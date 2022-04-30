@@ -1,0 +1,11 @@
+*~
+.projectile
+.lsp-session*
+projectile*
+recentf*
+session*
+
+.cache/
+auto-save-list/
+elpa/
+transient/
