@@ -1,3 +1,5 @@
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
@@ -71,7 +73,6 @@
   :ensure t
   :bind ("C-S-t" . vterm-other-window)
   :config
-  (setq vterm-timer-delay 0)
-  (setq-local show-trailing-whitespace nil))
+  (setq vterm-timer-delay 0))
 
 (provide 'setup-ide)

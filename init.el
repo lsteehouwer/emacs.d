@@ -10,11 +10,7 @@
 (load custom-file)
 
 (setq-default fill-column 80
-			  display-fill-column-indicator 80
-			  show-trailing-whitespace t)
-
-(add-hook 'minibuffer-setup-hook
-		  (lambda () (setq-local show-trailing-whitespace nil)))
+			  display-fill-column-indicator 80)
 
 (menu-bar-mode t)
 (tool-bar-mode -1)

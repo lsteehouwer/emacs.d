@@ -1,11 +1,14 @@
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-keybinding nil)
+  (setq evil-want-keybinding nil
+		evil-want-minibuffer nil)
   :config
   (evil-mode t)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (evil-global-set-key 'motion "/" 'consult-ripgrep))
+
 
 (use-package evil-collection
   :after evil
@@ -21,7 +24,7 @@
 (use-package undo-fu
   :ensure t
   :bind (:map evil-normal-state-map
-			  ("u" . 'undo-fu-only-undo)
-			  ("C-r" . 'undo-fu-only-redo)))
+			  ("u"		. 'undo-fu-only-undo)
+			  ("C-r"	. 'undo-fu-only-redo)))
 
 (provide 'setup-evil)
