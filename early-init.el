@@ -1,2 +1,2 @@
-(setq gc-cons-threshold (* 1024 1024 1024)
-	  read-process-output-max (* 10 1024 1024))
+(setq gc-cons-threshold (* 20 1024 1024)
+	  native-comp-async-report-warnings-errors nil)
