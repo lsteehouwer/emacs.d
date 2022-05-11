@@ -1,11 +1,11 @@
 ;; Setup completion styles and frameworks
 
-(use-package company
+(use-package corfu
   :ensure t
   :config
-  (setq company-idle-delay 0
-		company-minimum-prefix-length 3)
-  (global-company-mode t))
+  (setq corfu-auto t
+		corfu-cycle t)
+  (global-corfu-mode))
 
 (use-package vertico
   :ensure t
@@ -22,6 +22,7 @@
 
 (define-key vertico-map (kbd "C-j") #'vertico-next)
 (define-key vertico-map (kbd "C-k") #'vertico-previous)
+(define-key vertico-map (kbd "TAB") #'minibuffer-complete)
 
 (use-package marginalia
   :after vertico
@@ -37,10 +38,11 @@
   :bind (("C-s" . consult-line)
 		 ("C-c i" . consult-imenu)))
 
+
 (use-package orderless
   :ensure t
   :config
-  (setq completion-styles '(partial-completion substring flex initials)
+  (setq completion-styles '(basic partial-completion emacs22)
 		completion-category-overrides '((file (styles partial-completion))
 										(consult-location (styles orderless)))))
 
