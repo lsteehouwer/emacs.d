@@ -8,7 +8,8 @@
 		 (python-mode				. lsp-deferred)
 		 (ruby-mode					. lsp-deferred)
 		 (haskell-mode				. lsp-deferred)
-		 (haskell-interactive-mode	. lsp-deferred))
+		 (haskell-interactive-mode	. lsp-deferred)
+		 (dockerfile-mode			. lsp-deferred))
   :init
   (setq lsp-keymap-prefix "C-c l"
 		lsp-clients-clangd-args '("--compile-commands-dir=debug"))
@@ -18,19 +19,19 @@
 		lsp-enable-snippet t))
 
 (use-package lsp-ui
+  :after company-box
   :ensure t
   :commands lsp-ui-mode
   :config
   (setq lsp-signature-auto-activate nil
 		lsp-signature-function 'lsp-signature-posframe
-		lsp-signature-posframe-params (list :min-height 1 :poshandler #'posframe-poshandler-window-top-right-corner)
 		lsp-signature-render-documentation t
 		lsp-ui-doc-enable t
 		lsp-ui-doc-delay 0
-		lsp-ui-doc-alignment 'window
-		lsp-ui-doc-max-width 70
 		lsp-ui-doc-show-with-cursor t
 		lsp-ui-doc-show-with-mouse nil
+		lsp-ui-doc-position 'at-point
+		lsp-ui-doc-max-width 70
 		lsp-eldoc-enable-hover nil)
   :bind ((:map evil-normal-state-map
 			   ("gd" . 'lsp-ui-peek-find-definitions)
@@ -64,9 +65,6 @@
 
 (use-package magit
   :defer t
-  :ensure t)
-
-(use-package diff-hl
   :ensure t)
 
 (use-package vterm

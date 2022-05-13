@@ -24,7 +24,7 @@
 (use-package undo-fu
   :ensure t
   :bind (:map evil-normal-state-map
-			  ("u"		. 'undo-fu-only-undo)
-			  ("C-r"	. 'undo-fu-only-redo)))
+			  ("u"	 . 'undo-fu-only-undo)
+			  ("C-r" . 'undo-fu-only-redo)))
 
 (provide 'setup-evil)
