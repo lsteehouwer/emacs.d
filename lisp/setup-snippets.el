@@ -4,9 +4,8 @@
   (yas-global-mode)
   (message "Yas should be active now"))
 
-;; (use-package yasnippet-snippets
-;;   :after yasnippet
-;;   :hook yas-minor-mode
-;;   :ensure t)
+(use-package yasnippet-snippets
+  :after yasnippet
+  :ensure t)
 
 (provide 'setup-snippets)

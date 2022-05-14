@@ -45,10 +45,10 @@
   			  			  (yas-expand))))
 
 (use-package company-box
+  :after company
   :ensure t
   :config (setq company-box-doc-delay 0
 				company-box-doc-enable t
-				company-box-scrollbar nil
 				company-box-doc-frame-parameters '((internal-border-width . 1)))
   :hook (company-mode . company-box-mode))
 
