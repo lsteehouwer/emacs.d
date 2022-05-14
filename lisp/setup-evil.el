@@ -9,7 +9,6 @@
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
   (evil-global-set-key 'motion "/" 'consult-ripgrep))
 
-
 (use-package evil-collection
   :after evil
   :ensure t

@@ -3,13 +3,14 @@
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
-  :hook ((c-mode					. lsp-deferred)
-		 (c++-mode					. lsp-deferred)
-		 (python-mode				. lsp-deferred)
-		 (ruby-mode					. lsp-deferred)
-		 (haskell-mode				. lsp-deferred)
-		 (haskell-interactive-mode	. lsp-deferred)
-		 (dockerfile-mode			. lsp-deferred))
+  :hook ((lsp-mode					.	lsp-enable-which-key-integration)
+		 (c-mode					.	lsp-deferred)
+		 (c++-mode					.	lsp-deferred)
+		 (python-mode				.	lsp-deferred)
+		 (ruby-mode					.	lsp-deferred)
+		 (haskell-mode				.	lsp-deferred)
+		 (haskell-interactive-mode	.	lsp-deferred)
+		 (dockerfile-mode			.	lsp-deferred))
   :init
   (setq lsp-keymap-prefix "C-c l"
 		lsp-clients-clangd-args '("--compile-commands-dir=debug"))

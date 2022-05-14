@@ -1,3 +1,11 @@
+(use-package highlight-indent-guides
+  :ensure t
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-responsive 'top
+		highlight-indent-guides-delay 0
+		highlight-indent-guides-method 'character))
+
 (use-package rainbow-delimiters
   :ensure t)
 
