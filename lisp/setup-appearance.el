@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (use-package highlight-indent-guides
   :ensure t
   :hook (prog-mode . highlight-indent-guides-mode)
@@ -16,13 +17,39 @@
   (setq dashboard-items '((recents . 10)
 						  (registers . 10))))
 
-(use-package doom-modeline
+;; (use-package diminish
+;;   :diminish (company-mode
+;; 			 company-box-mode
+;; 			 yas-minor-mode
+;; 			 highlight-indent-guides-mode
+;; 			 which-key-mode
+;; 			 evil-collection-unimpaired-mode
+;; 			 eldoc-mode
+;; 			 flycheck-mode
+;; 			 abbrev-mode)
+;;   :ensure t)
+
+(use-package telephone-line
   :ensure t
   :config
-  (setq doom-modeline-height 32
-		doom-modeline-workspace-name t
-		doom-modeline-icon t)
-  (doom-modeline-mode t))
+  (telephone-line-mode))
+
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :config
+;;   (setq doom-modeline-height 32
+;; 		doom-modeline-workspace-name t
+;; 		doom-modeline-icon t)
+;;   (doom-modeline-mode t))
+
+;; (use-package spaceline
+;;   :ensure t
+;;   :config
+;;   (spaceline-spacemacs-theme))
+
+;; (use-package airline-themes
+;;   :ensure t
+;;   :config (load-theme 'airline-badwolf t))
 
 (use-package monokai-theme
   :ensure t

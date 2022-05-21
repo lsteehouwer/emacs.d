@@ -36,6 +36,8 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(require 'setup-gc)
+(require 'setup-clutter)
 (require 'setup-evil)
 (require 'setup-completion)
 (require 'setup-ide)
