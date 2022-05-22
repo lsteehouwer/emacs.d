@@ -50,6 +50,9 @@
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
+(use-package all-the-icons
+  :ensure t)
+
 (use-package circadian
   :ensure t
   :config
