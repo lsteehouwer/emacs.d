@@ -1,7 +1,10 @@
 ;; ruby
 (use-package projectile-rails
   :after projectile
-  :ensure t)
+  :ensure t
+  :config (projectile-rails-mode))
+
+(define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
 
 (use-package inf-ruby
   :ensure t)
@@ -9,9 +12,6 @@
 (use-package rvm
   :ensure t
   :hook (ruby-mode . rvm-activate-corresponding-ruby))
-
-;; (add-hook 'ruby-mode-hook
-;;           (lambda () (rvm-activate-corresponding-ruby)))
 
 (use-package ruby-electric
   :ensure t
