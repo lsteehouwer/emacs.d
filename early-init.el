@@ -1,2 +1,2 @@
-(setq gc-cons-threshold (* 20 1024 1024)
+(setq gc-cons-threshold most-positive-fixnum
 	  native-comp-async-report-warnings-errors nil)

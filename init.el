@@ -10,7 +10,7 @@
 (load custom-file)
 
 (setq-default fill-column 80
-			  display-fill-column-indicator 80)
+              display-fill-column-indicator 80)
 
 (menu-bar-mode t)
 (tool-bar-mode -1)
@@ -23,14 +23,14 @@
 (require 'autorevert)
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t
-	  auto-revert-verbose nil)
+      auto-revert-verbose nil)
 
 (setq dired-auto-revert-buffer t
-	  dired-listing-switches "-la --group-directories-first")
+      dired-listing-switches "-la --group-directories-first")
 
 (require 'package)
 (add-to-list `package-archives
-			 '("melpa" . "https://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -43,9 +43,9 @@
 (require 'setup-ide)
 (require 'setup-snippets)
 (require 'setup-languages)
-;; (require 'setup-org)
-;; (require 'setup-tex)
-(require 'setup-pdf)
+;; ;; (require 'setup-org)
+;; ;; (require 'setup-tex)
+;; ;; (require 'setup-pdf)
 (require 'setup-appearance)
 (require 'setup-misc)
 
@@ -57,20 +57,20 @@
 (set-face-attribute 'fringe nil :background (face-background 'line-number))
 
 (set-face-attribute 'default nil
-					:family "JetBrains Mono"
-					:height 110
-					:weight 'normal)
+                    :family "JetBrains Mono"
+                    :height 110
+                    :weight 'normal)
 (set-face-attribute 'fixed-pitch nil
-					:family "JetBrains Mono"
-					:height 110
-					:weight 'normal)
+                    :family "JetBrains Mono"
+                    :height 110
+                    :weight 'normal)
 
 (add-hook 'prog-mode-hook
-		  (lambda ()
-			(display-line-numbers-mode t)
-			(electric-pair-mode t)
-			(rainbow-delimiters-mode t)))
+          (lambda ()
+            (display-line-numbers-mode t)
+            (electric-pair-mode t)
+            (rainbow-delimiters-mode t)))
 
 (setq my-tab-width 4)
-(setq-default indent-tabs-mode t
-			  tab-width my-tab-width)
+(setq-default indent-tabs-mode nil
+              tab-width my-tab-width)

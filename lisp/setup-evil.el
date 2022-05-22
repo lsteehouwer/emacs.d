@@ -2,7 +2,10 @@
   :ensure t
   :init
   (setq evil-want-keybinding nil
-		evil-want-minibuffer nil)
+        evil-want-minibuffer nil
+        evil-normal-state-cursor 'box
+        evil-insert-state-cursor 'bar
+        evil-visual-state-cursor 'hollow)
   :config
   (evil-mode t)
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
@@ -23,7 +26,7 @@
 (use-package undo-fu
   :ensure t
   :bind (:map evil-normal-state-map
-			  ("u"	 . 'undo-fu-only-undo)
-			  ("C-r" . 'undo-fu-only-redo)))
+              ("u"   . 'undo-fu-only-undo)
+              ("C-r" . 'undo-fu-only-redo)))
 
 (provide 'setup-evil)

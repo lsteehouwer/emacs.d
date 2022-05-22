@@ -1,4 +1,17 @@
 ;; ruby
+(use-package projectile-rails
+  :after projectile
+  :ensure t)
+
+(use-package inf-ruby
+  :ensure t)
+
+(use-package rvm
+  :ensure t
+  :hook (ruby-mode . rvm-activate-corresponding-ruby))
+
+;; (add-hook 'ruby-mode-hook
+;;           (lambda () (rvm-activate-corresponding-ruby)))
 
 (use-package ruby-electric
   :ensure t
@@ -30,7 +43,7 @@
 (use-package lsp-haskell
   :ensure t
   :hook ((haskell-mode . lsp-deferred)
-		 (haskell-mode . interactive-haskell-mode)))
+         (haskell-mode . interactive-haskell-mode)))
 
 ;; yaml
 (use-package yaml-mode
@@ -42,7 +55,7 @@
 
 (auto-insert-mode t)
 (setq auto-insert-query nil
-	  auto-insert-directory "~/.emacs.d/auto-insert/"
-	  auto-insert-alist '((ruby-mode . "ruby.el")))
+      auto-insert-directory "~/.emacs.d/auto-insert/"
+      auto-insert-alist '((ruby-mode . "ruby.el")))
 
 (provide 'setup-languages)

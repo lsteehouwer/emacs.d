@@ -5,6 +5,6 @@
   :ensure t
   :hook org-mode
   :bind (:map org-mode-map
-			  ("C-c [" . org-ref-insert-link)))
+              ("C-c [" . org-ref-insert-link)))
 
 (provide 'setup-org)
