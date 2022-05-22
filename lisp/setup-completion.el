@@ -1,5 +1,7 @@
 ;; Setup completion styles and frameworks
 
+(savehist-mode)
+
 (use-package company
   :ensure t
   :diminish
@@ -22,46 +24,63 @@
         company-box-backends-colors nil
         company-box-doc-enable nil))
 
-(use-package vertico
-  :ensure t
-  :bind (:map vertico-map
-              (("DEL" . vertico-directory-delete-char)
-               ("TAB" . minibuffer-complete)
-               ("C-j" . vertico-next)
-               ("C-k" . vertico-previous)))
-  :config
-  (setq read-file-name-completion-ignore-case t
-        read-buffer-completion-ignore-case t
-        completion-ignore-case t
-        vertico-resize nil
-        vertico-multiform-categories '((file reverse)
-                                       (consult-grep buffer)
-                                       (imenu buffer))))
-(vertico-mode)
-(vertico-multiform-mode)
+(if (< emacs-major-version 27)
+    (progn
+      (use-package ivy
+        :ensure t
+        :bind (:map ivy-minibuffer-map
+                    (("C-j" . ivy-next-line)
+                     ("C-k" . ivy-previous-line)))
+        :config (ivy-mode))
 
-(use-package marginalia
-  :after vertico
-  :ensure t
-  :bind (:map vertico-map (("DEL" . vertico-directory-delete-char)))
-  :config
-  (marginalia-mode))
+      (use-package counsel
+        :ensure t
+        :config (counsel-mode))
 
-(use-package consult
-  :ensure t
-  :config
-  (setq consult-narrow-key "<")
-  (consult-customize consult-theme :preview-key '(:debounce 0.2 any))
-  :bind (("C-s" . consult-line)
-         ("C-c i" . consult-imenu)))
+      (use-package swiper
+        :ensure t
+        :bind ("C-s" . swiper)))
+  (progn
+    (use-package vertico
+     :ensure t
+     :bind (:map vertico-map
+                 (("DEL" . vertico-directory-delete-char)
+                  ("TAB" . minibuffer-complete)
+                  ("C-j" . vertico-next)
+                  ("C-k" . vertico-previous)))
+     :config
+     (setq read-file-name-completion-ignore-case t
+           read-buffer-completion-ignore-case t
+           completion-ignore-case t
+           vertico-resize nil
+           vertico-multiform-categories '((file reverse)
+                                          (consult-grep buffer)
+                                          (imenu buffer))))
+   (vertico-mode)
+   (vertico-multiform-mode)
+
+   (use-package marginalia
+     :after vertico
+     :ensure t
+     :bind (:map vertico-map (("DEL" . vertico-directory-delete-char)))
+     :config
+     (marginalia-mode))
+
+   (use-package consult
+     :ensure t
+     :config
+     (setq consult-narrow-key "<")
+     (consult-customize consult-theme :preview-key '(:debounce 0.2 any))
+     :bind (("C-s" . consult-line)
+            ("C-c i" . consult-imenu)))
 
 
-(use-package orderless
-  :ensure t
-  :config
-  (setq completion-styles '(basic partial-completion emacs22)
-        completion-category-overrides '((file (styles partial-completion))
-                                        (consult-location (styles orderless)))))
+   (use-package orderless
+     :ensure t
+     :config
+     (setq completion-styles '(basic partial-completion emacs22)
+           completion-category-overrides '((file (styles partial-completion))
+                                           (consult-location (styles orderless)))))))
 
 (provide 'setup-completion)
 ;;; setup-completion.el ends here
