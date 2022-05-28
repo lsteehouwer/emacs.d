@@ -1,57 +1,53 @@
+;; web mode
+(use-package web-mode
+  :mode (("\\.erb\\'" . web-mode)
+         ("\\.html?\\'" . web-mode)))
+
 ;; ruby
-(use-package projectile-rails
-  :after projectile
-  :ensure t
-  :config (projectile-rails-mode))
+(use-package robe
+  :hook (ruby-mode . robe-mode))
 
-(define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
+;; (use-package projectile-rails
+;;   :after projectile
+;;   :config (projectile-rails-global-mode))
 
-(use-package inf-ruby
-  :ensure t)
+(use-package projectile-rails)
+  ;; :after projectile)
+
+;; (define-key projectile-rails-mode-map (kbd "C-c r") 'hydra-projectile-rails/body)
 
 (use-package rvm
-  :ensure t
+  :defer t
   :hook (ruby-mode . rvm-activate-corresponding-ruby))
 
 (use-package ruby-electric
-  :ensure t
   :hook (ruby-mode . ruby-electric-mode))
 
 (use-package yard-mode
-  :ensure t
   :hook (ruby-mode . yard-mode))
 
-
 ;; c(++)
-(setq c-tab-width 4)
 (use-package cc-mode
-  :config (setq-default c-basic-offset c-tab-width))
+  :init
+  (setq c-tab-width 4)
+  (setq-default c-basic-offset c-tab-width))
 
 ;; meson build system
-(use-package meson-mode
-  :ensure t)
-
-;; python
-(setq python-tab-width 4)
-(use-package python
-  :config (setq-default python-indent-offset python-tab-width))
+(use-package meson-mode)
 
 ;; haskell
-(use-package haskell-mode
-  :ensure t)
+(use-package haskell-mode)
 
-(use-package lsp-haskell
-  :ensure t
-  :hook ((haskell-mode . lsp-deferred)
-         (haskell-mode . interactive-haskell-mode)))
+;; (use-package lsp-haskell
+;;   :ensure t
+;;   :hook ((haskell-mode . lsp-deferred)
+;;          (haskell-mode . interactive-haskell-mode)))
 
 ;; yaml
-(use-package yaml-mode
-  :ensure t)
+(use-package yaml-mode)
 
 ;; docker
-(use-package dockerfile-mode
-  :ensure t)
+(use-package dockerfile-mode)
 
 (auto-insert-mode t)
 (setq auto-insert-query nil

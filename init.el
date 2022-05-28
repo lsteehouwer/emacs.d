@@ -29,12 +29,16 @@
       dired-listing-switches "-la --group-directories-first")
 
 (require 'package)
+;; (setq package-quickstart t)
 (add-to-list `package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
+(setq use-package-always-ensure t)
+      ;; use-package-always-demand t)
 
 (require 'setup-gc)
 (require 'setup-clutter)
@@ -43,9 +47,9 @@
 (require 'setup-ide)
 (require 'setup-snippets)
 (require 'setup-languages)
-;; ;; (require 'setup-org)
-;; ;; (require 'setup-tex)
-;; ;; (require 'setup-pdf)
+(require 'setup-org)
+(require 'setup-tex)
+(require 'setup-pdf)
 (require 'setup-appearance)
 (require 'setup-misc)
 
@@ -57,11 +61,15 @@
 (set-face-attribute 'fringe nil :background (face-background 'line-number))
 
 (set-face-attribute 'default nil
-                    :family "JetBrains Mono"
-                    :height 110
+                    :family "Ubuntu Mono"
+                    :height 120
                     :weight 'normal)
 (set-face-attribute 'fixed-pitch nil
-                    :family "JetBrains Mono"
+                    :family "Ubuntu Mono"
+                    :height 120
+                    :weight 'normal)
+(set-face-attribute 'variable-pitch nil
+                    :family "Ubuntu"
                     :height 110
                     :weight 'normal)
 

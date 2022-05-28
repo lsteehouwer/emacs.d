@@ -1,7 +1,6 @@
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
 (use-package lsp-mode
-  :ensure t
   :commands (lsp lsp-deferred)
   :hook ((lsp-mode                  .   lsp-enable-which-key-integration)
          (c-mode                    .   lsp-deferred)
@@ -19,8 +18,6 @@
         lsp-enable-snippet t))
 
 (use-package lsp-ui
-  :after company-box
-  :ensure t
   :commands lsp-ui-mode
   :config
   (setq lsp-signature-auto-activate nil
@@ -41,10 +38,10 @@
                ("k" . 'lsp-ui-peek--select-prev))))
 
 (use-package flycheck
-  :ensure t)
+  :commands flycheck-mode)
 
 (use-package treemacs
-  :ensure t
+  :commands (treemacs treemacs-select-window)
   :config
   (setq treemacs-follow-after-init t
         treemacs-follow-mode -1
@@ -55,34 +52,27 @@
   :bind (("<f8>" . treemacs)
          ("S-<f8>" . treemacs-select-window)))
 
-(use-package treemacs-evil
-  :ensure t)
+(use-package treemacs-evil)
 
 (use-package treemacs-projectile
-  :ensure t
   :after treemacs)
 
 (use-package treemacs-magit
-  :ensure t
   :after treemacs magit)
 
 (use-package lsp-treemacs
-  :ensure t
   :defer t
   :config (lsp-treemacs-sync-mode t))
 
 (use-package projectile
-  :ensure t
   :config (projectile-mode t)
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
 
 (use-package magit
-  :defer t
-  :ensure t)
+  :commands magit)
 
 (use-package vterm
-  :ensure t
   :bind ("C-S-t" . vterm-other-window)
   :hook (vterm-mode . hide-mode-line-mode)
   :config

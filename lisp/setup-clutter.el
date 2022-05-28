@@ -7,3 +7,4 @@
       auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/autosave" user-emacs-directory) t)))
 
 (provide 'setup-clutter)
+;;; setup-clutter.el ends here

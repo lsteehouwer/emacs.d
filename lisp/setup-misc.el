@@ -1,20 +1,18 @@
 (use-package which-key
-  :ensure t
+  :init
+  (setq which-key-sort-order #'which-key-key-order-alpha
+        which-key-add-column-padding 10
+        which-key-idle-delay 0.2)
   :config
-  (setq which-key-idle-delay 0.2)
-  (which-key-mode t))
+  (which-key-setup-side-window-bottom)
+  (which-key-mode))
 
 (use-package helpful
-  :ensure t
-  :bind (("C-h f" . #'helpful-callable)
-         ("C-h v" . #'helpful-variable)
-         ("C-h k" . #'helpful-key)))
+  :bind (("C-h f" . helpful-callable)
+         ("C-h v" . helpful-variable)
+         ("C-h k" . helpful-key)))
 
 (use-package olivetti
-  :ensure  t
   :commands olivetti-mode)
-
-(use-package hide-mode-line
-  :ensure t)
 
 (provide 'setup-misc)

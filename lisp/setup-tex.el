@@ -9,4 +9,6 @@
         TeX-parse-self t
         TeX-source-correlate-mode t)
   :hook (TeX-mode . (lambda () (turn-on-reftex))))
+
 (provide 'setup-tex)
+;;; setup-tex.el ends here
