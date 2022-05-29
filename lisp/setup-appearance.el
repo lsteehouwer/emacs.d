@@ -7,6 +7,9 @@
       window-divider-default-right-width 1)
 (window-divider-mode)
 
+(use-package smooth-scrolling
+  :config (smooth-scrolling-mode))
+
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :config
