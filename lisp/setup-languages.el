@@ -1,7 +1,27 @@
 ;; web mode
+(setq my-html-indent 2)
+
 (use-package web-mode
   :mode (("\\.erb\\'" . web-mode)
-         ("\\.html?\\'" . web-mode)))
+         ("\\.html?\\'" . web-mode))
+  :config
+  (setq web-mode-markup-indent-offset my-html-indent))
+
+(use-package emmet-mode
+  :hook (web-mode . emmet-mode)
+  :config
+  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-n") #'emmet-next-edit-point)
+  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-p") #'emmet-prev-edit-point)
+  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-j") #'emmet-next-edit-point)
+  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-k") #'emmet-prev-edit-point)
+  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-n") #'emmet-next-edit-point)
+  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-p") #'emmet-prev-edit-point)
+  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-j") #'emmet-next-edit-point)
+  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-k") #'emmet-prev-edit-point)
+  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-M-j") #'emmet-expand-line)
+  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-M-j") #'emmet-expand-line)
+  (setq emmet-indentation my-html-indent
+        emmet-move-cursor-between-quotes t))
 
 ;; ruby
 (use-package robe
