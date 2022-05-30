@@ -1,3 +1,10 @@
+;; dired settings
+(setq delete-by-moving-to-trash t)
+
+;; remove trailing whitespace automatically on save
+(use-package ws-butler
+  :hook (prog-mode . ws-butler-mode))
+
 (use-package which-key
   :init
   (setq which-key-sort-order #'which-key-key-order-alpha
