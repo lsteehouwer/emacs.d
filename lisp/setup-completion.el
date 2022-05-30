@@ -72,7 +72,7 @@
     (use-package orderless
       :config
       (setq completion-styles '(basic partial-completion emacs22)
-            completion-category-overrides '((file (styles partial-completion))
+            completion-category-overrides '((file (styles flex partial-completion))
                                             (consult-location (styles orderless)))))))
 
 (provide 'setup-completion)

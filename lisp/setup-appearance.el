@@ -7,6 +7,8 @@
       window-divider-default-right-width 1)
 (window-divider-mode)
 
+(use-package hide-mode-line)
+
 (use-package smooth-scrolling
   :config (smooth-scrolling-mode))
 
@@ -62,7 +64,7 @@
   :init
   (setq calendar-latitude 52.37
         calendar-longitude 4.89
-        circadian-themes '((:sunrise . doom-gruvbox)
+        circadian-themes '((:sunrise . modus-operandi)
                            (:sunset  . doom-gruvbox)))
   (circadian-setup))
 

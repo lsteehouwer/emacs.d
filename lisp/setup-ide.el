@@ -38,7 +38,13 @@
                ("k" . 'lsp-ui-peek--select-prev))))
 
 (use-package flycheck
-  :commands flycheck-mode)
+  :commands flycheck-mode
+  :hook (prog-mode . flycheck-mode))
+
+(use-package flycheck-pos-tip
+  :config
+  (setq flycheck-pos-tip-max-width 90)
+  :hook (flycheck-mode . flycheck-pos-tip-mode))
 
 (use-package treemacs
   :commands (treemacs treemacs-select-window)

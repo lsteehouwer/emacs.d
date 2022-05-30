@@ -27,14 +27,15 @@
 (use-package robe
   :hook (ruby-mode . robe-mode))
 
-;; (use-package projectile-rails
-;;   :after projectile
-;;   :config (projectile-rails-global-mode))
+(use-package rubocop
+  :config (setq rubocop-autocorrect-on-save t
+                rubocop-format-on-save t)
+  :hook (ruby-mode . rubocop-mode))
 
-(use-package projectile-rails)
-  ;; :after projectile)
-
-;; (define-key projectile-rails-mode-map (kbd "C-c r") 'hydra-projectile-rails/body)
+(use-package projectile-rails
+  :config
+  (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
+  (projectile-rails-global-mode))
 
 (use-package rvm
   :defer t
