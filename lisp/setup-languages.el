@@ -23,6 +23,8 @@
   (setq emmet-indentation my-html-indent
         emmet-move-cursor-between-quotes t))
 
+(use-package haml-mode)
+
 ;; ruby
 (use-package robe
   :hook (ruby-mode . robe-mode))
@@ -75,4 +77,9 @@
       auto-insert-directory "~/.emacs.d/auto-insert/"
       auto-insert-alist '((ruby-mode . "ruby.el")))
 
+;; markdown
+(use-package grip-mode
+  :hook (markdown-mode . grip-mode))
+
 (provide 'setup-languages)
+;;; setup-languages.el ends here

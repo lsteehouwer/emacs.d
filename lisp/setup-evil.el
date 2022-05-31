@@ -20,6 +20,11 @@
   :after evil
   :bind ("C-/" . 'evilnc-comment-or-uncomment-lines))
 
+(use-package ace-window
+  :after evil
+  :bind ("M-o" . ace-window)
+  :config (setq ace-window-display-mode t))
+
 (use-package undo-fu
   :bind (:map evil-normal-state-map
               ("u"   . 'undo-fu-only-undo)

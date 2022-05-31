@@ -38,7 +38,6 @@
   (package-install 'use-package))
 
 (setq use-package-always-ensure t)
-      ;; use-package-always-demand t)
 
 (require 'setup-gc)
 (require 'setup-clutter)
@@ -56,9 +55,6 @@
 ;; GENERAL SETTINGS
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-(set-fringe-style '(nil . 0))
-(set-face-attribute 'fringe nil :background (face-background 'line-number))
 
 (set-face-attribute 'default nil
                     :family "Ubuntu Mono"
