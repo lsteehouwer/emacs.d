@@ -39,7 +39,12 @@
 
 (use-package flycheck
   :commands flycheck-mode
-  :hook (prog-mode . flycheck-mode))
+  :hook (prog-mode . flycheck-mode)
+  :config
+  (setq flycheck-display-errors-delay 0.1
+        flycheck-indication-mode 'right-fringe)
+  (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
+    [16 48 112 240 112 48 16] nil nil 'center))
 
 (use-package flycheck-pos-tip
   :config
@@ -77,6 +82,14 @@
 
 (use-package magit
   :commands magit)
+
+(use-package git-gutter-fringe
+  :hook (prog-mode . git-gutter)
+  :config
+  (setq fringes-outside-margins t)
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (use-package vterm
   :bind ("C-S-t" . vterm-other-window)

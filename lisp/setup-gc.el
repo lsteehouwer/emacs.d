@@ -4,3 +4,4 @@
   :config (gcmh-mode))
 
 (provide 'setup-gc)
+;;; setup-gc.el ends here
