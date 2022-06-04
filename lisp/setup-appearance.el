@@ -2,6 +2,11 @@
 
 (blink-cursor-mode -1)
 
+(add-hook 'prog-mode-hook
+          (lambda () (setq-local indicate-empty-lines t)))
+
+(setq display-line-numbers-widen t)
+
 (setq window-divider-default-places t
       window-divider-default-bottom-width 1
       window-divider-default-right-width 1)
@@ -42,9 +47,9 @@
   :config
   (setq telephone-line-evil-use-short-tag t
         telephone-line-height 28
-        telephone-line-primary-left-separator    'telephone-line-flat
+        telephone-line-primary-left-separator    'telephone-line-cubed-left
         telephone-line-secondary-left-separator  'telephone-line-flat
-        telephone-line-primary-right-separator   'telephone-line-flat
+        telephone-line-primary-right-separator   'telephone-line-cubed-left
         telephone-line-secondary-right-separator 'telephone-line-flat)
   (telephone-line-mode))
 
