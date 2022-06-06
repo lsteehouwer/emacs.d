@@ -1,4 +1,5 @@
 (use-package evil
+  :defer 0.1
   :init
   (setq evil-want-keybinding nil
         evil-want-minibuffer nil
@@ -13,19 +14,26 @@
 
 (use-package evil-collection
   :after evil
-  :init (setq evil-want-integration t)
+  :init
+  (setq evil-want-integration t)
   (evil-collection-init))
 
 (use-package evil-nerd-commenter
   :after evil
-  :bind ("C-/" . 'evilnc-comment-or-uncomment-lines))
+  :bind (:map
+         evil-normal-state-map
+         ("C-/" . evilnc-comment-or-uncomment-lines)
+         :map
+         evil-insert-state-map
+         ("C-/" . evilnc-comment-or-uncomment-lines)))
+
 
 (use-package ace-window
-  :after evil
   :bind ("M-o" . ace-window)
   :config (setq ace-window-display-mode t))
 
 (use-package undo-fu
+  :after evil
   :bind (:map evil-normal-state-map
               ("u"   . 'undo-fu-only-undo)
               ("C-r" . 'undo-fu-only-redo)))

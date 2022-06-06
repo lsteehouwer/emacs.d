@@ -1,4 +1,4 @@
-(require 'reftex)
+;; (require 'reftex)
 (use-package tex
   :defer t
   :ensure auctex

@@ -22,6 +22,6 @@
 (use-package olivetti
   :commands olivetti-mode)
 
-(use-package hydra)
+;; (use-package hydra)
 
 (provide 'setup-misc)

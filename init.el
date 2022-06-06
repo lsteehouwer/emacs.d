@@ -1,10 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
 ;; Basic settings
-(defun dir-concat (dir file) (concat (file-name-as-directory dir) file))
-
-(push (dir-concat user-emacs-directory "lisp/") load-path)
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+(add-to-list 'load-path
+              (expand-file-name "lisp" user-emacs-directory))
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
@@ -25,9 +23,6 @@
 (setq global-auto-revert-non-file-buffers t
       auto-revert-verbose nil)
 
-(setq dired-auto-revert-buffer t
-      dired-listing-switches "-la --group-directories-first")
-
 (require 'package)
 ;; (setq package-quickstart t)
 (add-to-list `package-archives
@@ -38,9 +33,11 @@
   (package-install 'use-package))
 
 (setq use-package-always-ensure t)
+      ;; use-package-compute-statistics t)
 
 (require 'setup-gc)
 (require 'setup-clutter)
+(require 'setup-dired)
 (require 'setup-evil)
 (require 'setup-completion)
 (require 'setup-ide)
@@ -68,12 +65,6 @@
                     :family "Ubuntu"
                     :height 110
                     :weight 'normal)
-
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (display-line-numbers-mode t)
-            (electric-pair-mode t)
-            (rainbow-delimiters-mode t)))
 
 (setq my-tab-width 4)
 (setq-default indent-tabs-mode nil

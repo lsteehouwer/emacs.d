@@ -1,18 +1,28 @@
-;; -*- lexical-binding: t; -*-
+;;; setup-appearance.el --- Setup the appearance of emacs -*- lexical-binding: t; -*-
+;;; Commentary:
 
-(blink-cursor-mode -1)
+;; Does what is says on the tin
+
+;;; Code:
 
 (add-hook 'prog-mode-hook
           (lambda () (setq-local indicate-empty-lines t)))
 
-(setq display-line-numbers-widen t)
+(use-package frame
+  :ensure nil
+  :config
+  (setq window-divider-default-places t
+        window-divider-default-bottom-width 1
+        window-divider-default-right-width 1)
+  (window-divider-mode))
 
-(setq window-divider-default-places t
-      window-divider-default-bottom-width 1
-      window-divider-default-right-width 1)
-(window-divider-mode)
+(use-package display-line-numbers
+  :ensure nil
+  :config
+  (setq display-line-numbers-widen nil))
 
-(use-package hide-mode-line)
+(use-package hide-mode-line
+  :commands hide-mode-line-mode)
 
 (use-package smooth-scrolling
   :config (smooth-scrolling-mode))
@@ -39,11 +49,12 @@
                       :weight 'bold)
   (set-face-attribute 'dashboard-heading-face nil
                       :family "Roboto"
-                      :height 140
+                      :height 120
                       :weight 'bold)
   (dashboard-setup-startup-hook))
 
 (use-package telephone-line
+  :demand t
   :config
   (setq telephone-line-evil-use-short-tag t
         telephone-line-height 28

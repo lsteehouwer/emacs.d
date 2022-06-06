@@ -1,8 +1,18 @@
+;;; setup-lang.el --- Setup packages for different (programming) languages -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Code:
+(use-package prog-mode
+  :ensure nil
+  :hook (prog-mode . (lambda ()
+                       (display-line-numbers-mode)
+                       (electric-pair-local-mode)
+                       (rainbow-delimiters-mode))))
+
 ;; web mode
 (setq my-html-indent 2)
 
 (use-package web-mode
-  :mode (("\\.erb\\'" . web-mode)
+  :mode (("\\.erb\\'"   . web-mode)
          ("\\.html?\\'" . web-mode))
   :config
   (setq web-mode-markup-indent-offset my-html-indent))
@@ -23,7 +33,9 @@
   (setq emmet-indentation my-html-indent
         emmet-move-cursor-between-quotes t))
 
-(use-package haml-mode)
+(use-package haml-mode
+  :config (message "loading haml")
+  :mode "\\.haml\\'")
 
 ;; ruby
 (use-package robe
@@ -35,12 +47,12 @@
   :hook (ruby-mode . rubocop-mode))
 
 (use-package projectile-rails
+  :after projectile
+  :hook (projectile-mode . projectile-rails-mode)
   :config
-  (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map)
-  (projectile-rails-global-mode))
+  (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map))
 
 (use-package rvm
-  :defer t
   :hook (ruby-mode . rvm-activate-corresponding-ruby))
 
 (use-package ruby-electric
@@ -50,16 +62,28 @@
   :hook (ruby-mode . yard-mode))
 
 ;; c(++)
-(use-package cc-mode
-  :init
-  (setq c-tab-width 4)
-  (setq-default c-basic-offset c-tab-width))
+;; (use-package cc-mode
+;;   :ensure nil
+;;   :init
+;;   (setq c-tab-width 4)
+;;   (setq-default c-basic-offset c-tab-width))
 
 ;; meson build system
-(use-package meson-mode)
+(use-package meson-mode
+  :mode "/meson\\(\\.build\\|_options\\.txt\\)\\'")
 
 ;; haskell
-(use-package haskell-mode)
+(use-package haskell-mode
+  :mode (("\\.[gh]s\\'" . haskell-mode)
+         ("\\.hsc\\'" . haskell-mode)
+         ("\\.l[gh]s\\'" . haskell-literate-mode)
+         ("\\.hsig\\'" . haskell-mode)
+         ("\\.[gh]s\\'" . haskell-mode)
+         ("\\.cabal\\'\\|/cabal\\.project\\|/\\.cabal/config\\'" . haskell-cabal-mode)
+         ("\\.chs\\'" . haskell-c2hs-mode)
+         ("\\.ghci\\'" . ghci-script-mode)
+         ("\\.dump-simpl\\'" . ghc-core-mode)
+         ("\\.hcr\\'" . ghc-core-mode)))
 
 ;; (use-package lsp-haskell
 ;;   :ensure t
@@ -67,19 +91,18 @@
 ;;          (haskell-mode . interactive-haskell-mode)))
 
 ;; yaml
-(use-package yaml-mode)
+(use-package yaml-mode
+  :mode ("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-mode))
 
 ;; docker
-(use-package dockerfile-mode)
+(use-package dockerfile-mode
+  :mode (("\\.dockerfile\\'" . dockerfile-mode)
+         ("/Dockerfile\\(?:\\.[^/\\]*\\)?\\'" . dockerfile-mode)))
 
 (auto-insert-mode t)
 (setq auto-insert-query nil
       auto-insert-directory "~/.emacs.d/auto-insert/"
       auto-insert-alist '((ruby-mode . "ruby.el")))
-
-;; markdown
-(use-package grip-mode
-  :hook (markdown-mode . grip-mode))
 
 (provide 'setup-languages)
 ;;; setup-languages.el ends here

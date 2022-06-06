@@ -63,7 +63,7 @@
   :bind (("<f8>" . treemacs)
          ("S-<f8>" . treemacs-select-window)))
 
-(use-package treemacs-evil)
+;; (use-package treemacs-evil)
 
 (use-package treemacs-projectile
   :after treemacs)

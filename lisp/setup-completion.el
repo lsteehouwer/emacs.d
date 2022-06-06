@@ -37,10 +37,10 @@
   (progn
     (use-package vertico
       :bind (:map vertico-map
-                  (("DEL" . vertico-directory-delete-char)
+                  (("C-j" . vertico-next)
+                   ("C-k" . vertico-previous)
                    ("TAB" . minibuffer-complete)
-                   ("C-j" . vertico-next)
-                   ("C-k" . vertico-previous)))
+                   ("<escape>" . keyboard-escape-quit)))
       :custom
       (read-file-name-completion-ignore-case t)
       (read-buffer-completion-ignore-case t)
@@ -53,10 +53,22 @@
       (vertico-mode t)
       (vertico-multiform-mode t)
       :config
-      (evil-define-key 'insert vertico-map (kbd "<escape>") #'keyboard-escape-quit)
-      (evil-define-key 'insert vertico-map (kbd "C-k") #'vertico-previous)
+      (setq enable-recursive-minibuffers t))
+
+    (use-package vertico-directory
+      :after vertico
+      :ensure nil
+      :bind (:map vertico-map
+                  ("RET" . vertico-directory-enter)
+                  ("DEL" . vertico-directory-delete-char))
       :hook
       (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+    (use-package vertico-reverse
+      :ensure nil
+      :bind (:map vertico-reverse-map
+                  (("C-j" . vertico-previous)
+                   ("C-k" . vertico-next))))
 
     (use-package marginalia
       :init
