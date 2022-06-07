@@ -83,9 +83,8 @@
 
     (use-package orderless
       :config
-      (setq completion-styles '(basic partial-completion emacs22)
-            completion-category-overrides '((file (styles flex partial-completion))
-                                            (consult-location (styles orderless)))))))
+      (setq completion-styles '(orderless partial-completion flex)
+            completion-category-overrides '((consult-location (styles basic orderless)))))))
 
 (provide 'setup-completion)
 ;;; setup-completion.el ends here
