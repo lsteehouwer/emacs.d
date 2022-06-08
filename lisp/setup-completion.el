@@ -72,7 +72,21 @@
 
     (use-package marginalia
       :init
-      (marginalia-mode))
+      (marginalia-mode)
+      :config
+      (defmacro pushnew! (place &rest values)
+        "Push VALUES sequentially into PLACE, if they aren't already present.
+This is a variadic `cl-pushnew'."
+        (let ((var (make-symbol "result")))
+          `(dolist (,var (list ,@values) (with-no-warnings ,place))
+             (cl-pushnew ,var ,place :test #'equal))))
+      (pushnew! marginalia-command-categories
+                '(projectile-find-file . project-file)
+                '(projectile-recentf . project-file)
+                '(projectile-switch-to-buffer . buffer)
+                '(projectile-switch-project . project-file))
+      (setq completion-category-overrides '((project-file (styles orderless))))
+      )
 
     (use-package consult
       :config
@@ -81,10 +95,14 @@
       :bind (("C-s" . consult-line)
              ("C-c i" . consult-imenu)))
 
-    (use-package orderless
-      :config
-      (setq completion-styles '(orderless partial-completion flex)
-            completion-category-overrides '((consult-location (styles basic orderless)))))))
+
+    ;; ))
+    (use-package orderless)))
+    ;;   :config
+    ;;   (setq
+    ;;    ;;completion-styles '(orderless partial-completion flex)
+    ;;    completion-category-overrides '((file (styles orderless partial-completion flex))
+    ;;                                    (consult-location (styles basic orderless)))))))
 
 (provide 'setup-completion)
 ;;; setup-completion.el ends here
