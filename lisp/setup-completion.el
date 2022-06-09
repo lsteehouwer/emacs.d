@@ -81,12 +81,14 @@ This is a variadic `cl-pushnew'."
           `(dolist (,var (list ,@values) (with-no-warnings ,place))
              (cl-pushnew ,var ,place :test #'equal))))
       (pushnew! marginalia-command-categories
-                '(projectile-find-file . project-file)
-                '(projectile-recentf . project-file)
-                '(projectile-switch-to-buffer . buffer)
-                '(projectile-switch-project . project-file))
-      (setq completion-category-overrides '((project-file (styles orderless))))
-      )
+                '(projectile-find-file              . project-file)
+                '(projectile-recentf                . project-file)
+                '(projectile-switch-to-buffer       . buffer)
+                '(projectile-switch-project         . project-file)
+                '(projectile-switch-project-by-name . project-file))
+      (setq completion-category-overrides '((file (styles basic flex))
+                                            (project-file (styles orderless))
+                                            (consult-location (styles basic orderless)))))
 
     (use-package consult
       :config
@@ -95,11 +97,8 @@ This is a variadic `cl-pushnew'."
       :bind (("C-s" . consult-line)
              ("C-c i" . consult-imenu)))
 
-
-    ;; ))
     (use-package orderless)))
-    ;;   :config
-    ;;   (setq
+
     ;;    ;;completion-styles '(orderless partial-completion flex)
     ;;    completion-category-overrides '((file (styles orderless partial-completion flex))
     ;;                                    (consult-location (styles basic orderless)))))))
