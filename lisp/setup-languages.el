@@ -33,13 +33,25 @@
   (setq emmet-indentation my-html-indent
         emmet-move-cursor-between-quotes t))
 
+;; ruby
+(use-package ruby-electric
+  :hook (ruby-mode . ruby-electric-mode))
+
+(use-package yard-mode
+  :hook (ruby-mode . yard-mode))
+
+(use-package rspec-mode
+  :config (setq rspec-use-rvm t))
+
+(use-package rvm
+  :hook (ruby-mode . rvm-activate-corresponding-ruby))
+
+(use-package robe
+  :hook (ruby-mode . robe-mode))
+
 (use-package haml-mode
   :config (message "loading haml")
   :mode "\\.haml\\'")
-
-;; ruby
-(use-package robe
-  :hook (ruby-mode . robe-mode))
 
 (use-package rubocop
   :config (setq rubocop-autocorrect-on-save t
@@ -51,15 +63,6 @@
   :hook (projectile-mode . projectile-rails-mode)
   :config
   (define-key projectile-rails-mode-map (kbd "C-c r") 'projectile-rails-command-map))
-
-(use-package rvm
-  :hook (ruby-mode . rvm-activate-corresponding-ruby))
-
-(use-package ruby-electric
-  :hook (ruby-mode . ruby-electric-mode))
-
-(use-package yard-mode
-  :hook (ruby-mode . yard-mode))
 
 ;; c(++)
 ;; (use-package cc-mode
