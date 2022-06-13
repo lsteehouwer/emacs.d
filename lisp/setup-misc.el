@@ -22,6 +22,9 @@
 (use-package olivetti
   :commands olivetti-mode)
 
-;; (use-package hydra)
+(use-package time
+  :ensure nil
+  :config (setq display-time-default-load-average nil))
 
 (provide 'setup-misc)
+;;; setup-misc.el ends here

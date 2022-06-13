@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t -*-
 
+(setq initial-major-mode nil)
+
 ;; Basic settings
 (add-to-list 'load-path
               (expand-file-name "lisp" user-emacs-directory))
@@ -32,8 +34,8 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(setq use-package-always-ensure t)
-      ;; use-package-compute-statistics t)
+(setq use-package-always-ensure t
+      use-package-compute-statistics t)
 
 (require 'setup-gc)
 (require 'setup-clutter)

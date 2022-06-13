@@ -21,6 +21,9 @@
         company-box-backends-colors nil
         company-box-doc-enable nil))
 
+(use-package company-prescient
+  :hook (company-mode . company-prescient-mode))
+
 (if (< emacs-major-version 27)
     (progn
       (use-package ivy

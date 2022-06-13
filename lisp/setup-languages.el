@@ -41,7 +41,8 @@
   :hook (ruby-mode . yard-mode))
 
 (use-package rspec-mode
-  :config (setq rspec-use-rvm t))
+  :config (setq rspec-use-rvm t)
+  :mode "\\.spec\\'")
 
 (use-package rvm
   :hook (ruby-mode . rvm-activate-corresponding-ruby))
