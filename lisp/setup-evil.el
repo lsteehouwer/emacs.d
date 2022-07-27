@@ -5,9 +5,12 @@
         evil-normal-state-cursor 'box
         evil-insert-state-cursor 'bar
         evil-visual-state-cursor 'hollow)
+  :bind (:map evil-insert-state-map ("C-k" . nil))
   :config
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (evil-global-set-key 'motion "H" 'evil-beginning-of-visual-line)
+  (evil-global-set-key 'motion "L" 'evil-end-of-visual-line)
   (evil-global-set-key 'motion "/" 'consult-ripgrep)
   (evil-mode t))
 
