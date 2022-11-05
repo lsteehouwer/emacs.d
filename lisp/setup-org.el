@@ -1,5 +1,12 @@
 ;; (use-package org-superstar)
 
+(use-package org
+  :ensure nil
+  :hook ((org-mode . visual-line-mode)
+         (org-mode . visual-fill-column-mode)
+         (org-mode . org-indent-mode))
+  :config
+  (require 'org-tempo))
 
 ;; (require 'ox-beamer)
 
