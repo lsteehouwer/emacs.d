@@ -44,6 +44,9 @@
   :config (setq rspec-use-rvm t)
   :mode "\\.spec\\'")
 
+(use-package rake
+  :commands (rake rake-rerun rake-find-tasks))
+
 (use-package rvm
   :hook (ruby-mode . rvm-activate-corresponding-ruby))
 
@@ -71,6 +74,9 @@
 ;;   :init
 ;;   (setq c-tab-width 4)
 ;;   (setq-default c-basic-offset c-tab-width))
+
+;; terraform
+(use-package terraform-mode)
 
 ;; meson build system
 (use-package meson-mode
