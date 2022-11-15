@@ -25,9 +25,6 @@
 (use-package hide-mode-line
   :commands hide-mode-line-mode)
 
-(use-package smooth-scrolling
-  :config (smooth-scrolling-mode))
-
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :config
