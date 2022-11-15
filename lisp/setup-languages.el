@@ -6,16 +6,19 @@
   :hook (prog-mode . (lambda ()
                        (display-line-numbers-mode)
                        (electric-pair-local-mode)
+                       (column-enforce-mode)
                        (rainbow-delimiters-mode))))
 
-;; web mode
-(setq my-html-indent 2)
+(use-package column-enforce-mode)
 
+;; web mode
 (use-package web-mode
   :mode (("\\.erb\\'"   . web-mode)
-         ("\\.html?\\'" . web-mode))
+         ("\\.html?\\'" . web-mode)
+         ("\\.jsx?\\'"  . web-mode))
   :config
-  (setq web-mode-markup-indent-offset my-html-indent))
+  (setq web-mode-markup-indent-offset 2
+        web-mode-code-indent-offset 2))
 
 (use-package emmet-mode
   :hook (web-mode . emmet-mode)
@@ -30,7 +33,7 @@
   (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-k") #'emmet-prev-edit-point)
   (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-M-j") #'emmet-expand-line)
   (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-M-j") #'emmet-expand-line)
-  (setq emmet-indentation my-html-indent
+  (setq emmet-indentation 2
         emmet-move-cursor-between-quotes t))
 
 ;; ruby

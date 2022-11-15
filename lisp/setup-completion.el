@@ -6,7 +6,7 @@
   :hook (prog-mode . company-mode)
   :config
   (setq company-idle-delay 0
-        company-minimum-prefix-length 1))
+        company-minimum-prefix-length 3))
 
 ;; (defvar my-company-point nil)
 ;; (advice-add 'company-complete-common :before (lambda () (setq my-company-point (point))))
