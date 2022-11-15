@@ -4,8 +4,10 @@
 projectile*
 recentf*
 session*
+history
 
 .cache/
 auto-save-list/
 elpa/
 transient/
+eln-cache/
