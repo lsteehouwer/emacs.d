@@ -56,13 +56,13 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (set-face-attribute 'default nil
-                    :family "Ubuntu Mono"
+                    :family "Anonymous Pro"
                     :height 120
-                    :weight 'normal)
+                    :weight 'bold)
 (set-face-attribute 'fixed-pitch nil
-                    :family "Ubuntu Mono"
+                    :family "Anonymous Pro"
                     :height 120
-                    :weight 'normal)
+                    :weight 'bold)
 (set-face-attribute 'variable-pitch nil
                     :family "Ubuntu"
                     :height 110
