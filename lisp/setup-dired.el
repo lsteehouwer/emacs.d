@@ -5,5 +5,7 @@
   (setq dired-auto-revert-buffer t
         dired-listing-switches "-la --group-directories-first"))
 
+(use-package ranger)
+
 (provide 'setup-dired)
 ;;; setup-dired.el ends here

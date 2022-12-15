@@ -100,5 +100,7 @@
                            (:sunset  . modus-vivendi)))
   (circadian-setup))
 
+(setq scroll-conservatively 101)
+
 (provide 'setup-appearance)
 ;;; setup-appearance.el ends here
