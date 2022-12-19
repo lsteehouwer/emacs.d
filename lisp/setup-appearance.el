@@ -70,6 +70,18 @@
                              ;; (nil telephone-line-time-segment)))
   (telephone-line-mode))
 
+(use-package modus-themes
+  :config
+  (setq modus-themes-fringes 'subtie
+        modus-themes-bold-constructs t
+        modus-themes-italic-constructs t
+        modus-themes-region '(bg-only)
+        modus-themes-syntax '(yellow-comments)
+        modus-themes-headings '((1 . (rainbow 1.0))
+                                (2 . (rainbow 1.0))
+                                (t . (rainbow)))
+        modus-themes-scale-headings t))
+
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t
@@ -82,25 +94,15 @@
   :defer t)
 
 (use-package circadian
-  ;; :after modus-themes
   :init
-  (setq modus-themes-fringes 'subtie
-        modus-themes-bold-constructs t
-        modus-themes-italic-constructs t
-        modus-themes-region 'bg-only
-        modus-themes-syntax '(yellow-comments))
-  (setq modus-themes-headings
-        '((1 . (rainbow 1.0))
-          (2 . (rainbow 1.0))
-          (t . (rainbow)))
-        modus-themes-scale-headings t)
   (setq calendar-latitude 52.37
         calendar-longitude 4.89
         circadian-themes '((:sunrise . modus-operandi)
                            (:sunset  . modus-vivendi)))
   (circadian-setup))
 
-(setq scroll-conservatively 101)
+(setq scroll-conservatively 101
+      scroll-margin 5)
 
 (provide 'setup-appearance)
 ;;; setup-appearance.el ends here
