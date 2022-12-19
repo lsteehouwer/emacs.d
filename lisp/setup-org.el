@@ -4,15 +4,19 @@
          (org-mode . visual-line-mode)
          (org-mode . org-indent-mode))
   :config
-  (setq org-agenda-files '("~/org")
+  (setq org-agenda-files '("~/Documents/.org")
         org-log-done 'time
         org-return-follows-link t
         org-hide-emphasis-markers nil)
   (require 'org-tempo))
 
-;; (custom-theme-set-faces
-;;  'user
-;;  'org-table ((t (:inherit))))
+(use-package org-ref
+  :after org
+  :config
+  (setq org-latex-pdf-process '("latexmk -shell-escape -bibtex -pdf %f")))
+
+(use-package helm-bibtex
+  :after org-ref)
 
 (use-package visual-fill-column
   :hook ((org-mode . visual-fill-column-mode)))
