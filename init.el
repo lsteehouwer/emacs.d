@@ -56,15 +56,15 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (set-face-attribute 'default nil
-                    :family "Anonymous Pro"
-                    :height 120
+                    :family "JetBrains Mono"
+                    :height 110
                     :weight 'bold)
 (set-face-attribute 'fixed-pitch nil
-                    :family "Anonymous Pro"
-                    :height 120
+                    :family "JetBrains Mono"
+                    :height 110
                     :weight 'bold)
 (set-face-attribute 'variable-pitch nil
-                    :family "Ubuntu"
+                    :family "Liberation Sans"
                     :height 110
                     :weight 'normal)
 
