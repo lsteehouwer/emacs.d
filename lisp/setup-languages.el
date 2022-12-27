@@ -45,7 +45,8 @@
 
 (use-package rspec-mode
   :config (setq rspec-use-rvm t)
-  :mode "\\.spec\\'")
+  :mode "\\.spec\\'"
+  :bind ("C-c ." . rspec-find-spec-or-target-other-window))
 
 (use-package rake
   :commands (rake rake-rerun rake-find-tasks))
