@@ -25,5 +25,9 @@
   :config
   (setq org-superstar-headline-bullets-list '("◉")))
 
+(use-package ox-latex
+  :ensure nil
+  :config (setq org-latex-listings 'minted))
+
 (provide 'setup-org)
 ;;; setup-org.el ends here
