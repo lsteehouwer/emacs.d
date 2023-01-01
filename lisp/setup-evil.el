@@ -2,6 +2,7 @@
   :init
   (setq evil-want-keybinding nil
         evil-want-minibuffer nil
+        evil-respect-visual-line-mode t
         evil-normal-state-cursor 'box
         evil-insert-state-cursor 'bar
         evil-visual-state-cursor 'hollow)
