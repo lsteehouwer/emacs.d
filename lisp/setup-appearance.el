@@ -72,15 +72,12 @@
 
 (use-package modus-themes
   :config
-  (setq modus-themes-fringes 'subtie
-        modus-themes-bold-constructs t
+  (setq modus-themes-bold-constructs t
         modus-themes-italic-constructs t
         modus-themes-region '(bg-only)
-        modus-themes-syntax '(yellow-comments)
         modus-themes-headings '((1 . (rainbow 1.0))
                                 (2 . (rainbow 1.0))
-                                (t . (rainbow)))
-        modus-themes-scale-headings t))
+                                (t . (rainbow)))))
 
 (use-package doom-themes
   :config
