@@ -16,26 +16,26 @@
         helm-echo-input-in-header-line t)
   (helm-mode 1))
 
-(use-package helm-posframe
-  :config
-  (setq helm-posframe-size-function 'ls/helm-posframe-get-size
-        helm-posframe-border-width 3
-        helm-posframe-poshandler 'posframe-poshandler-frame-top-center
-        helm-posframe-parameters '((left-fringe . 10)
-                                   (right-fringe . 10)))
-  (helm-posframe-enable))
+;; (use-package helm-posframe
+;;   :config
+;;   (setq helm-posframe-size-function 'ls/helm-posframe-get-size
+;;         helm-posframe-border-width 3
+;;         helm-posframe-poshandler 'posframe-poshandler-frame-top-center
+;;         helm-posframe-parameters '((left-fringe . 10)
+;;                                    (right-fringe . 10)))
+;;   (helm-posframe-enable))
 
-(defun ls/helm-posframe-get-size ()
-  "Custom function to size helm posframe."
-  (list
-   :width (or helm-posframe-width (round(* (frame-width) 0.62)))
-   :height (or helm-posframe-height helm-display-buffer-height)
-   :min-height (or helm-posframe-min-height
-                   (let ((height (+ helm-display-buffer-height 1)))
-                     (min height (or helm-posframe-height height))))
-   :min-width (or helm-posframe-min-width
-                  (let ((width (round (* (frame-width) 0.62))))
-                    (min width (or helm-posframe-width width))))))
+;; (defun ls/helm-posframe-get-size ()
+;;   "Custom function to size helm posframe."
+;;   (list
+;;    :width (or helm-posframe-width (round(* (frame-width) 0.62)))
+;;    :height (or helm-posframe-height helm-display-buffer-height)
+;;    :min-height (or helm-posframe-min-height
+;;                    (let ((height (+ helm-display-buffer-height 1)))
+;;                      (min height (or helm-posframe-height height))))
+;;    :min-width (or helm-posframe-min-width
+;;                   (let ((width (round (* (frame-width) 0.62))))
+;;                     (min width (or helm-posframe-width width))))))
 
 (provide 'setup-helm)
 ;;; setup-helm.el ends here.
