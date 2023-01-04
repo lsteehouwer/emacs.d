@@ -63,6 +63,10 @@
                     :family "JetBrains Mono"
                     :height 110
                     :weight 'bold)
+(set-face-attribute 'fixed-pitch-serif nil
+                    :family "JetBrains Mono"
+                    :height 110
+                    :weight 'normal)
 (set-face-attribute 'variable-pitch nil
                     :family "Liberation Sans"
                     :height 110
