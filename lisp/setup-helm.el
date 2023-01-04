@@ -12,6 +12,8 @@
   :config
   (setq helm-input-idle-delay 0
         helm-split-window-inside-p nil
+        helm-split-window-default-side 'other
+        helm-split-window-other-side-when-one-window 'right
         helm-move-to-line-cycle-in-source t
         helm-echo-input-in-header-line t)
   (helm-mode 1))
