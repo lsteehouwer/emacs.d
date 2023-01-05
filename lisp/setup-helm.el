@@ -18,6 +18,11 @@
         helm-echo-input-in-header-line t)
   (helm-mode 1))
 
+(use-package helm-flx
+  :after helm
+  :config
+  (helm-flx-mode 1))
+
 ;; (use-package helm-posframe
 ;;   :config
 ;;   (setq helm-posframe-size-function 'ls/helm-posframe-get-size
