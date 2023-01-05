@@ -8,7 +8,9 @@
          :map helm-map
          ("<tab>"   . helm-execute-persistent-action)
          ("C-i"     . helm-execute-persistent-action)
-         ("C-z"     . helm-select-action))
+         ("C-z"     . helm-select-action)
+         :map helm-find-files-map
+         ("C-<backspace>" . helm-find-files-up-one-level))
   :config
   (setq helm-input-idle-delay 0
         helm-split-window-inside-p nil
