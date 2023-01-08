@@ -12,7 +12,9 @@
          :map helm-find-files-map
          ("C-<backspace>" . helm-find-files-up-one-level))
   :config
-  (setq helm-input-idle-delay 0
+  (setq helm-display-header-line nil
+        helm-mode-line-string nil
+        helm-input-idle-delay 0
         helm-split-window-inside-p nil
         helm-split-window-default-side 'other
         helm-split-window-other-side-when-one-window 'right
@@ -24,6 +26,19 @@
   :after helm
   :config
   (helm-flx-mode 1))
+
+(use-package helm-rg
+  :after helm
+  :hook (helm-rg . helm-follow-mode)
+  :config
+  (setq helm-rg-default-case-sensitivity 'case-insensitive
+        helm-rg-display-buffer-normal-method #'pop-to-buffer
+        helm-rg-prepend-file-name-line-at-top-of-matches t
+        helm-rg-thing-at-point nil
+        helm-rg-input-min-search-chars 3))
+
+(use-package helm-projectile
+  :config (helm-projectile-on))
 
 ;; (use-package helm-posframe
 ;;   :config
