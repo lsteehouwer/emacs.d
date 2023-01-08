@@ -9,6 +9,8 @@
          ("<tab>"   . helm-execute-persistent-action)
          ("C-i"     . helm-execute-persistent-action)
          ("C-z"     . helm-select-action)
+         ("C-j"     . helm-next-line)
+         ("C-k"     . helm-previous-line)
          :map helm-find-files-map
          ("C-<backspace>" . helm-find-files-up-one-level))
   :config
