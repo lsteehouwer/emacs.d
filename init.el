@@ -17,6 +17,8 @@
 (scroll-bar-mode -1)
 (show-paren-mode t)
 
+(save-place-mode t)
+
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
