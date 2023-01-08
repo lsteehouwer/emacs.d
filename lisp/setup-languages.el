@@ -22,22 +22,6 @@
   (setq web-mode-markup-indent-offset 2
         web-mode-code-indent-offset 2))
 
-(use-package emmet-mode
-  :hook (web-mode . emmet-mode)
-  :config
-  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-n") #'emmet-next-edit-point)
-  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-p") #'emmet-prev-edit-point)
-  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-j") #'emmet-next-edit-point)
-  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-k") #'emmet-prev-edit-point)
-  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-n") #'emmet-next-edit-point)
-  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-p") #'emmet-prev-edit-point)
-  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-j") #'emmet-next-edit-point)
-  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-k") #'emmet-prev-edit-point)
-  (evil-define-key 'normal 'emmet-mode-keymap (kbd "C-M-j") #'emmet-expand-line)
-  (evil-define-key 'insert 'emmet-mode-keymap (kbd "C-M-j") #'emmet-expand-line)
-  (setq emmet-indentation 2
-        emmet-move-cursor-between-quotes t))
-
 ;; ruby
 (use-package ruby-electric
   :hook (ruby-mode . ruby-electric-mode))
