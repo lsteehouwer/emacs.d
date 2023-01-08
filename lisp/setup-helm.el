@@ -42,6 +42,8 @@
 (use-package helm-projectile
   :config (helm-projectile-on))
 
+(use-package helm-themes)
+
 ;; (use-package helm-posframe
 ;;   :config
 ;;   (setq helm-posframe-size-function 'ls/helm-posframe-get-size
