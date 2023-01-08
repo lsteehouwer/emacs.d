@@ -16,8 +16,11 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (show-paren-mode t)
+(blink-cursor-mode -1)
 
 (save-place-mode t)
+
+(defalias #'yes-or-no-p #'y-or-n-p)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
