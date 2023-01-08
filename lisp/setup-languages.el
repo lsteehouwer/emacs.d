@@ -3,7 +3,7 @@
 ;;; Code:
 (use-package prog-mode
   :ensure nil
-  :init (setq-default display-line-numbers-width 3
+  :init (setq-default display-line-numbers-width 4
                       display-line-numbers-widen t)
   :hook (prog-mode . (lambda ()
                        (display-line-numbers-mode)
