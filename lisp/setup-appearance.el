@@ -87,6 +87,10 @@
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
 
+(use-package solaire-mode
+  :config
+  (solaire-global-mode))
+
 (use-package all-the-icons
   :defer t)
 
