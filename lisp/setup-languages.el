@@ -3,6 +3,8 @@
 ;;; Code:
 (use-package prog-mode
   :ensure nil
+  :init (setq-default display-line-numbers-width 3
+                      display-line-numbers-widen t)
   :hook (prog-mode . (lambda ()
                        (display-line-numbers-mode)
                        (electric-pair-local-mode)
