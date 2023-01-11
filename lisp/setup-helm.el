@@ -21,7 +21,8 @@
         helm-split-window-default-side 'other
         helm-split-window-other-side-when-one-window 'right
         helm-move-to-line-cycle-in-source t
-        helm-echo-input-in-header-line t)
+        helm-echo-input-in-header-line t
+        helm-follow-mode-persistent t)
   (helm-mode 1))
 
 (use-package helm-flx
@@ -29,15 +30,12 @@
   :config
   (helm-flx-mode 1))
 
-(use-package helm-rg
+(use-package helm-ag
   :after helm
-  :hook (helm-rg . helm-follow-mode)
   :config
-  (setq helm-rg-default-case-sensitivity 'case-insensitive
-        helm-rg-display-buffer-normal-method #'pop-to-buffer
-        helm-rg-prepend-file-name-line-at-top-of-matches t
-        helm-rg-thing-at-point nil
-        helm-rg-input-min-search-chars 3))
+  (setq helm-ag-base-command "rg --no-heading"
+        helm-ag-success-exit-status '(0 2))
+  (evil-global-set-key 'motion "/" 'helm-do-ag-project-root))
 
 (use-package helm-projectile
   :config (helm-projectile-on))
