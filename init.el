@@ -1,10 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
-(setq initial-major-mode nil)
-
 ;; Basic settings
 (add-to-list 'load-path
-              (expand-file-name "lisp" user-emacs-directory))
+             (expand-file-name "lisp" user-emacs-directory))
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
