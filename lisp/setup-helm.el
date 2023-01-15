@@ -38,9 +38,11 @@
   (evil-global-set-key 'motion "/" 'helm-do-ag-project-root))
 
 (use-package helm-projectile
+  :after helm
   :config (helm-projectile-on))
 
-(use-package helm-themes)
+(use-package helm-themes
+  :after helm)
 
 ;; (use-package helm-posframe
 ;;   :config
