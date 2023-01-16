@@ -42,6 +42,7 @@
 
 (require 'setup-gc)
 (require 'setup-clutter)
+(require 'setup-windowing)
 (require 'setup-dired)
 (require 'setup-evil)
 (require 'setup-company)

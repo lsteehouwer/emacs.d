@@ -1,4 +1,5 @@
 (use-package helm
+  :hook (helm-mode . shackle-mode)
   :bind (("M-x"     . helm-M-x)
          ("C-x C-f" . helm-find-files)
          ("C-x b"   . helm-mini)
@@ -17,12 +18,10 @@
   (setq helm-display-header-line nil
         helm-mode-line-string nil
         helm-input-idle-delay 0
-        helm-split-window-inside-p nil
-        helm-split-window-default-side 'other
-        helm-split-window-other-side-when-one-window 'right
         helm-move-to-line-cycle-in-source t
-        helm-echo-input-in-header-line t
-        helm-follow-mode-persistent t)
+        helm-follow-mode-persistent t
+        helm-display-function 'pop-to-buffer)
+  (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.4)))
   (helm-mode 1))
 
 (use-package helm-flx
