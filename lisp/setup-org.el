@@ -35,7 +35,8 @@
   :after org
   :ensure nil
   :config
-  (setq org-latex-listings 'minted)
+  (setq org-latex-listings 'minted
+        org-latex-minted-options '(("linenos" "true")))
   (add-to-list 'org-latex-packages-alist '("" "minted" t ("pdflatex")) t))
 
 (provide 'setup-org)
