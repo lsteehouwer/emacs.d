@@ -40,6 +40,9 @@
 (setq use-package-always-ensure t
       use-package-compute-statistics t)
 
+(use-package exec-path-from-shell
+  :config (exec-path-from-shell-initialize))
+
 (require 'setup-gc)
 (require 'setup-clutter)
 (require 'setup-windowing)
