@@ -328,6 +328,15 @@ A feature found in many modern editors and IDEs is showing version control infor
     (set-fringe-style 4))
 #+end_src
 
+** All The Icons
+
+Some packages want to show icons. These icons need to be installed first.
+
+#+begin_src elisp
+  (use-package all-the-icons
+    :defer t)
+#+end_src
+
 * Programming
 
 Programming in Emacs is a joy, but it requires some configuration. Let's start with settings applicable to all languages.
@@ -394,7 +403,8 @@ Live feedback on your crap code.
     :hook (prog-mode . global-flycheck-mode)
     :config
     (setq flycheck-idle-change-delay 1.0
-          flycheck-display-errors-delay 0.2))
+          flycheck-display-errors-delay 0.2
+          flycheck-indication-mode 'right-fringe))
 
   (use-package flycheck-pos-tip
     :hook (flycheck-mode . flycheck-pos-tip-mode))
@@ -523,4 +533,16 @@ Being able to read PDFs within Emacs is a great feature, especially when editing
     (setq pdf-view-use-scaling t
           pdf-view-use-imagemagick nil)
     (pdf-loader-install :noquery))
+#+end_src
+
+* Miscellaneous
+
+Things I don't know where else to put
+
+** Long lines
+
+Current versions of Emacs are not good with handling (very) long lines, slowing down considerably. So-long mode does not quite fix, but with it enabled Emacs at least won't slow down to a complete halt when opening compiled JavaScript files.
+
+#+begin_src elisp
+  (add-hook 'after-init-hook  'global-so-long-mode)
 #+end_src
