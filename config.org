@@ -224,6 +224,10 @@ What editor is complete without the ability to provide suggestions as you type t
                   corfu-right-margin-width 2)
     :hook (prog-mode . corfu-mode))
 
+  (use-package cape
+    :init
+    (add-to-list 'completion-at-point-functions #'cape-file))
+
   (use-package kind-icon
     :after corfu
     :config
