@@ -24,6 +24,13 @@ Disable some distracting UI elements.
   (blink-cursor-mode -1)
 #+end_src
 
+But do enable some others
+
+#+begin_src elisp
+  (add-hook 'prog-mode-hook 'hl-line-mode)
+  (add-hook 'text-mode-hook 'hl-line-mode)
+#+end_src
+
 Let's start in fullscreen.
 
 #+begin_src elisp
@@ -163,7 +170,10 @@ While recent versions of Emacs come with tools to manage and navigate projects, 
 
 #+begin_src elisp
   (use-package projectile
-    :bind ("C-c p" . projectile-command-map))
+    :bind
+    ("C-c p" . projectile-command-map)
+    :config
+    (setq projectile-switch-project-action #'consult-projectile))
 #+end_src
 
 ** Which Key
@@ -225,9 +235,7 @@ There are many minibuffer completion frameworks, and they're all pretty great. C
   (use-package consult-projectile
     :after projectile
     :bind (:map projectile-command-map
-                ("h" . consult-projectile))
-    :config
-    (setq projectile-switch-project-action #'consult-projectile))
+                ("h" . consult-projectile)))
 #+end_src
 
 * In-buffer Completion
@@ -343,7 +351,7 @@ Emacs standard dashboard is kind of ugly. Let's use something a bit nicer lookin
 Increase the fringe width to give some breathing room.
 
 #+begin_src elisp
-  (set-fringe-mode 16)
+  (set-fringe-mode 24)
 
   (setq-default fringes-outside-margins t)
 #+end_src
@@ -352,11 +360,15 @@ A feature found in many modern editors and IDEs is showing version control infor
 
 #+begin_src elisp
   (use-package diff-hl
-    :hook (prog-mode . (lambda ()
-                         (setq-local left-margin-width 1)
-                         (set-fringe-mode 8)
-                         (diff-hl-mode)
-                         (diff-hl-margin-mode))))
+    :defer t)
+
+  (add-hook 'prog-mode-hook
+            '(lambda ()
+               (setq-local left-margin-width 0
+                           right-margin-width 0
+                           left-fringe-width 16
+                           right-fringe-width 16)
+               (diff-hl-mode)))
 #+end_src
 
 ** All The Icons
