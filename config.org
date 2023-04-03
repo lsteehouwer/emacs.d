@@ -243,25 +243,16 @@ There are many minibuffer completion frameworks, and they're all pretty great. C
 What editor is complete without the ability to provide suggestions as you type them?
 
 #+begin_src elisp
-  (use-package corfu
-    :config (setq corfu-auto-delay 0.1
-                  corfu-auto t
-                  corfu-cycle nil
-                  corfu-bar-width 0.4
-                  corfu-min-width 20
-                  corfu-left-margin-width 2
-                  corfu-right-margin-width 2)
-    :hook (prog-mode . corfu-mode))
+  (use-package company
+    :hook (prog-mode . company-mode)
+    :config (setq company-idle-delay 0.1
+                  company-minimum-prefix-length 3))
 
-  (use-package cape
-    :init
-    (add-to-list 'completion-at-point-functions #'cape-file))
-
-  (use-package kind-icon
-    :after corfu
-    :config
-    (setq kind-icon-default-face 'corfu-default)
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  (use-package company-posframe
+    :hook (company-mode . company-posframe-mode)
+    :config (setq company-posframe-show-indicator nil
+                  company-posframe-show-params '((alpha . 10))
+                  company-posframe-quickhelp-show-header nil))
 #+end_src
 
 * UI
