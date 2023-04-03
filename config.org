@@ -50,10 +50,13 @@ Some sensible defaults.
         frame-resize-pixelwise t
         window-resize-pixelwise t
         scroll-conservatively 101
-        scroll-margin 5)
+        scroll-margin 5
+        scroll-preserve-screen-position t
+        auto-window-vscroll nil)
 
-  (setq use-short-answers t
-        require-final-newline t)
+  (setq require-final-newline t)
+
+  (defalias #'yes-or-no-p #'y-or-n-p)
 
   (global-set-key (kbd "<escape>") #'keyboard-escape-quit)
   (global-set-key (kbd "C-+") #'text-scale-increase)
@@ -229,8 +232,9 @@ There are many minibuffer completion frameworks, and they're all pretty great. C
                 ("C-c i" . consult-imenu)
                 ("/"     . consult-ripgrep))
     :config
-    (setq consult-line-start-from-top t)
-    (setq vertico-multiform-categories '((consult-grep buffer))))
+    (setq consult-line-start-from-top t
+          consult-project-function #'projectile-project-root
+          vertico-multiform-categories '((consult-grep buffer))))
 
   (use-package consult-projectile
     :after projectile
