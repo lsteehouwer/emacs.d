@@ -105,6 +105,12 @@ Set a nice font.
                       :weight 'normal)
 #+end_src
 
+IMenu is a nice generic tool to quickly traverse over all major sections in your file, be they headers, class names, or methods. Like so many of Emacs' built-ins it needs a little tweaking to work nicely.
+
+#+begin_src elisp
+  (setq imenu-max-item-length 500)
+#+end_src
+
 * Package Setup
 
 We need packages to make Emacs better. And to make installing and configuring packages easy I use =use-package=.
@@ -460,6 +466,10 @@ Live feedback on your crap code.
 
   (use-package rvm
     :hook (ruby-mode . rvm-activate-corresponding-ruby))
+
+  (use-package rubocop
+    :hook (ruby-mode . rubocop-mode)
+    :config (setq rubocop-format-on-save t))
 
   (use-package rspec-mode
     :defer t)
