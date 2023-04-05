@@ -326,7 +326,8 @@ Using Treemacs we can show a file browser like you'd find in VS Code, Atom, and 
           doom-themes-treemacs-enable-variable-pitch nil)
     (setq treemacs-is-never-other-window t
           treemacs-follow-after-init t
-          treemacs-project-follow-cleanup t))
+          treemacs-project-follow-cleanup t
+          treemacs--project-follow-delay 0))
 
   (use-package treemacs-evil
     :after (treemacs evil))
