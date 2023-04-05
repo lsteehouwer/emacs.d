@@ -24,7 +24,7 @@ Disable some distracting UI elements.
   (blink-cursor-mode -1)
 #+end_src
 
-But do enable some others
+But do enable some others.
 
 #+begin_src elisp
   (add-hook 'prog-mode-hook 'hl-line-mode)
@@ -99,10 +99,11 @@ When splitting a window, prefer to split vertically.
 Set a nice font.
 
 #+begin_src elisp
-  (set-face-attribute 'default nil
-                      :family "DejaVu Sans Mono Nerd Font"
-                      :height 105
-                      :weight 'normal)
+  (dolist (face '(default fixed-pitch))
+    (set-face-attribute face nil
+                        :family "Monospace"
+                        :height 100
+                        :weight 'normal))
 #+end_src
 
 IMenu is a nice generic tool to quickly traverse over all major sections in your file, be they headers, class names, or methods. Like so many of Emacs' built-ins it needs a little tweaking to work nicely.
@@ -182,7 +183,9 @@ While recent versions of Emacs come with tools to manage and navigate projects, 
     :bind
     ("C-c p" . projectile-command-map)
     :config
-    (setq projectile-switch-project-action #'consult-projectile))
+    (setq projectile-auto-discover t
+          projectile-switch-project-action #'consult-projectile)
+    (projectile-global-mode))
 #+end_src
 
 ** Which Key
@@ -319,7 +322,8 @@ Using Treemacs we can show a file browser like you'd find in VS Code, Atom, and 
     :config
     (doom-themes-treemacs-config)
     (setq doom-themes-treemacs-theme "doom-colors"
-          doom-themes-treemacs-enable-variable-pitch nil))
+          doom-themes-treemacs-enable-variable-pitch nil)
+    (setq treemacs-is-never-other-window t))
 #+end_src
 
 ** Window Lines
@@ -588,11 +592,11 @@ Being able to read PDFs within Emacs is a great feature, especially when editing
 
 * Miscellaneous
 
-Things I don't know where else to put
+Things I don't know where else to put.
 
 ** Long lines
 
-Current versions of Emacs are not good with handling (very) long lines, slowing down considerably. So-long mode does not quite fix, but with it enabled Emacs at least won't slow down to a complete halt when opening compiled JavaScript files.
+Current versions of Emacs are not good with handling (very) long lines, slowing it down considerably. So-long mode does not quite fix these issues, but with it enabled Emacs at least won't slow down to a complete halt when opening compiled JavaScript files for example.
 
 #+begin_src elisp
   (add-hook 'after-init-hook  'global-so-long-mode)
