@@ -4,7 +4,7 @@
 
 This is my personal Emacs setup. There are many like it, but this one is mine.
 
-* Emacs Settings
+* General Emacs Settings
 
 Let Emacs put changes made via custom in a separate file.
 
@@ -27,8 +27,8 @@ Disable some distracting UI elements.
 But do enable some others.
 
 #+begin_src elisp
-  (add-hook 'prog-mode-hook 'hl-line-mode)
-  (add-hook 'text-mode-hook 'hl-line-mode)
+  (dolist (mode-hook '(prog-mode-hook text-mode-hook))
+    (add-hook mode-hook 'hl-line-mode))
 #+end_src
 
 Let's start in fullscreen.
@@ -128,7 +128,18 @@ We need packages to make Emacs better. And to make installing and configuring pa
 
 * Core
 
-Let's first install and configure some packages that I really cannot do without.
+Let's configure some built-in Emacs packages and then install and configure some packages that I really cannot do without.
+
+** Built-in
+
+Auto insert mode lets you automatically insert content when opening new files. This is useful for inserting boilerplate code, for example.
+
+#+begin_src elisp
+  (setq auto-insert-query nil
+        auto-insert-directory (concat user-emacs-directory "auto-insert")
+        auto-insert-alist '((ruby-mode . "ruby.el")))
+  (auto-insert-mode)
+#+end_src
 
 ** Evil
 
