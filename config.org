@@ -317,13 +317,25 @@ Using Treemacs we can show a file browser like you'd find in VS Code, Atom, and 
 
 #+begin_src elisp
   (use-package treemacs
+    :hook (treemacs-mode . treemacs-project-follow-mode)
     :bind (("<f8>" . treemacs)
            ("S-<f8>" . treemacs-select-window))
     :config
     (doom-themes-treemacs-config)
     (setq doom-themes-treemacs-theme "doom-colors"
           doom-themes-treemacs-enable-variable-pitch nil)
-    (setq treemacs-is-never-other-window t))
+    (setq treemacs-is-never-other-window t
+          treemacs-follow-after-init t
+          treemacs-project-follow-cleanup t))
+
+  (use-package treemacs-evil
+    :after (treemacs evil))
+
+  (use-package treemacs-projectile
+    :after (treemacs projectile))
+
+  (use-package treemacs-magit
+    :after (treemacs magit))
 #+end_src
 
 ** Window Lines
