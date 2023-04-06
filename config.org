@@ -497,7 +497,7 @@ Live feedback on your crap code.
 
   (use-package rubocop
     :hook (ruby-mode . rubocop-mode)
-    :config (setq rubocop-format-on-save t))
+    :config (setq rubocop-autocorrect-on-save t))
 
   (use-package rspec-mode
     :defer t)
