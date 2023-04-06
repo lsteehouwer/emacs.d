@@ -562,6 +562,14 @@ Occasionally I generate LaTeX documents from Org documents. These often have cod
     (add-to-list 'org-latex-packages-alist '("" "minted" t ("pdflatex")) t))
 #+end_src
 
+** Markdown
+
+It's everywhere.
+
+#+begin_src elisp
+  (use-package markdown-mode)
+#+end_src
+
 * Tools
 
 At what point does an editor stop being an editor, and becomes much more? Right here.
