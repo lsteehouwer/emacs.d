@@ -63,6 +63,15 @@ Some sensible defaults.
   (global-set-key (kbd "C--") #'text-scale-decrease)
 #+end_src
 
+Auto revert is a must.
+
+#+begin_src elisp
+  (require 'autorevert)
+  (setq auto-revert-verbose nil
+        global-auto-revert-non-file-buffers t)
+  (global-auto-revert-mode)
+#+end_src
+
 Cleanup empty lines at the end of a file upon saving.
 
 #+begin_src elisp
@@ -94,16 +103,6 @@ When splitting a window, prefer to split vertically.
 #+begin_src elisp
   (setq split-width-threshold 160
         split-height-threshold nil)
-#+end_src
-
-Set a nice font.
-
-#+begin_src elisp
-  (dolist (face '(default fixed-pitch))
-    (set-face-attribute face nil
-                        :family "Monospace"
-                        :height 100
-                        :weight 'normal))
 #+end_src
 
 IMenu is a nice generic tool to quickly traverse over all major sections in your file, be they headers, class names, or methods. Like so many of Emacs' built-ins it needs a little tweaking to work nicely.
@@ -177,7 +176,7 @@ Evil is a vim emulation layer for Emacs. Emacs' default keybindings hurt my hand
 
 ** Ace Window
 
-Window navigation commands kind of suck. Ace window does not suck.
+The default window navigation commands kind of suck. Ace window does not suck.
 
 #+begin_src elisp
 (use-package ace-window
@@ -283,6 +282,22 @@ What editor is complete without the ability to provide suggestions as you type t
 
 Emacs looks pretty dated out-of-the-box. But with some packages we can spice it up a lot.
 
+** Font
+
+Set a nice font.
+
+#+begin_src elisp
+  (let ((fixed-pitch-font (font-spec :family "monospace"
+                                     :size 14
+                                     :dpi 120)))
+    (dolist (face '(default fixed-pitch))
+      (set-face-attribute face nil
+                          :weight 'normal
+                          :width  'normal
+                          :slant  'normal
+                          :font   fixed-pitch-font)))
+#+end_src
+
 ** Theme
 
 Nothing changes as often as my preferred theme. Luckily there's a whole lot to choose from.
@@ -292,7 +307,10 @@ Nothing changes as often as my preferred theme. Luckily there's a whole lot to c
     :config
     (setq doom-themes-enable-bold t
           doom-themes-enable-italic t)
-    (load-theme 'doom-gruvbox-light t))
+    (load-theme 'doom-zenburn t))
+
+  (use-package spacemacs-theme
+    :defer t)
 
   (use-package solaire-mode
     :after doom-themes
@@ -352,7 +370,7 @@ Using Treemacs we can show a file browser like you'd find in VS Code, Atom, and 
 
 ** Window Lines
 
-Add more window lines to better separate windows from one-another.
+Add more window lines to better visually separate windows from one-another.
 
 #+begin_src elisp
   (setq window-divider-default-places t
@@ -385,7 +403,7 @@ Increase the fringe width to give some breathing room.
   (setq-default fringes-outside-margins t)
 #+end_src
 
-A feature found in many modern editors and IDEs is showing version control information per line in the fringes, using different colors for new, updated, and deleted lines.
+A feature found in many modern editors and IDEs is showing version control information per line in the fringes, using different colors for new, updated, and deleted lines. We can add that feature with =diff-hl=.
 
 #+begin_src elisp
   (use-package diff-hl
@@ -413,14 +431,14 @@ Some packages want to show icons. These icons need to be installed first.
 
 Programming in Emacs is a joy, but it requires some configuration. Let's start with settings applicable to all languages.
 
-Use spaces instead of tabs. Spaces are more flexible, and the space saving benefits do not matter on modern machines. Use 4 spaces for tabs.
+Use spaces instead of tabs. Spaces are more flexible, and the space saving benefits of using tabs do not matter on modern machines. Use 4 spaces for tabs by default. This can be overridden for specific modes.
 
 #+begin_src elisp
   (setq-default indent-tabs-mode nil
                 tab-width 4)
 #+end_src
 
-But when working with others, you may have to deviate from your personal preferences. To codify the consensus regarding common editor configuration options, we have editorconfig
+But when working with other people, you may have to deviate from your personal preferences. To codify the consensus regarding common editor configuration options, we have editorconfig.
 
 #+begin_src elisp
   (use-package editorconfig
@@ -469,7 +487,7 @@ Highlight text that goes past the fill-column marker (80 characters).
     :hook (prog-mode . column-enforce-mode))
 #+end_src
 
-Live feedback on your crap code.
+Get live feedback on your crap code.
 
 #+begin_src elisp
   (use-package flycheck
@@ -510,6 +528,13 @@ Live feedback on your crap code.
     :defer t)
 #+end_src
 
+** HAML
+
+#+begin_src elisp
+  (use-package haml-mode
+    :mode ("\\.haml\\'" . haml-mode))
+#+end_src
+
 ** PHP
 
 I am unfortunate enough to sometimes program in PHP.
@@ -517,6 +542,16 @@ I am unfortunate enough to sometimes program in PHP.
 #+begin_src elisp
   (use-package php-mode
     :defer t)
+#+end_src
+
+** Terraform
+
+#+begin_src elisp
+  (use-package terraform-mode
+    :mode ("\\.tf\\'" . terraform-mode))
+
+  (use-package company-terraform
+    :hook (terraform-mode . (lambda () (company-terraform-init))))
 #+end_src
 
 * Writing
@@ -567,7 +602,8 @@ Occasionally I generate LaTeX documents from Org documents. These often have cod
 It's everywhere.
 
 #+begin_src elisp
-  (use-package markdown-mode)
+  (use-package markdown-mode
+    :mode ("README\\.md\\'" . gfm-mode))
 #+end_src
 
 * Tools
