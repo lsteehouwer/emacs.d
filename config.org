@@ -288,8 +288,7 @@ Set a nice font.
 
 #+begin_src elisp
   (let ((fixed-pitch-font (font-spec :family "monospace"
-                                     :size 14
-                                     :dpi 120)))
+                                     :size 14)))
     (dolist (face '(default fixed-pitch))
       (set-face-attribute face nil
                           :weight 'normal
