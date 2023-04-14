@@ -548,9 +548,6 @@ I am unfortunate enough to sometimes program in PHP.
 #+begin_src elisp
   (use-package terraform-mode
     :mode ("\\.tf\\'" . terraform-mode))
-
-  (use-package company-terraform
-    :hook (terraform-mode . (lambda () (company-terraform-init))))
 #+end_src
 
 * Writing
