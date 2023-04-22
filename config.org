@@ -38,11 +38,19 @@ Let's start in fullscreen.
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
-Some sensible defaults.
+Why use anything but unicode?
 
 #+begin_src elisp
   (prefer-coding-system 'utf-8)
+  (set-language-environment 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-selection-coding-system 'utf-8)
+#+end_src
 
+Some sensible defaults.
+
+#+begin_src elisp
   (setq-default delete-by-moving-to-trash t
                 fill-column 80)
 
@@ -52,9 +60,11 @@ Some sensible defaults.
         scroll-conservatively 101
         scroll-margin 5
         scroll-preserve-screen-position t
-        auto-window-vscroll nil)
-
-  (setq require-final-newline t)
+        auto-window-vscroll nil
+        require-final-newline t
+        completion-ignore-case t
+        read-file-name-completion-ignore-case t
+        ring-bell-function 'ignore)
 
   (defalias #'yes-or-no-p #'y-or-n-p)
 
@@ -122,6 +132,7 @@ We need packages to make Emacs better. And to make installing and configuring pa
     (package-refresh-contents)
     (package-install 'use-package))
   (setq use-package-always-ensure t
+        use-package-expand-minimally t
         use-package-compute-statistics t)
 #+end_src
 
@@ -204,12 +215,12 @@ Sometimes I forget what the keybindings do. Having Emacs show it to me is very h
 
 #+begin_src elisp
   (use-package which-key
+    :hook after-init
     :config
     (setq which-key-sort-order #'which-key-key-order-alpha
           which-key-add-column-padding 20
           which-key-idle-delay 0.2)
-    (which-key-setup-side-window-bottom)
-    (which-key-mode))
+    (which-key-setup-side-window-bottom))
 #+end_src
 
 * Minibuffer Completion
@@ -218,6 +229,7 @@ There are many minibuffer completion frameworks, and they're all pretty great. C
 
 #+begin_src elisp
   (use-package vertico
+    :hook after-init
     :bind (:map vertico-map
                 (("C-j" . vertico-next)
                  ("C-k" . vertico-previous)
