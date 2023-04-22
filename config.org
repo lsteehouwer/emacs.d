@@ -421,12 +421,12 @@ A feature found in many modern editors and IDEs is showing version control infor
     :defer t)
 
   (add-hook 'prog-mode-hook
-            '(lambda ()
-               (setq-local left-margin-width 0
-                           right-margin-width 0
-                           left-fringe-width 16
-                           right-fringe-width 16)
-               (diff-hl-mode)))
+            (lambda ()
+              (setq-local left-margin-width 0
+                          right-margin-width 0
+                          left-fringe-width 16
+                          right-fringe-width 16)
+              (diff-hl-mode)))
 #+end_src
 
 ** All The Icons
