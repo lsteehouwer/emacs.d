@@ -11,3 +11,5 @@ auto-save-list/
 elpa/
 transient/
 eln-cache/
+config.el
+straight/
