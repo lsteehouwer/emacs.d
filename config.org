@@ -126,11 +126,25 @@ IMenu is a nice generic tool to quickly traverse over all major sections in your
 We need packages to make Emacs better. And to make installing and configuring packages easy I use =use-package=.
 
 #+begin_src elisp
-  (require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
+  (setq-default straight-use-package-by-default t
+                straight-cache-autoloads t
+                straight-check-for-modifications nil)
+
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+     (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+    (bootstrap-version 6))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+       'silent 'inhibit-cookies)
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+  (straight-use-package 'use-package)
+
   (setq use-package-always-ensure t
         use-package-expand-minimally t
         use-package-compute-statistics t)
@@ -229,6 +243,8 @@ There are many minibuffer completion frameworks, and they're all pretty great. C
 
 #+begin_src elisp
   (use-package vertico
+    :straight (vertico :files (:defaults "extensions/*.el")
+                       :includes (vertico-directory vertico-multiform))
     :hook after-init
     :bind (:map vertico-map
                 (("C-j" . vertico-next)
@@ -462,7 +478,7 @@ Show line numbers and use color pairings for delimiters.
 
 #+begin_src elisp
   (use-package display-line-numbers
-    :ensure nil
+    :straight (:type built-in)
     :hook (prog-mode . display-line-numbers-mode)
     :init
     (setq-default display-line-numbers-width 3
@@ -582,7 +598,7 @@ Org mode is a very powerful system for organizing things. I mostly use it as a m
 
 #+begin_src elisp
   (use-package org
-    :ensure nil
+    :straight (:type built-in)
     :hook (org-mode . org-indent-mode)
     :config
     (require 'org-tempo))
@@ -597,8 +613,8 @@ Occasionally I generate LaTeX documents from Org documents. These often have cod
 
 #+begin_src elisp
   (use-package ox-latex
+    :straight (:type built-in)
     :after org
-    :ensure nil
     :config
     (setq org-latex-listings 'minted
           org-latex-minted-options '(("linenos" "true")))
