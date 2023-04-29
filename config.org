@@ -570,6 +570,13 @@ I am unfortunate enough to sometimes program in PHP.
     :defer t)
 #+end_src
 
+** Coffeescript
+
+#+begin_src elisp
+  (use-package coffee-mode
+    :defer t)
+#+end_src
+
 ** Terraform
 
 #+begin_src elisp
