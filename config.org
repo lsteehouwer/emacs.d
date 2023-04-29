@@ -215,7 +215,7 @@ While recent versions of Emacs come with tools to manage and navigate projects, 
 
 #+begin_src elisp
   (use-package projectile
-    :bind
+    :bind-keymap
     ("C-c p" . projectile-command-map)
     :config
     (setq projectile-auto-discover t
@@ -229,7 +229,6 @@ Sometimes I forget what the keybindings do. Having Emacs show it to me is very h
 
 #+begin_src elisp
   (use-package which-key
-    :hook after-init
     :config
     (setq which-key-sort-order #'which-key-key-order-alpha
           which-key-add-column-padding 20
@@ -243,18 +242,17 @@ There are many minibuffer completion frameworks, and they're all pretty great. C
 
 #+begin_src elisp
   (use-package vertico
-    :straight (vertico :files (:defaults "extensions/*.el")
+    :straight (vertico :files ("*.el" "extensions/*.el")
                        :includes (vertico-directory vertico-multiform))
-    :hook after-init
     :bind (:map vertico-map
                 (("C-j" . vertico-next)
                  ("C-k" . vertico-previous)
                  ("C-o" . vertico-next-group)))
-    :config
+    :init
     (setq vertico-count 25
           vertico-resize 'grow-only)
     (vertico-multiform-mode t)
-    (vertico-mode t))
+    (vertico-mode))
 
   (use-package vertico-directory
     :after vertico
@@ -266,6 +264,7 @@ There are many minibuffer completion frameworks, and they're all pretty great. C
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
   (use-package vertico-prescient
+    :after vertico
     :config (vertico-prescient-mode))
 
   (use-package marginalia
