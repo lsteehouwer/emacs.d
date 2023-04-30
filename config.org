@@ -276,7 +276,8 @@ There are many minibuffer completion frameworks, and they're all pretty great. C
     :bind (:map evil-normal-state-map
                 ("C-s"   . consult-line)
                 ("C-c i" . consult-imenu)
-                ("/"     . consult-ripgrep))
+                ("/"     . consult-ripgrep)
+                ("C-x b" . consult-buffer))
     :config
     (setq consult-line-start-from-top t
           consult-project-function #'projectile-project-root
