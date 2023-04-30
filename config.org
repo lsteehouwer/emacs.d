@@ -323,6 +323,15 @@ Set a nice font.
                           :width  'normal
                           :slant  'normal
                           :font   fixed-pitch-font)))
+
+  (let ((variable-pitch-font (font-spec :family "Liberation Sans"
+                                        :size 12)))
+    (dolist (face '(variable-pitch))
+      (set-face-attribute face nil
+                          :weight 'normal
+                          :width  'normal
+                          :slant  'normal
+                          :font   variable-pitch-font)))
 #+end_src
 
 ** Theme
