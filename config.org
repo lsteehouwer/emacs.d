@@ -598,14 +598,24 @@ I am unfortunate enough to sometimes program in PHP.
 
 Emacs is not just suited for writing code. It's also a good prose editor. But, some tweaks have to be made again for a better experience.
 
+Sentences do not need to end with double spaces. That era is over.
+
 #+begin_src elisp
   (setq sentence-end-double-space nil)
+#+end_src
 
+In most text modes I prefer to use soft breaks, meaning that the text is visually wrapped at the fill-column mark, but underneath no real newline is inserted. However, in some modes this behavior is undesirable. So let's define a method that determines whether this behavior should be on or off depending on whether the current major mode is an exception or not.
+
+#+begin_src elisp
   (use-package visual-fill-column
-    :hook (text-mode . visual-fill-column-mode))
-
-  (setq-default fill-column 80)
-  (add-hook 'text-mode-hook #'visual-line-mode)
+    :hook (text-mode . ls/turn-on-visual-fill-column-mode-maybe)
+    :init
+    (defun ls/turn-on-visual-fill-column-mode-maybe ()
+      (let ((exceptions '(yaml-mode)))
+        (unless (apply 'derived-mode-p exceptions)
+          (message "hello")
+          (visual-line-mode +1)
+          (visual-fill-column-mode +1)))))
 #+end_src
 
 ** Org Mode
