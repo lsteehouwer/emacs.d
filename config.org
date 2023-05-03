@@ -587,6 +587,13 @@ I am unfortunate enough to sometimes program in PHP.
     :defer t)
 #+end_src
 
+** Docker
+
+#+begin_src elisp
+  (use-package dockerfile-mode
+    :defer t)
+#+end_src
+
 ** Terraform
 
 #+begin_src elisp
