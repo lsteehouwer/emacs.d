@@ -12,4 +12,5 @@ elpa/
 transient/
 eln-cache/
 config.el
+environment.el
 straight/

@@ -6,6 +6,22 @@ This is my personal Emacs setup. There are many like it, but this one is mine.
 
 * General Emacs Settings
 
+Load the environment settings.
+
+#+begin_src elisp
+  (defvar environment-file (concat user-emacs-directory "environment.el"))
+
+  ;;; initialize user variables
+  ;; fonts
+  (defvar ls/fixed-pitch-font (font-spec :family "monospace" :size 14))
+  (defvar ls/variable-pitch-font (font-spec :family "sans serif" :size 14))
+  ;; theme
+  (defvar ls/theme 'default)
+
+  (when (file-exists-p environment-file)
+    (load environment-file))
+#+end_src
+
 Let Emacs put changes made via custom in a separate file.
 
 #+begin_src elisp
@@ -315,23 +331,19 @@ Emacs looks pretty dated out-of-the-box. But with some packages we can spice it 
 Set a nice font.
 
 #+begin_src elisp
-  (let ((fixed-pitch-font (font-spec :family "monospace"
-                                     :size 14)))
-    (dolist (face '(default fixed-pitch))
-      (set-face-attribute face nil
-                          :weight 'normal
-                          :width  'normal
-                          :slant  'normal
-                          :font   fixed-pitch-font)))
+  (dolist (face '(default fixed-pitch))
+    (set-face-attribute face nil
+                        :weight 'normal
+                        :width  'normal
+                        :slant  'normal
+                        :font   ls/fixed-pitch-font))
 
-  (let ((variable-pitch-font (font-spec :family "Liberation Sans"
-                                        :size 12)))
-    (dolist (face '(variable-pitch))
-      (set-face-attribute face nil
-                          :weight 'normal
-                          :width  'normal
-                          :slant  'normal
-                          :font   variable-pitch-font)))
+  (dolist (face '(variable-pitch))
+    (set-face-attribute face nil
+                        :weight 'normal
+                        :width  'normal
+                        :slant  'normal
+                        :font   ls/variable-pitch-font))
 #+end_src
 
 ** Theme
@@ -340,10 +352,13 @@ Nothing changes as often as my preferred theme. Luckily there's a whole lot to c
 
 #+begin_src elisp
   (use-package doom-themes
+    :defer t
     :config
     (setq doom-themes-enable-bold t
-          doom-themes-enable-italic t)
-    (load-theme 'doom-zenburn t))
+          doom-themes-enable-italic t
+          doom-themes-treemacs-theme "doom-colors")
+    (doom-themes-treemacs-config)
+    (doom-themes-org-config))
 
   (use-package spacemacs-theme
     :defer t)
@@ -351,6 +366,8 @@ Nothing changes as often as my preferred theme. Luckily there's a whole lot to c
   (use-package solaire-mode
     :after doom-themes
     :config (solaire-global-mode))
+
+  (load-theme ls/theme t)
 #+end_src
 
 ** Modeline
@@ -388,7 +405,7 @@ Using Treemacs we can show a file browser like you'd find in VS Code, Atom, and 
     :config
     (doom-themes-treemacs-config)
     (setq doom-themes-treemacs-theme "doom-colors"
-          doom-themes-treemacs-enable-variable-pitch nil)
+          doom-themes-treemacs-enable-variable-pitch t)
     (setq treemacs-is-never-other-window t
           treemacs-follow-after-init t
           treemacs-project-follow-cleanup t
