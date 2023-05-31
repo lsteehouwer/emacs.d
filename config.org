@@ -1,6 +1,7 @@
 #+title: Emacs Config
 #+options: toc:nil num:nil
 #+property: header-args :tangle yes
+#+startup: overview
 
 This is my personal Emacs setup. There are many like it, but this one is mine.
 
@@ -135,6 +136,12 @@ IMenu is a nice generic tool to quickly traverse over all major sections in your
 
 #+begin_src elisp
   (setq imenu-max-item-length 500)
+#+end_src
+
+Current versions of Emacs are not good with handling (very) long lines, slowing it down considerably. So-long mode does not quite fix these issues, but with it enabled Emacs at least won't slow down to a complete halt when opening compiled JavaScript files for example.
+
+#+begin_src elisp
+  (add-hook 'after-init-hook  'global-so-long-mode)
 #+end_src
 
 * Package Setup
@@ -737,16 +744,4 @@ Being able to read PDFs within Emacs is a great feature, especially when editing
     (setq pdf-view-use-scaling t
           pdf-view-use-imagemagick nil)
     (pdf-loader-install :noquery))
-#+end_src
-
-* Miscellaneous
-
-Things I don't know where else to put.
-
-** Long lines
-
-Current versions of Emacs are not good with handling (very) long lines, slowing it down considerably. So-long mode does not quite fix these issues, but with it enabled Emacs at least won't slow down to a complete halt when opening compiled JavaScript files for example.
-
-#+begin_src elisp
-  (add-hook 'after-init-hook  'global-so-long-mode)
 #+end_src
