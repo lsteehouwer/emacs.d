@@ -562,6 +562,12 @@ Get live feedback on your crap code.
     :hook (flycheck-mode . flycheck-pos-tip-mode))
 #+end_src
 
+** Arduino
+
+#+begin_src elisp
+  (use-package arduino-mode)
+#+end_src
+
 ** Ruby
 
 #+begin_src elisp
