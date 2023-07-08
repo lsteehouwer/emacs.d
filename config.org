@@ -371,6 +371,12 @@ Nothing changes as often as my preferred theme. Luckily there's a whole lot to c
   (use-package spacemacs-theme
     :defer t)
 
+  (use-package ef-themes
+    :defer t)
+
+  (use-package standard-themes
+    :defer t)
+
   (use-package solaire-mode
     :after doom-themes
     :config (solaire-global-mode))

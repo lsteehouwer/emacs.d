@@ -4,4 +4,4 @@
 (setq ls/fixed-pitch-font    (font-spec :family "monospace"  :size 14)
       ls/variable-pitch-font (font-spec :family "sans serif" :size 12))
 
-(setq ls/theme 'default)
+(setq ls/theme 'standard-light)
