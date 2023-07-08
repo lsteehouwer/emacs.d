@@ -448,6 +448,7 @@ Emacs standard dashboard is kind of ugly. Let's use something a bit nicer lookin
   (use-package dashboard
     :config
     (setq dashboard-banner-logo-title nil
+          dashboard-set-footer nil
           dashboard-center-content t
           dashboard-items '((recents . 5)
                             (projects . 5)))
