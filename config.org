@@ -407,6 +407,20 @@ In some modes we do not want to see the modeline at all.
     :defer t)
 #+end_src
 
+** Indent Bars
+
+#+begin_src elisp
+  (use-package indent-bars
+    :straight(indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+    :hook (prog-mode . indent-bars-mode)
+    :config (setq indent-bars-display-on-blank-lines t
+                  indent-bars-highlight-current-depth nil
+                  indent-bars-pattern "."
+                  indent-bars-width-frac 0.1
+                  indent-bars-pad-frac 0.45))
+#+end_src
+
+
 ** Treemacs
 
 Using Treemacs we can show a file browser like you'd find in VS Code, Atom, and other modern editors.
