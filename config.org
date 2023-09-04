@@ -193,6 +193,9 @@ Auto insert mode lets you automatically insert content when opening new files. T
 Evil is a vim emulation layer for Emacs. Emacs' default keybindings hurt my hands, vim's do not.
 
 #+begin_src elisp
+    (global-set-key (kbd "M-j") 'next-window-any-frame)
+    (global-set-key (kbd "M-k") 'previous-window-any-frame)
+
   (use-package evil
     :after undo-fu
     :init
