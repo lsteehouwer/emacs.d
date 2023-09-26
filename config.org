@@ -732,6 +732,7 @@ At what point does an editor stop being an editor, and becomes much more? Right 
 
 #+begin_src elisp
   (setq dired-auto-revert-buffer t
+        dired-dwim-target t
         dired-listing-switches "-la --group-directories-first")
 
   (use-package diredfl
