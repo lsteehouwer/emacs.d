@@ -1,6 +1,6 @@
-(setq garbage-collection-messages t
-      gc-cons-threshold 20000000
-      native-comp-async-report-warnings-errors nil)
+(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
+(push '(fullscreen . maximized) default-frame-alist)
 
 (setq package-enable-at-startup nil)
-(setq frame-inhibit-implied-resize t)

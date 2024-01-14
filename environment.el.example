@@ -1,7 +1,0 @@
-(setq user-full-name "John Doe"
-      user-mail-address "john.doe@example.com")
-
-(setq ls/fixed-pitch-font    (font-spec :family "monospace"  :size 14)
-      ls/variable-pitch-font (font-spec :family "sans serif" :size 12))
-
-(setq ls/theme 'standard-light)
