@@ -52,7 +52,7 @@
 
 ;; Use general for registering key bindings
 (elpaca general
-  :config (general-evil-setup)
+  (general-evil-setup)
   (general-create-definer leader-keys
     :states '(normal insert visual emacs)
     :keymaps 'override
@@ -88,7 +88,8 @@
   ;; Don't get in my way, Emacs
   (defalias 'yes-or-no-p 'y-or-n-p)
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  (setq byte-compile-warnings nil)
+  (setq byte-compile-warnings nil
+        ring-bell-function #'ignore)
   ;; Disable both backup and lock files
   (setq create-lockfiles nil
         make-backup-files nil)
@@ -236,17 +237,21 @@ bottom of the buffer"
 ;; well with other packages that open and close windows. So, i3 it is.
 (use-package windmove
   :elpaca nil
-  :general
-  (general-nmap
-    "M-RET"        #'split-window-right
-    "M-<return>"   #'split-window-right
-    "M-<S-RET>"    #'split-window-below
-    "M-<S-return>" #'split-window-below
-    "M-h"          #'windmove-left
-    "M-j"          #'windmove-down
-    "M-k"          #'windmove-up
-    "M-l"          #'windmove-right
-    "M-Q"          #'delete-window))
+  :init
+  (cl-defun ls/setup-i3-keys (&key (keymaps 'global) (states 'normal))
+    (general-define-key
+     :keymaps keymaps
+     :states states
+     "M-RET"        #'split-window-right
+     "M-<return>"   #'split-window-right
+     "M-<S-RET>"    #'split-window-below
+     "M-<S-return>" #'split-window-below
+     "M-h"          #'windmove-left
+     "M-j"          #'windmove-down
+     "M-k"          #'windmove-up
+     "M-l"          #'windmove-right
+     "M-Q"          #'delete-window))
+  (ls/setup-i3-keys))
 
 ;; EDITOR BEHAVIOR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -422,9 +427,9 @@ there the start of the visual line"
         vterm-always-compile-module t
         vterm-kill-buffer-on-exit t
         confirm-kill-processes nil)
-  :bind (:map vterm-mode-map
-              (("M-j" . evil-window-next)
-               ("M-k" . evil-window-prev))))
+  :config
+  (ls/setup-i3-keys :keymaps 'vterm-mode-map
+                    :states '(normal insert)))
 
 (use-package vterm-toggle
   :general
@@ -552,10 +557,6 @@ there the start of the visual line"
   (setq pulsar-delay 0.05
         pulsar-iterations 10
         pulsar-face 'pulsar-magenta)
-  (dolist (func '(edwina-select-next-window
-                  edwina-select-previous-window))
-    (add-to-list 'pulsar-pulse-functions
-                 func))
   (pulsar-global-mode))
 
 ;; LANG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
