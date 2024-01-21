@@ -1,4 +1,4 @@
-(defvar ls/cache-dir (file-name-concat user-emacs-directory ".cache")
+(defvar ls/cache-dir (concat user-emacs-directory ".cache/")
   "Directory used for cached files")
 
 (defvar elpaca-installer-version 0.6)
@@ -96,7 +96,7 @@
   ;; Don't clutter whatever directory I'm working in with autosave files
   (setq auto-save-default t
         auto-save-include-big-deletions t
-        auto-save-list-file-prefix (file-name-concat ls/cache-dir "autosave/"))
+        auto-save-list-file-prefix (concat ls/cache-dir "autosave/"))
   ;; Delete by moving to trash.
   (setq delete-by-moving-to-trash t)
   ;; UTF-8 everywhere please
@@ -187,23 +187,23 @@ bottom of the buffer"
     "f e" '(ls/edit-emacs-init :which-key "emacs config"))
   :init
   (defun ls/edit-emacs-init ()
-    "Edit this file"
+    "Edit emacs configuration"
     (interactive)
-    (find-file (file-name-concat user-emacs-directory "init.el"))))
+    (find-file (concat user-emacs-directory "init.el"))))
 
 ;; I never use custom, but in the off chance that I do need it, don't clutter
 ;; my init.el
 (use-package cus-edit
   :elpaca nil
   :init
-  (setq custom-file (file-name-concat user-emacs-directory "custom.el"))
+  (setq custom-file (concat user-emacs-directory "custom.el"))
   (when (file-exists-p custom-file)
     (load custom-file)))
 
 (use-package project
   :elpaca nil
   :init
-  (setq project-list-file (file-name-concat ls/cache-dir "projects")
+  (setq project-list-file (concat ls/cache-dir "projects")
         project-switch-commands #'project-dired)
   :general
   (leader-keys
@@ -272,17 +272,16 @@ there the start of the visual line"
       (evil-first-non-blank-of-visual-line)
       (when (<= starting-point (point))
         (evil-beginning-of-visual-line))))
-  (setq evil-want-keybinding nil)
-  ;; Use built-in undo-redo functionallity if available
-  ;; (>= emacs-major-version 28)
-  (if (fboundp 'undo-redo)
-      (setq evil-undo-system 'undo-redo))
-  :config (evil-mode 1))
+
+  (setq evil-want-keybinding nil
+        evil-backspace-join-lines t
+        evil-respect-visual-line-mode t)
+  (when (not (fboundp 'undo-redo))
+    (setq evil-undo-system 'undo-fu))
+  (evil-mode 1))
 
 (use-package undo-fu
-  :if (not (fboundp 'undo-redo))
-  :after evil
-  :init (setq evil-undo-system 'undo-fu))
+  :unless (fboundp 'undo-redo))
 
 ;; Evil bindings in modes not provided by standard evil
 (use-package evil-collection
@@ -461,9 +460,9 @@ there the start of the visual line"
 ;; Magit is the best git client. Full stop.
 (use-package magit
   :init
-  (setq transient-levels-file (file-name-concat ls/cache-dir "levels.el")
-        transient-values-file (file-name-concat ls/cache-dir "values.el")
-        transient-history-file (file-name-concat ls/cache-dir "history.el"))
+  (setq transient-levels-file (concat ls/cache-dir  "levels.el")
+        transient-values-file (concat ls/cache-dir  "values.el")
+        transient-history-file (concat ls/cache-dir "history.el"))
   :general
   (leader-keys
     "g" '(:ignore t :which-key "git")
@@ -517,7 +516,7 @@ there the start of the visual line"
 ;; Line numbers in programming environments please
 (use-package display-line-numbers
   :elpaca nil
-  :hook (prog-mode . display-line-numbers-mode)
+  :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
   :init
   (setq display-line-numbers-grow-only t
         display-line-numbers-width-start t))
@@ -576,7 +575,7 @@ there the start of the visual line"
 ;; it's still not quite where I want it to be.
 (use-package treesit
   :elpaca nil
-  :when (symbolp 'treesit)
+  :when (fboundp 'treesit-install-language-grammar)
   :init
   (defun ls/treesit-install-language (lang)
     "Install treesitter language LANG
@@ -597,11 +596,11 @@ own version of treesitter."
 ;; Ruby
 (use-package ruby-ts-mode
   :elpaca nil
-  :when (symbolp 'treesit)
+  :when (fboundp 'treesit-install-language-grammar)
   :mode "\\.rb\\'"
   :mode "Rakefile\\'"
   :mode "Gemfile\\'"
-  :init
+  :config
   (ls/treesit-install-language 'ruby))
 
 (use-package yard-mode
@@ -629,6 +628,10 @@ own version of treesitter."
 
 ;; Terraform
 (use-package terraform-mode)
+
+(use-package groovy-mode)
+
+(use-package markdown-mode)
 
 ;; Org
 (use-package org
