@@ -259,7 +259,8 @@ bottom of the buffer"
 (use-package evil
   :demand
   :general
-  (general-nmap
+  (general-define-key
+    :states 'motion
     "H" #'ls/beginning-of-line-dwim
     "L" #'evil-end-of-visual-line)
   :init
@@ -306,13 +307,16 @@ there the start of the visual line"
 (use-package yasnippet-snippets
   :hook (prog-mode . yas-minor-mode))
 
+;; Highlight the current line
 (use-package hl-line
   :elpaca nil
   :hook (prog-mode . hl-line-mode))
 
+;; Highlight TODO, HACK, FIXME, etc.
 (use-package hl-todo
   :init (global-hl-todo-mode))
 
+;; Cleanup trailing whitespace
 (use-package ws-butler
   :hook ((text-mode prog-mode) . ws-butler-mode)
   :init
@@ -322,20 +326,24 @@ there the start of the visual line"
     (ws-butler-clean-region (point-min) (point-max)))
   (setq ws-butler-keep-whitespace-before-point nil))
 
+;; Highlight characters past the fill-column mark
 (use-package column-enforce-mode
   :hook (prog-mode . column-enforce-mode))
 
+;; Auto update buffers when other programs modify them
 (use-package autorevert
   :elpaca nil
   :init
   (setq auto-revert-verbose nil)
   :hook (after-init . global-auto-revert-mode))
 
+;; Don't slow to a crawl when loading files with very long lines, e.g. minified
+;; javascript
 (use-package so-long
   :elpaca nil
   :hook (after-init . global-so-long-mode))
 
-;; completions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; COMPLETIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; A better IComplete vertical
 (use-package vertico
@@ -399,6 +407,7 @@ there the start of the visual line"
 
 ;; TOOLS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Who needs a graphical file explorer?
 (use-package dired
   :elpaca nil
   :general
@@ -540,7 +549,7 @@ there the start of the visual line"
 ;; that capability
 (use-package hide-mode-line)
 
-;; Hide all of the various minor modes behind a simple menu in mode line
+;; Hide all of the various minor modes behind a simple menu in the mode line
 (use-package minions
   :commands minions-mode
   :init (minions-mode +1))
