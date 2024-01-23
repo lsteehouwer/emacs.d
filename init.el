@@ -638,7 +638,8 @@ own version of treesitter."
   :elpaca nil
   :hook (org-mode . org-indent-mode)
   :config
-  (require 'org-tempo))
+  (require 'org-tempo)
+  (ls/setup-i3-keys :keymaps 'org-mode-map))
 
 (use-package org-superstar
   :hook (org-mode . org-superstar-mode)
