@@ -123,6 +123,11 @@
                       :font (font-spec :family "Commit Mono"
                                        :size 10.5
                                        :weight 'normal))
+
+  (set-face-attribute 'fixed-pitch nil
+                      :family 'unspecified
+                      :inherit 'default)
+
   (set-face-attribute 'variable-pitch nil
                       :weight 'normal
                       :width  'normal
@@ -250,6 +255,10 @@ bottom of the buffer"
      "M-j"          #'windmove-down
      "M-k"          #'windmove-up
      "M-l"          #'windmove-right
+     "M-H"          #'windmove-swap-states-left
+     "M-J"          #'windmove-swap-states-down
+     "M-K"          #'windmove-swap-states-up
+     "M-L"          #'windmove-swap-states-right
      "M-Q"          #'delete-window))
   (ls/setup-i3-keys))
 
@@ -257,7 +266,6 @@ bottom of the buffer"
 
 ;; Vim emulation
 (use-package evil
-  :demand
   :general
   (general-define-key
     :states 'motion
@@ -276,9 +284,9 @@ there the start of the visual line"
   (setq evil-want-keybinding nil
         evil-backspace-join-lines t
         evil-respect-visual-line-mode t)
-  (when (not (fboundp 'undo-redo))
-    (setq evil-undo-system 'undo-fu))
-  (evil-mode 1))
+  (when (fboundp 'undo-redo)
+    (setq evil-undo-system 'undo-redo))
+  (evil-mode +1))
 
 (use-package undo-fu
   :unless (fboundp 'undo-redo))
@@ -317,13 +325,13 @@ there the start of the visual line"
 
 ;; Cleanup trailing whitespace
 (use-package ws-butler
-  :hook ((text-mode prog-mode) . ws-butler-mode)
   :init
   (defun ls/ws-butler-clean-buffer ()
     "Cleanup all trailing whitespace in a buffer"
     (interactive)
     (ws-butler-clean-region (point-min) (point-max)))
-  (setq ws-butler-keep-whitespace-before-point nil))
+  (setq ws-butler-keep-whitespace-before-point nil)
+  (ws-butler-global-mode +1))
 
 ;; Highlight characters past the fill-column mark
 (use-package column-enforce-mode
@@ -373,6 +381,7 @@ there the start of the visual line"
   :general
   (general-nmap
     "C-c i" #'consult-imenu
+    "C-f"   #'consult-line
     "C-s"   #'consult-ripgrep
     "C-x b" #'consult-buffer)
   (leader-keys
@@ -382,7 +391,8 @@ there the start of the visual line"
   :init
   (setq vertico-multiform-commands
         '((consult-ripgrep buffer)))
-  (setq consult-preview-partial-size 0))
+  (setq consult-preview-partial-size 0
+        consult-line-start-from-top t))
 
 ;; Quickly switch between all files and open buffers within a project
 (use-package consult-project-extra
@@ -400,9 +410,9 @@ there the start of the visual line"
 
 ;; In-buffer completions
 (use-package company
-  :hook (prog-mode . company-mode)
   :init (setq company-idle-delay 0.05
-              company-minimum-prefix-length 3))
+              company-minimum-prefix-length 3)
+  :hook ((prog-mode org-mode) . company-mode))
 
 ;; TOOLS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -473,8 +483,7 @@ there the start of the visual line"
     "<escape>" #'transient-quit-one))
 
 (use-package which-key
-  :demand
-  :config
+  :init
   (setq which-key-idle-delay 1)
   (which-key-mode))
 
@@ -613,6 +622,8 @@ own version of treesitter."
   :hook ((ruby-mode ruby-ts-mode) . rvm-activate-corresponding-ruby))
 
 (use-package rspec-mode)
+
+(use-package feature-mode)
 
 (use-package haml-mode)
 
