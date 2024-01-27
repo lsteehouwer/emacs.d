@@ -284,8 +284,9 @@ there the start of the visual line"
   (setq evil-want-keybinding nil
         evil-backspace-join-lines t
         evil-respect-visual-line-mode t)
-  (when (fboundp 'undo-redo)
-    (setq evil-undo-system 'undo-redo))
+  (if (fboundp 'undo-redo)
+      (setq evil-undo-system 'undo-redo)
+    (setq evil-undo-system 'undo-fu))
   (evil-mode +1))
 
 (use-package undo-fu
@@ -649,8 +650,9 @@ own version of treesitter."
   :elpaca nil
   :hook (org-mode . org-indent-mode)
   :config
+  (ls/setup-i3-keys :keymaps 'org-mode-map)
   (require 'org-tempo)
-  (ls/setup-i3-keys :keymaps 'org-mode-map))
+  (setq org-latex-pdf-process (list "latexmk -pdf -shell-escape %f")))
 
 (use-package org-superstar
   :hook (org-mode . org-superstar-mode)
