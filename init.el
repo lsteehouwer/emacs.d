@@ -205,6 +205,7 @@ bottom of the buffer"
   (when (file-exists-p custom-file)
     (load custom-file)))
 
+;; Find files within projects, switch between projects, etc.
 (use-package project
   :elpaca nil
   :init
@@ -220,6 +221,12 @@ bottom of the buffer"
     "p f"        '(project-find-file :which-key "find file")
     "p d"        '(project-find-dir :which-key "find dir")
     "p k"        '(project-kill-buffers :which-key "kill all project buffers")))
+
+(use-package saveplace
+  :elpaca nil
+  :hook (after-init . save-place-mode)
+  :config
+  (setq save-place-file (concat ls/cache-dir "places")))
 
 ;; FRAMES AND WINDOWS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
