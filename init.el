@@ -481,6 +481,8 @@ there the start of the visual line"
   (setq transient-levels-file (concat ls/cache-dir  "levels.el")
         transient-values-file (concat ls/cache-dir  "values.el")
         transient-history-file (concat ls/cache-dir "history.el"))
+  :config
+  (add-hook 'after-save-hook 'magit-after-save-refresh-status)
   :general
   (leader-keys
     "g" '(:ignore t :which-key "git")
