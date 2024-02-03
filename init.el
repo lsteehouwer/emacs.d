@@ -358,6 +358,12 @@ there the start of the visual line"
   :elpaca nil
   :hook (after-init . global-so-long-mode))
 
+;; Configure a built-in package to something more sensible, yet again
+(use-package imenu
+  :elpaca nil
+  :config
+  (setq imenu-max-item-length 500))
+
 ;; COMPLETIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; A better IComplete vertical
