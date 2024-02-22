@@ -538,6 +538,14 @@ there the start of the visual line"
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+;; Set keybindings for resizing faces
+(use-package face-remap
+  :elpaca nil
+  :general
+  (general-nmap
+    "C-+" '(text-scale-increase)
+    "C--" '(text-scale-decrease)))
+
 ;; Line numbers in programming environments please
 (use-package display-line-numbers
   :elpaca nil
