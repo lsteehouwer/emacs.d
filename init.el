@@ -543,8 +543,8 @@ there the start of the visual line"
   :elpaca nil
   :general
   (general-nmap
-    "C-+" '(text-scale-increase)
-    "C--" '(text-scale-decrease)))
+    "C-+" 'text-scale-increase
+    "C--" 'text-scale-decrease))
 
 ;; Line numbers in programming environments please
 (use-package display-line-numbers
