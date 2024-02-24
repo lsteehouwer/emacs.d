@@ -45,9 +45,9 @@
 ;; Install use-package and configure it
 (elpaca elpaca-use-package
   (elpaca-use-package-mode)
-  (setq elpaca-use-package-by-default t)
   (setq use-package-always-defer t
-        use-package-expand-minimally nil
+        use-package-always-ensure t
+        use-package-expand-minimally t
         use-package-compute-statistics nil))
 
 ;; Use general for registering key bindings
@@ -70,7 +70,7 @@
 ;;   :hook (after-init-hook . benchmark-init/deactivate))
 
 (use-package emacs
-  :elpaca nil
+  :ensure nil
   :init
   ;; Some performance improvements
   (setq initial-scratch-message nil
@@ -164,7 +164,7 @@ bottom of the buffer"
 
 ;; Startup tweaks
 (use-package startup
-  :elpaca nil
+  :ensure nil
   :init
   (setq initial-major-mode 'fundamental-mode
         inhibit-splash-screen t)
@@ -175,13 +175,13 @@ bottom of the buffer"
                  (expand-file-name "eln" ls/cache-dir))))
 
 (use-package simple
-  :elpaca nil
+  :ensure nil
   :init (column-number-mode +1))
 
 ;; FILES AND PROJECTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package files
-  :elpaca nil
+  :ensure nil
   :general
   (leader-keys
     "f"   '(:ignore t :which-key "find")
@@ -199,7 +199,7 @@ bottom of the buffer"
 ;; I never use custom, but in the off chance that I do need it, don't clutter
 ;; my init.el
 (use-package cus-edit
-  :elpaca nil
+  :ensure nil
   :init
   (setq custom-file (concat user-emacs-directory "custom.el"))
   (when (file-exists-p custom-file)
@@ -207,7 +207,7 @@ bottom of the buffer"
 
 ;; Find files within projects, switch between projects, etc.
 (use-package project
-  :elpaca nil
+  :ensure nil
   :init
   (setq project-list-file (concat ls/cache-dir "projects")
         project-switch-commands #'project-dired)
@@ -223,7 +223,7 @@ bottom of the buffer"
     "p k"        '(project-kill-buffers :which-key "kill all project buffers")))
 
 (use-package saveplace
-  :elpaca nil
+  :ensure nil
   :hook (after-init . save-place-mode)
   :config
   (setq save-place-file (concat ls/cache-dir "places")))
@@ -231,14 +231,14 @@ bottom of the buffer"
 ;; FRAMES AND WINDOWS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package frame
-  :elpaca nil
+  :ensure nil
   :init
   ;; blinking cursors only distract
   (blink-cursor-mode -1)
   (setq frame-inhibit-implied-resize t)) ;; performance improvement
 
 (use-package window
-  :elpaca nil
+  :ensure nil
   :init
   (set-window-fringes nil 16 16 nil t)
   (setq split-width-threshold 160
@@ -248,7 +248,7 @@ bottom of the buffer"
 ;; the only package I know of that achieves this, edwina, does not integrate
 ;; well with other packages that open and close windows. So, i3 it is.
 (use-package windmove
-  :elpaca nil
+  :ensure nil
   :init
   (cl-defun ls/setup-i3-keys (&key (keymaps 'global) (states 'normal))
     (general-define-key
@@ -324,7 +324,7 @@ there the start of the visual line"
 
 ;; Highlight the current line
 (use-package hl-line
-  :elpaca nil
+  :ensure nil
   :hook (prog-mode . hl-line-mode))
 
 ;; Highlight TODO, HACK, FIXME, etc.
@@ -347,7 +347,7 @@ there the start of the visual line"
 
 ;; Auto update buffers when other programs modify them
 (use-package autorevert
-  :elpaca nil
+  :ensure nil
   :init
   (setq auto-revert-verbose nil)
   :hook (after-init . global-auto-revert-mode))
@@ -355,12 +355,12 @@ there the start of the visual line"
 ;; Don't slow to a crawl when loading files with very long lines, e.g. minified
 ;; javascript
 (use-package so-long
-  :elpaca nil
+  :ensure nil
   :hook (after-init . global-so-long-mode))
 
 ;; Configure a built-in package to something more sensible, yet again
 (use-package imenu
-  :elpaca nil
+  :ensure nil
   :config
   (setq imenu-max-item-length 500))
 
@@ -368,7 +368,7 @@ there the start of the visual line"
 
 ;; A better IComplete vertical
 (use-package vertico
-  :elpaca (:files ("*.el" "extensions/*.el"))
+  :ensure (:files ("*.el" "extensions/*.el"))
   :bind (:map vertico-map
               (("C-j" . vertico-next)
                ("C-k" . vertico-previous)
@@ -432,7 +432,7 @@ there the start of the visual line"
 
 ;; Who needs a graphical file explorer?
 (use-package dired
-  :elpaca nil
+  :ensure nil
   :general
   (leader-keys
     "d" '(:ignore t :which-key "dired")
@@ -452,7 +452,7 @@ there the start of the visual line"
 ;; it will not cooperate with solaire mode.
 (use-package vterm
   :hook (vterm-mode . hide-mode-line-mode)
-  :elpaca (:pin t :ref "94e2b0b2b4a750e7907dacd5b4c0584900846dd1")
+  :ensure (:pin t :ref "94e2b0b2b4a750e7907dacd5b4c0584900846dd1")
   :init
   (setq vterm-timer-delay 0.0
         vterm-max-scrollback 50000
@@ -479,7 +479,7 @@ there the start of the visual line"
                        elpaca--pre-built-steps elpaca-build-steps))
           (list '+elpaca-unload-seq 'elpaca--activate-package)))
 
-(use-package seq :elpaca `(seq :build ,(+elpaca-seq-build-steps)))
+(use-package seq :ensure `(seq :build ,(+elpaca-seq-build-steps)))
 
 ;; Magit is the best git client. Full stop.
 (use-package magit
@@ -540,7 +540,7 @@ there the start of the visual line"
 
 ;; Set keybindings for resizing faces
 (use-package face-remap
-  :elpaca nil
+  :ensure nil
   :general
   (general-nmap
     "C-+" 'text-scale-increase
@@ -548,7 +548,7 @@ there the start of the visual line"
 
 ;; Line numbers in programming environments please
 (use-package display-line-numbers
-  :elpaca nil
+  :ensure nil
   :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
   :init
   (setq display-line-numbers-grow-only t
@@ -563,7 +563,7 @@ there the start of the visual line"
 (use-package modus-themes
   ;; Use the remote one over the built-in one since it's more up to date, and
   ;; makes the themes available to older Emacs versions.
-  :elpaca (:repo "https://github.com/protesilaos/modus-themes")
+  :ensure (:repo "https://github.com/protesilaos/modus-themes")
   :init
   (setq modus-themes-common-palette-overrides
         '((fringe unspecified)
@@ -607,7 +607,7 @@ there the start of the visual line"
 ;; language grammars. The function below improves the situation quite a bit, but
 ;; it's still not quite where I want it to be.
 (use-package treesit
-  :elpaca nil
+  :ensure nil
   :when (fboundp 'treesit-install-language-grammar)
   :init
   (defun ls/treesit-install-language (lang)
@@ -628,7 +628,7 @@ own version of treesitter."
 
 ;; Ruby
 (use-package ruby-ts-mode
-  :elpaca nil
+  :ensure nil
   :when (fboundp 'treesit-install-language-grammar)
   :mode "\\.rb\\'"
   :mode "Rakefile\\'"
@@ -670,7 +670,7 @@ own version of treesitter."
 
 ;; Org
 (use-package org
-  :elpaca nil
+  :ensure nil
   :hook (org-mode . org-indent-mode)
   :config
   (ls/setup-i3-keys :keymaps 'org-mode-map)
@@ -683,7 +683,7 @@ own version of treesitter."
   (setq org-superstar-headline-bullets-list '("◉")))
 
 (use-package ox-latex
-  :elpaca nil
+  :ensure nil
   :config
   (setq org-latex-listings 'minted
         org-latex-minted-options '(("linenos" "true")))
