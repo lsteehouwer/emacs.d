@@ -160,7 +160,8 @@ bottom of the buffer"
          (prog-mode   . ls/indicate-empty-lines))
   :general
   (leader-keys
-    "<escape>" '(keyboard-escape-quit :which-key t)))
+    "<escape>" '(keyboard-quit :which-key t)
+    "o"        '(:ignore t :which-key "open")))
 
 ;; Startup tweaks
 (use-package startup
@@ -215,7 +216,7 @@ bottom of the buffer"
   (leader-keys
     :states 'normal
     "p"          '(:ignore t :which-key "projects")
-    "p <escape>" '(keyboard-escape-quit :which-key t)
+    "p <escape>" '(keyboard-quit :which-key t)
     "p p"        '(project-switch-project :which-key "switch project")
     "p b"        '(project-switch-to-buffer :which-key "switch buffer")
     "p f"        '(project-find-file :which-key "find file")
@@ -492,7 +493,7 @@ there the start of the visual line"
   :general
   (leader-keys
     "g" '(:ignore t :which-key "git")
-    "g <escape>" '(keyboard-escape-quit :which-key t)
+    "g <escape>" '(keyboard-quit :which-key t)
     "g g" '(magit-status :which-key "status")
     "g l" '(magit-log :which-key "log"))
   (general-nmap
