@@ -245,30 +245,36 @@ bottom of the buffer"
   (setq split-width-threshold 160
         split-height-threshold nil))
 
+(use-package windmove
+  :ensure nil)
+
+(use-package zoom-window
+  :init
+  (setq zoom-window-mode-line-color "DarkGreen"))
+
 ;; Setup i3-like key bindings. I prefer a master-stack layout like in DWM, but
 ;; the only package I know of that achieves this, edwina, does not integrate
 ;; well with other packages that open and close windows. So, i3 it is.
-(use-package windmove
-  :ensure nil
-  :init
-  (cl-defun ls/setup-i3-keys (&key (keymaps 'global) (states 'normal))
-    (general-define-key
-     :keymaps keymaps
-     :states states
-     "M-RET"        #'split-window-right
-     "M-<return>"   #'split-window-right
-     "M-<S-RET>"    #'split-window-below
-     "M-<S-return>" #'split-window-below
-     "M-h"          #'windmove-left
-     "M-j"          #'windmove-down
-     "M-k"          #'windmove-up
-     "M-l"          #'windmove-right
-     "M-H"          #'windmove-swap-states-left
-     "M-J"          #'windmove-swap-states-down
-     "M-K"          #'windmove-swap-states-up
-     "M-L"          #'windmove-swap-states-right
-     "M-Q"          #'delete-window))
-  (ls/setup-i3-keys))
+(cl-defun ls/setup-i3-keys (&key (keymaps 'global) (states 'normal))
+  (general-define-key
+   :keymaps keymaps
+   :states states
+   "M-RET"        #'split-window-right
+   "M-<return>"   #'split-window-right
+   "M-<S-RET>"    #'split-window-below
+   "M-<S-return>" #'split-window-below
+   "M-h"          #'windmove-left
+   "M-j"          #'windmove-down
+   "M-k"          #'windmove-up
+   "M-l"          #'windmove-right
+   "M-H"          #'windmove-swap-states-left
+   "M-J"          #'windmove-swap-states-down
+   "M-K"          #'windmove-swap-states-up
+   "M-L"          #'windmove-swap-states-right
+   "M-Q"          #'delete-window
+   "M-O"          #'zoom-window-zoom))
+
+(add-hook 'elpaca-after-init-hook (ls/setup-i3-keys))
 
 ;; EDITOR BEHAVIOR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
