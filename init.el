@@ -1,8 +1,11 @@
 (defvar ls/cache-dir (concat user-emacs-directory ".cache/")
+(defvar ls/cache-directory (concat user-emacs-directory ".cache/")
   "Directory used for cached files")
+(defvar ls/templates-directory (concat user-emacs-directory "templates/")
+  "Directory used for templates")
 
-(defvar elpaca-installer-version 0.6)
-(defvar elpaca-directory (expand-file-name "elpaca/" ls/cache-dir))
+(defvar elpaca-installer-version 0.7)
+(defvar elpaca-directory (expand-file-name "elpaca/" ls/cache-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
@@ -96,7 +99,7 @@
   ;; Don't clutter whatever directory I'm working in with autosave files
   (setq auto-save-default t
         auto-save-include-big-deletions t
-        auto-save-list-file-prefix (concat ls/cache-dir "autosave/"))
+        auto-save-list-file-prefix (concat ls/cache-directory "autosave/"))
   ;; Delete by moving to trash.
   (setq delete-by-moving-to-trash t)
   ;; UTF-8 everywhere please
@@ -173,7 +176,7 @@ bottom of the buffer"
   ;; in the cache dir
   (when (boundp 'native-comp-eln-load-path)
     (add-to-list 'native-comp-eln-load-path
-                 (expand-file-name "eln" ls/cache-dir))))
+                 (expand-file-name "eln" ls/cache-directory))))
 
 (use-package simple
   :ensure nil
@@ -210,7 +213,7 @@ bottom of the buffer"
 (use-package project
   :ensure nil
   :init
-  (setq project-list-file (concat ls/cache-dir "projects")
+  (setq project-list-file (concat ls/cache-directory "projects")
         project-switch-commands #'project-dired)
   :general
   (leader-keys
@@ -227,7 +230,7 @@ bottom of the buffer"
   :ensure nil
   :hook (after-init . save-place-mode)
   :config
-  (setq save-place-file (concat ls/cache-dir "places")))
+  (setq save-place-file (concat ls/cache-directory "places")))
 
 ;; FRAMES AND WINDOWS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -326,8 +329,28 @@ there the start of the visual line"
     "C-/" 'evilnc-comment-operator))
 
 ;; Snippets
+(use-package yasnippet
+  :hook (prog-mode . yas-minor-mode)
+  :init
+  (setq yasnippet-snippets-dir (concat ls/templates-directory "snippets")))
+
 (use-package yasnippet-snippets
-  :hook (prog-mode . yas-minor-mode))
+  :after yasnippet)
+
+(use-package auto-insert-mode
+  :ensure nil
+  :init
+  (let ((insert-dir (concat ls/templates-directory "auto-insert/")))
+    (setq auto-insert-query nil
+          auto-insert-directory insert-dir
+          auto-insert-alist ())
+    (dolist (fname (directory-files insert-dir nil
+                                    directory-files-no-dot-files-regexp))
+      (let* ((mode-name (file-name-base fname))
+             (mode-str  (concat mode-name "-mode"))
+             (mode      (intern mode-str)))
+        (push `(,mode . ,fname) auto-insert-alist))))
+  (auto-insert-mode +1))
 
 ;; Highlight the current line
 (use-package hl-line
