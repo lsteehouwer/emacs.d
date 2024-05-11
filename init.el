@@ -1,4 +1,3 @@
-(defvar ls/cache-dir (concat user-emacs-directory ".cache/")
 (defvar ls/cache-directory (concat user-emacs-directory ".cache/")
   "Directory used for cached files")
 (defvar ls/templates-directory (concat user-emacs-directory "templates/")
