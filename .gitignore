@@ -1,16 +1,7 @@
-*~
-.projectile
-.lsp-session*
-projectile*
-recentf*
-session*
-history
+# Files
+.yas-compiled-snippets.el
 
+# Directories
 .cache/
-auto-save-list/
-elpa/
-transient/
 eln-cache/
-config.el
-environment.el
-straight/
+tree-sitter/
