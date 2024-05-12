@@ -327,6 +327,13 @@ there the start of the visual line"
   (general-nvmap
     "C-/" 'evilnc-comment-operator))
 
+;; Move lines and regions up or down
+(use-package drag-stuff
+  :general
+  (general-define-key :states 'normal
+                      "M-i" #'drag-stuff-up
+                      "M-o" #'drag-stuff-down))
+
 ;; Snippets
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode)
