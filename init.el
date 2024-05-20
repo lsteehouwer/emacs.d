@@ -117,25 +117,6 @@
   ;; spaces wide
   (setq-default indent-tabs-mode nil
 		            tab-width 2)
-  ;; Font settings
-  (set-face-attribute 'default nil
-                      :weight 'normal
-                      :width  'normal
-                      :slant  'normal
-                      :font (font-spec :family "Commit Mono"
-                                       :size 10.5
-                                       :weight 'normal))
-
-  (set-face-attribute 'fixed-pitch nil
-                      :family 'unspecified
-                      :inherit 'default)
-
-  (set-face-attribute 'variable-pitch nil
-                      :weight 'normal
-                      :width  'normal
-                      :slant  'normal
-                      :font (font-spec :family "Liberation Sans"
-                                       :size 11))
   ;; Functions for use in hooks (below)
   (defun ls/trim-trailing-newlines ()
     "Remove empty lines at the end of the buffer.
@@ -575,6 +556,37 @@ there the start of the visual line"
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+
+;; Settings for fonts/faces
+(use-package faces
+  :ensure nil
+  :general
+  (leader-keys
+    "u"   '(:ignore t :wk "ui")
+    "u b" '(ls/toggle-bold-face :wk "toggle face boldness"))
+  :init
+  (set-face-attribute 'default nil
+                      :weight 'normal
+                      :width  'normal
+                      :slant  'normal
+                      :font (font-spec :family "Commit Mono"
+                                       :size 10.5
+                                       :weight 'normal))
+  (set-face-attribute 'fixed-pitch nil
+                      :family 'unspecified
+                      :inherit 'default)
+  (set-face-attribute 'variable-pitch nil
+                      :weight 'normal
+                      :width  'normal
+                      :slant  'normal
+                      :font (font-spec :family "Liberation Sans"
+                                       :size 11))
+  (defun ls/toggle-bold-face ()
+    "Toggle the boldness of the default face"
+    (interactive)
+    (if (face-bold-p 'default nil t)
+        (make-face-unbold 'default)
+      (make-face-bold 'default))))
 
 ;; Set keybindings for resizing faces
 (use-package face-remap
