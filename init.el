@@ -208,6 +208,24 @@ bottom of the buffer"
   (when (file-exists-p custom-file)
     (load custom-file)))
 
+;; Dired. Who needs a graphical file explorer?
+(use-package dired
+  :ensure nil
+  :general
+  (leader-keys
+    "d" '(:ignore t :which-key "dired")
+    "d d" '(dired-jump :which-key "open current dir")
+    "d D" '(dired-jump-other-window :which-key "open current dir other window"))
+  :init (setq dired-auto-revert-buffer t
+              dired-dwim-target t
+              dired-clean-up-buffers-too t
+              dired-clean-confirm-killing-deleted-buffers nil
+              dired-listing-switches "-lah --group-directories-first"))
+
+;; Spice up dired just a little bit
+(use-package diredfl
+  :hook (dired-mode . diredfl-mode))
+
 ;; Find files within projects, switch between projects, etc.
 (use-package project
   :ensure nil
@@ -465,22 +483,6 @@ there the start of the visual line"
   :hook ((prog-mode org-mode) . company-mode))
 
 ;; TOOLS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Who needs a graphical file explorer?
-(use-package dired
-  :ensure nil
-  :general
-  (leader-keys
-    "d" '(:ignore t :which-key "dired")
-    "d d" '(dired-jump :which-key "open current dir")
-    "d D" '(dired-jump-other-window :which-key "open current dir other window"))
-  :init (setq dired-auto-revert-buffer t
-              dired-dwim-target t
-              dired-listing-switches "-la --group-directories-first"))
-
-;; Spice up dired just a little bit
-(use-package diredfl
-  :hook (dired-mode . diredfl-mode))
 
 ;; VTERM is probably still the best terminal emulator available in Emacs right
 ;; now, but eat seems to be making ways. Perhaps in the future I'll give it a
