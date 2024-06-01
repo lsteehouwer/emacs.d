@@ -580,6 +580,19 @@ there the start of the visual line"
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+(use-package dashboard
+  :hook (elpaca-after-init-hook . dashboard-initialize)
+  :init (dashboard-setup-startup-hook)
+  :config
+  (setq dashboard-center-content t
+        dashboard-display-icons-p t
+        dashboard-icon-type 'all-the-icons
+        dashboard-vertically-center-content t
+        dashboard-startupify-list '(dashboard-insert-banner-title
+                                    dashboard-insert-newline
+                                    dashboard-insert-init-info
+                                    dashboard-insert-items)))
+
 ;; Settings for fonts/faces
 (use-package faces
   :ensure nil
