@@ -162,6 +162,11 @@ bottom of the buffer"
   :ensure nil
   :init (column-number-mode +1))
 
+(use-package mouse
+  :ensure nil
+  :init (when (display-graphic-p)
+          (context-menu-mode)))
+
 ;; FILES AND PROJECTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package files
