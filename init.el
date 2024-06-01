@@ -588,6 +588,9 @@ there the start of the visual line"
         dashboard-display-icons-p t
         dashboard-icon-type 'all-the-icons
         dashboard-vertically-center-content t
+        dashboard-items '((projects . 10)
+                          (recents . 10)
+                          (agenda . 5))
         dashboard-startupify-list '(dashboard-insert-banner-title
                                     dashboard-insert-newline
                                     dashboard-insert-init-info
