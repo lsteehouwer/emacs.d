@@ -164,7 +164,7 @@ bottom of the buffer"
 
 (use-package mouse
   :ensure nil
-  :init (when (display-graphic-p)
+  :init (when (and (>= emacs-major-version 29) display-graphic-p)
           (context-menu-mode)))
 
 ;; FILES AND PROJECTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
