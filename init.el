@@ -385,12 +385,30 @@ there the start of the visual line"
 (use-package column-enforce-mode
   :hook (prog-mode . column-enforce-mode))
 
-;; Auto update buffers when other programs modify them
+;; Auto update buffers when other programs modify them. Setup stolen from DOOM
+;; emacs.
 (use-package autorevert
   :ensure nil
-  :init
-  (setq auto-revert-verbose nil)
-  :hook (after-init . global-auto-revert-mode))
+  :hook ((focus-in after-save) . ls/auto-revert-buffers-h)
+  :config
+  (setq auto-revert-verbose t
+        auto-revert-use-notify nil
+        revert-without-query (list "."))
+  (defun ls/auto-revert-buffer-h ()
+    "Auto revert current buffer, if necessary."
+    (unless (or auto-revert-mode (active-minibuffer-window))
+      (let ((auto-revert-mode t))
+        (auto-revert-handler))))
+
+  (defun ls/visible-buffers ()
+    "Determine all visible buffers"
+    (delete-dups (mapcar #'window-buffer (window-list))))
+
+  (defun ls/auto-revert-buffers-h ()
+    "Auto revert all visible buffers"
+    (dolist (buffer (ls/visible-buffers))
+      (with-current-buffer buffer
+        (ls/auto-revert-buffer-h)))))
 
 ;; Don't slow to a crawl when loading files with very long lines, e.g. minified
 ;; javascript
