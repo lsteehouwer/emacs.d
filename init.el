@@ -587,10 +587,11 @@ there the start of the visual line"
   (setq dashboard-center-content t
         dashboard-display-icons-p t
         dashboard-icon-type 'all-the-icons
+        dashboard-path-style 'truncate-beginning
+        dashboard-path-max-length 45
         dashboard-vertically-center-content t
-        dashboard-items '((projects . 10)
-                          (recents . 10)
-                          (agenda . 5))
+        dashboard-items '((projects . 5)
+                          (recents . 5))
         dashboard-startupify-list '(dashboard-insert-banner-title
                                     dashboard-insert-newline
                                     dashboard-insert-init-info
