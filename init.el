@@ -661,11 +661,50 @@ there the start of the visual line"
           (fg-line-number-inactive fg-dim)
           (bg-line-number-inactive unspecified))))
 
-;; Give "lesser" buffers like *scratch*, terms, and dired a different background
-;; to differentiate them from "normal" buffers.
-(use-package solaire-mode
+(use-package ef-themes
   :init
-  (solaire-global-mode +1))
+  (load-theme 'ef-light t))
+
+(use-package standard-themes)
+
+(use-package ample-theme)
+
+;; Custom mode line format
+(setq-default mode-line-format
+            '("%e"
+              mode-line-front-space
+              (:eval (format "[%s]" (ls/evil-state-acronymn)))
+              "  "
+              mode-line-mule-info
+              mode-line-client
+              mode-line-modified
+              mode-line-remote
+              "   "
+              "%12b%5I"
+              "   "
+              (vc-mode vc-mode)))
+
+(defun ls/setup-modeline (&rest r)
+  (set-face-attribute 'mode-line nil
+                      :background nil
+                      :overline t
+                      :box nil)
+  (set-face-attribute 'mode-line-active nil
+                      :background nil
+                      :overline t
+                      :box nil)
+  (set-face-attribute 'mode-line-inactive nil
+                      :background nil
+                      :overline t
+                      :box nil))
+
+(defun ls/evil-state-acronymn ()
+  "Describe the current evil state in a single letter. This function
+makes no distinction between the different kinds of visual states"
+  (capitalize (substring (symbol-name evil-state) 0 1)))
+
+(add-hook 'elpaca-after-init-hook #'ls/setup-modeline)
+(advice-add 'consult-theme :after #'ls/setup-modeline)
 
 ;; In some modes it makes no sense to show a mode line. This package provides
 ;; that capability
@@ -675,6 +714,12 @@ there the start of the visual line"
 (use-package minions
   :commands minions-mode
   :init (minions-mode +1))
+
+;; Give "lesser" buffers like *scratch*, terms, and dired a different background
+;; to differentiate them from "normal" buffers.
+(use-package solaire-mode
+  :init
+  (solaire-global-mode +1))
 
 ;; Some packages need icons. Here they are
 (use-package nerd-icons)
