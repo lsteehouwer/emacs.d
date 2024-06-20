@@ -685,18 +685,21 @@ there the start of the visual line"
               (vc-mode vc-mode)))
 
 (defun ls/setup-modeline (&rest r)
-  (set-face-attribute 'mode-line nil
-                      :background nil
-                      :overline t
-                      :box nil)
-  (set-face-attribute 'mode-line-active nil
-                      :background nil
-                      :overline t
-                      :box nil)
-  (set-face-attribute 'mode-line-inactive nil
-                      :background nil
-                      :overline t
-                      :box nil))
+  (when (facep 'mode-line)
+    (set-face-attribute 'mode-line nil
+                        :background nil
+                        :overline t
+                        :box nil))
+  (when (facep 'mode-line-active)
+    (set-face-attribute 'mode-line-active nil
+                        :background nil
+                        :overline t
+                        :box nil))
+  (when (facep 'mode-line-inactive)
+    (set-face-attribute 'mode-line-inactive nil
+                        :background nil
+                        :overline t
+                        :box nil)))
 
 (defun ls/evil-state-acronymn ()
   "Describe the current evil state in a single letter. This function
