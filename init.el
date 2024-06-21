@@ -151,7 +151,9 @@ bottom of the buffer"
   :ensure nil
   :init
   (setq initial-major-mode 'fundamental-mode
-        inhibit-splash-screen t)
+        inhibit-splash-screen t
+        inhibit-startup-echo-area-message user-login-name)
+  (advice-add #'display-startup-echo-area-message :override #'ignore)
   ;; On Emacs versions supporting native compilation, place the compiled files
   ;; in the cache dir
   (when (boundp 'native-comp-eln-load-path)
