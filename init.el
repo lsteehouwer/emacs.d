@@ -137,14 +137,13 @@ Function lifted from Doom Emacs."
 bottom of the buffer"
     (interactive)
     (setq-local indicate-empty-lines t))
-
   :hook ((before-save . ls/trim-trailing-newlines)
          (prog-mode   . ls/indicate-trailing-whitespace)
          (prog-mode   . ls/indicate-empty-lines))
   :general
   (leader-keys
-    "<escape>" '(keyboard-quit :which-key t)
-    "o"        '(:ignore t :which-key "open")))
+    "<escape>" '(keyboard-quit :wk t)
+    "o"        '(:ignore t :wk "open")))
 
 ;; Startup tweaks
 (use-package startup
@@ -175,12 +174,12 @@ bottom of the buffer"
   :ensure nil
   :general
   (leader-keys
-    "f"   '(:ignore t :which-key "find")
-    "f f" '(find-file :which-key "find file")
-    "f F" '(find-file-other-window :which-key "find file other window")
-    "f d" '(dired :which-key "find dir")
-    "f D" '(dired-other-window :which-key "find dir other window")
-    "f e" '(ls/edit-emacs-init :which-key "emacs config"))
+    "f"   '(:ignore t :wk "find")
+    "f f" '(find-file :wk "find file")
+    "f F" '(find-file-other-window :wk "find file other window")
+    "f d" '(dired :wk "find dir")
+    "f D" '(dired-other-window :wk "find dir other window")
+    "f e" '(ls/edit-emacs-init :wk "emacs config"))
   :init
   (defun ls/edit-emacs-init ()
     "Edit emacs configuration"
@@ -201,9 +200,9 @@ bottom of the buffer"
   :ensure nil
   :general
   (leader-keys
-    "d" '(:ignore t :which-key "dired")
-    "d d" '(dired-jump :which-key "open current dir")
-    "d D" '(dired-jump-other-window :which-key "open current dir other window"))
+    "d" '(:ignore t :wk "dired")
+    "d d" '(dired-jump :wk "open current dir")
+    "d D" '(dired-jump-other-window :wk "open current dir other window"))
   :init (setq dired-auto-revert-buffer t
               dired-dwim-target t
               dired-clean-up-buffers-too t
@@ -223,13 +222,13 @@ bottom of the buffer"
   :general
   (leader-keys
     :states 'normal
-    "p"          '(:ignore t :which-key "projects")
-    "p <escape>" '(keyboard-quit :which-key t)
-    "p p"        '(project-switch-project :which-key "switch project")
-    "p b"        '(project-switch-to-buffer :which-key "switch buffer")
-    "p f"        '(project-find-file :which-key "find file")
-    "p d"        '(project-find-dir :which-key "find dir")
-    "p k"        '(project-kill-buffers :which-key "kill all project buffers")))
+    "p"          '(:ignore t :wk "projects")
+    "p <escape>" '(keyboard-quit :wk t)
+    "p p"        '(project-switch-project :wk "switch project")
+    "p b"        '(project-switch-to-buffer :wk "switch buffer")
+    "p f"        '(project-find-file :wk "find file")
+    "p d"        '(project-find-dir :wk "find dir")
+    "p k"        '(project-kill-buffers :wk "kill all project buffers")))
 
 (use-package saveplace
   :ensure nil
@@ -295,7 +294,7 @@ bottom of the buffer"
     "L" #'evil-end-of-visual-line)
   :init
   (defun ls/beginning-of-line-dwim ()
-    "Move to the first text character on the line, or when already
+    "Move to the first text character of the line, or when already
 there the start of the visual line"
     (interactive)
     (let ((starting-point (point)))
@@ -460,8 +459,8 @@ there the start of the visual line"
     "C-x b" #'consult-buffer)
   (leader-keys
     :states 'normal
-    "o b" '(consult-buffer :which-key "open buffer")
-    "o B" '(consult-buffer-other-window :which-key "open buffer other window"))
+    "o b" '(consult-buffer :wk "open buffer")
+    "o B" '(consult-buffer-other-window :wk "open buffer other window"))
   :init
   (setq vertico-multiform-commands
         '((consult-ripgrep buffer)))
@@ -473,8 +472,8 @@ there the start of the visual line"
   :general
   (leader-keys
     :states 'normal
-    "SPC" '(consult-project-extra-find :which-key "quick switch")
-    "p h" '(consult-project-extra-find :which-key "quick switch")))
+    "SPC" '(consult-project-extra-find :wk "quick switch")
+    "p h" '(consult-project-extra-find :wk "quick switch")))
 
 ;; Add meta information to mini buffer completion candidates
 (use-package marginalia
@@ -510,7 +509,7 @@ there the start of the visual line"
 (use-package vterm-toggle
   :general
   (leader-keys
-    "o t" '(vterm-toggle :which-key "terminal")))
+    "o t" '(vterm-toggle :wk "terminal")))
 
 ;; FIXME: Some magic so we can build Magit
 ;; SEE: https://github.com/progfolio/elpaca/issues/216
@@ -535,10 +534,10 @@ there the start of the visual line"
   (add-hook 'after-save-hook 'magit-after-save-refresh-status)
   :general
   (leader-keys
-    "g" '(:ignore t :which-key "git")
-    "g <escape>" '(keyboard-quit :which-key t)
-    "g g" '(magit-status :which-key "status")
-    "g l" '(magit-log :which-key "log"))
+    "g"          '(:ignore t :wk "git")
+    "g <escape>" '(keyboard-quit :wk t)
+    "g g"        '(magit-status :wk "status")
+    "g l"        '(magit-log :wk "log"))
   (general-nmap
     "<escape>" #'transient-quit-one))
 
@@ -550,12 +549,12 @@ there the start of the visual line"
 (use-package helpful
   :general
   (leader-keys
-    "h"   '(:ignore t :which-key "help")
-    "h f" '(helpful-callable :which-key "callable")
-    "h v" '(helpful-variable :which-key "variable")
-    "h k" '(helpful-key :which-key "key")
-    "h x" '(helpful-command :which-key "command")
-    "h d" '(helpful-at-point :which-key "at point")))
+    "h"   '(:ignore t :wk "help")
+    "h f" '(helpful-callable :wk "callable")
+    "h v" '(helpful-variable :wk "variable")
+    "h k" '(helpful-key :wk "key")
+    "h x" '(helpful-command :wk "command")
+    "h d" '(helpful-at-point :wk "at point")))
 
 ;; Replace doc view with pdf tools
 (use-package pdf-tools
