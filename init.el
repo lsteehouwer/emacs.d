@@ -302,7 +302,8 @@ there the start of the visual line"
       (when (<= starting-point (point))
         (evil-beginning-of-visual-line))))
 
-  (setq evil-want-keybinding nil
+  (setq evil-echo-state nil
+        evil-want-keybinding nil
         evil-backspace-join-lines t
         evil-respect-visual-line-mode t)
   (if (fboundp 'undo-redo)
