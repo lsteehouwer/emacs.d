@@ -288,10 +288,10 @@ bottom of the buffer"
   (general-define-key
    :keymaps keymaps
    :states states
-   "M-RET"        #'split-window-right
-   "M-<return>"   #'split-window-right
-   "M-<S-RET>"    #'split-window-below
-   "M-<S-return>" #'split-window-below
+   "M-RET"        #'ls/split-window-right-and-rebalance
+   "M-<return>"   #'ls/split-window-right-and-rebalance
+   "M-<S-RET>"    #'ls/split-window-below-and-rebalance
+   "M-<S-return>" #'ls/split-window-below-and-rebalance
    "M-h"          #'windmove-left
    "M-j"          #'windmove-down
    "M-k"          #'windmove-up
