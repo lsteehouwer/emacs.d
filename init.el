@@ -627,7 +627,9 @@ there the start of the visual line"
   :general
   (leader-keys
     "u"   '(:ignore t :wk "ui")
-    "u b" '(ls/toggle-bold-face :wk "toggle face boldness"))
+    "u l" '(hl-line-mode :wk "toggle line highlight")
+    "u b" '(ls/toggle-bold-face :wk "toggle face boldness")
+    "u t" '(consult-theme :wk "pick a theme"))
   :init
   (set-face-attribute 'default nil
                       :weight 'normal
