@@ -259,6 +259,26 @@ bottom of the buffer"
   :init
   (setq zoom-window-mode-line-color "DarkGreen"))
 
+(defun ls/split-window-right-and-rebalance ()
+  "Split the current window into two side-by-side windows, and
+ rebalance all windows"
+  (interactive)
+  (split-window-right)
+  (balance-windows))
+
+(defun ls/split-window-below-and-rebalance ()
+  "Split the current window into two above and below each other,
+ and rebalance all windows"
+  (interactive)
+  (split-window-below)
+  (balance-windows))
+
+(defun ls/delete-window-and-rebalance ()
+  "Delete the current window and rebalance the windows left behind"
+  (interactive)
+  (delete-window)
+  (balance-windows))
+
 ;; Setup i3-like key bindings. I prefer a master-stack layout like in DWM, but
 ;; the only package I know of that achieves this, edwina, does not integrate
 ;; well with other packages that open and close windows. So, i3 it is.
@@ -278,7 +298,7 @@ bottom of the buffer"
    "M-J"          #'windmove-swap-states-down
    "M-K"          #'windmove-swap-states-up
    "M-L"          #'windmove-swap-states-right
-   "M-Q"          #'delete-window
+   "M-Q"          #'ls/delete-window-and-rebalance
    "M-O"          #'zoom-window-zoom))
 
 (add-hook 'elpaca-after-init-hook (ls/setup-i3-keys))
