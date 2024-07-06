@@ -94,6 +94,8 @@
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   (setq byte-compile-warnings nil
         ring-bell-function #'ignore)
+  ;; While a rare occurence, running a command during another is quite useful
+  (setq enable-recursive-minibuffers t)
   ;; Disable both backup and lock files
   (setq create-lockfiles nil
         make-backup-files nil)
