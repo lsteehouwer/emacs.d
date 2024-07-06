@@ -256,9 +256,6 @@ bottom of the buffer"
   (setq split-width-threshold 160
         split-height-threshold nil))
 
-(use-package windmove
-  :ensure nil)
-
 (use-package zoom-window
   :init
   (setq zoom-window-mode-line-color "DarkGreen"))
