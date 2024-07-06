@@ -698,18 +698,20 @@ there the start of the visual line"
 
 ;; Custom mode line format
 (setq-default mode-line-format
-            '("%e"
-              mode-line-front-space
-              (:eval (format "[%s]" (ls/evil-state-acronymn)))
-              "  "
-              mode-line-mule-info
-              mode-line-client
-              mode-line-modified
-              mode-line-remote
-              "   "
-              "%12b%5I"
-              "   "
-              (vc-mode vc-mode)))
+              '("%e"
+                mode-line-front-space
+                (:eval (format "[%s]" (ls/evil-state-acronymn)))
+                "  "
+                mode-line-mule-info
+                mode-line-client
+                mode-line-modified
+                mode-line-remote
+                "   "
+                "%12b"
+                "   "
+                (vc-mode vc-mode)
+                "   "
+                minions-mode-line-modes))
 
 (defun ls/setup-modeline (&rest r)
   (when (facep 'mode-line)
@@ -742,8 +744,9 @@ makes no distinction between the different kinds of visual states"
 
 ;; Hide all of the various minor modes behind a simple menu in the mode line
 (use-package minions
-  :commands minions-mode
-  :init (minions-mode +1))
+  :demand
+  :config
+  (setq minions-mode-line-delimiters '()))
 
 ;; Give "lesser" buffers like *scratch*, terms, and dired a different background
 ;; to differentiate them from "normal" buffers.
