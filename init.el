@@ -382,9 +382,8 @@ there the start of the visual line"
           auto-insert-alist ())
     (dolist (fname (directory-files insert-dir nil
                                     directory-files-no-dot-files-regexp))
-      (let* ((mode-name (file-name-base fname))
-             (mode-str  (concat mode-name "-mode"))
-             (mode      (intern mode-str)))
+      (let* ((mode-str (concat fname "-mode"))
+             (mode     (intern mode-str)))
         (push `(,mode . ,fname) auto-insert-alist))))
   (auto-insert-mode +1))
 
