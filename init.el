@@ -713,16 +713,19 @@ there the start of the visual line"
 (defun ls/setup-modeline (&rest r)
   (when (facep 'mode-line)
     (set-face-attribute 'mode-line nil
+                        :inherit 'default
                         :background nil
                         :overline t
                         :box nil))
   (when (facep 'mode-line-active)
     (set-face-attribute 'mode-line-active nil
+                        :inherit 'mode-line
                         :background nil
                         :overline t
                         :box nil))
   (when (facep 'mode-line-inactive)
     (set-face-attribute 'mode-line-inactive nil
+                        :inherit 'mode-line
                         :background nil
                         :overline t
                         :box nil)))
