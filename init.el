@@ -770,6 +770,33 @@ makes no distinction between the different kinds of visual states"
 
 ;; LANG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Eldoc is a built-in tool that shows documentation. Typically it does this by
+;; putting a lot of text in the echo area. I find this too distracting, so I
+;; disable it. Instead, I use eldoc box, which renders the documentation in a
+;; little box at point, but only on demand
+(use-package eldoc
+  :ensure nil
+  :config
+  (setq eldoc-idle-delay 0.2
+        eldoc-display-functions '(eldoc-display-in-buffer)))
+
+(use-package eldoc-box
+  :general
+  (leader-keys
+    "l l" '(eldoc-box-help-at-point :wk "describe")))
+
+;; Eglot is the built-in LSP-client. It's basic, but I don't need more.
+(use-package eglot
+  :ensure nil
+  :commands eglot
+  :general
+  (leader-keys
+    "l r" '(eglot-rename :wk "rename"))
+  :config
+  (setq eglot-autoshutdown t
+        eglot-report-progress t)
+  :hook ((ruby-mode ruby-ts-mode) . eglot-ensure))
+
 ;; Recent versions of Emacs come with tree sitter support built in. This is
 ;; nice, but I'm not too happy about how much manual action it takes to install
 ;; language grammars. The function below improves the situation quite a bit, but
