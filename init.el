@@ -245,8 +245,11 @@ bottom of the buffer"
 (use-package frame
   :ensure nil
   :init
+  (setq window-divider-default-places 'right-only
+        window-divider-default-right-width 1)
   ;; blinking cursors only distract
   (blink-cursor-mode -1)
+  (window-divider-mode)
   (setq frame-inhibit-implied-resize t)) ;; performance improvement
 
 (use-package window
@@ -387,7 +390,9 @@ there the start of the visual line"
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
-  :hook (prog-mode . hl-line-mode))
+  :hook (prog-mode . hl-line-mode)
+  :config
+  (setq hl-line-sticky-flag nil))
 
 ;; Highlight TODO, HACK, FIXME, etc.
 (use-package hl-todo
@@ -715,20 +720,23 @@ there the start of the visual line"
     (set-face-attribute 'mode-line nil
                         :inherit 'default
                         :background nil
-                        :overline t
-                        :box nil))
+                        :overline nil
+                        :underline nil
+                        :box '(:line-width (0 . 1))))
   (when (facep 'mode-line-active)
     (set-face-attribute 'mode-line-active nil
                         :inherit 'mode-line
                         :background nil
-                        :overline t
-                        :box nil))
+                        :overline nil
+                        :underline nil
+                        :box '(:line-width (0 . 1))))
   (when (facep 'mode-line-inactive)
     (set-face-attribute 'mode-line-inactive nil
                         :inherit 'mode-line
                         :background nil
-                        :overline t
-                        :box nil)))
+                        :overline nil
+                        :underline nil
+                        :box '(:line-width (0 . 1)))))
 
 (defun ls/evil-state-acronymn ()
   "Describe the current evil state in a single letter. This function
