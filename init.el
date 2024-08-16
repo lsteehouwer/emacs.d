@@ -766,16 +766,6 @@ makes no distinction between the different kinds of visual states"
 (use-package nerd-icons)
 (use-package all-the-icons)
 
-;; Pulse the current line upon certain operations, particularly large move
-;; operations and window switching
-(use-package pulsar
-  :demand
-  :config
-  (setq pulsar-delay 0.05
-        pulsar-iterations 10
-        pulsar-face 'pulsar-magenta)
-  (pulsar-global-mode))
-
 ;; LANG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Eldoc is a built-in tool that shows documentation. Typically it does this by
