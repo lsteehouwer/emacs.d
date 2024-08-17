@@ -255,7 +255,7 @@ bottom of the buffer"
 (use-package window
   :ensure nil
   :init
-  (set-window-fringes nil 16 16 nil t)
+  (fringe-mode '(24 . 0))
   (setq split-width-threshold 160
         split-height-threshold nil))
 
