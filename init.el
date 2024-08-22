@@ -520,7 +520,6 @@ there the start of the visual line"
 ;; shot. In the meantime I've had to pin vterm to a specific version otherwise
 ;; it will not cooperate with solaire mode.
 (use-package vterm
-  :hook (vterm-mode . hide-mode-line-mode)
   :ensure (:pin t :ref "94e2b0b2b4a750e7907dacd5b4c0584900846dd1")
   :init
   (setq vterm-timer-delay 0.0
@@ -745,10 +744,6 @@ makes no distinction between the different kinds of visual states"
 
 (add-hook 'elpaca-after-init-hook #'ls/setup-modeline)
 (advice-add 'consult-theme :after #'ls/setup-modeline)
-
-;; In some modes it makes no sense to show a mode line. This package provides
-;; that capability
-(use-package hide-mode-line)
 
 ;; Hide all of the various minor modes behind a simple menu in the mode line
 (use-package minions
