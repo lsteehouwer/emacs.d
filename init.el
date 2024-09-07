@@ -163,10 +163,6 @@ bottom of the buffer"
     (add-to-list 'native-comp-eln-load-path
                  (expand-file-name "eln" ls/cache-directory))))
 
-(use-package simple
-  :ensure nil
-  :init (column-number-mode +1))
-
 (use-package mouse
   :ensure nil
   :init (when (and (>= emacs-major-version 29) (display-graphic-p))
@@ -204,7 +200,7 @@ bottom of the buffer"
   :ensure nil
   :general
   (leader-keys
-    "d" '(:ignore t :wk "dired")
+    "d"   '(:ignore t :wk "dired")
     "d d" '(dired-jump :wk "open current dir")
     "d D" '(dired-jump-other-window :wk "open current dir other window"))
   :init (setq dired-auto-revert-buffer t
@@ -258,10 +254,6 @@ bottom of the buffer"
   (fringe-mode '(24 . 0))
   (setq split-width-threshold 160
         split-height-threshold nil))
-
-(use-package zoom-window
-  :init
-  (setq zoom-window-mode-line-color "DarkGreen"))
 
 (defun ls/split-window-right-and-rebalance ()
   "Split the current window into two side-by-side windows, and
@@ -345,7 +337,7 @@ there the start of the visual line"
   :config
   (evil-collection-init))
 
-;; Show the number of search candidates in the mini bufer
+;; Show the number of search candidates in the mini buffer
 (use-package evil-anzu
   :after evil
   :demand
