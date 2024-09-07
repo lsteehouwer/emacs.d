@@ -252,6 +252,9 @@ bottom of the buffer"
   :ensure nil
   :init
   (fringe-mode '(24 . 0))
+  (add-hook 'minibuffer-setup-hook #'(lambda ()
+                                       (progn (set-window-fringes nil 0)
+                                              (set-window-margins nil 2 2))))
   (setq split-width-threshold 160
         split-height-threshold nil))
 
