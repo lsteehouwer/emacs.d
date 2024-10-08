@@ -531,25 +531,15 @@ there the start of the visual line"
   (leader-keys
     "o t" '(vterm-toggle :wk "terminal")))
 
-;; FIXME: Some magic so we can build Magit
-;; SEE: https://github.com/progfolio/elpaca/issues/216
-(defun +elpaca-unload-seq (e)
-  (and (featurep 'seq) (unload-feature 'seq t))
-  (elpaca--continue-build e))
-
-(defun +elpaca-seq-build-steps ()
-  (append (butlast (if (file-exists-p (expand-file-name "seq" elpaca-builds-directory))
-                       elpaca--pre-built-steps elpaca-build-steps))
-          (list '+elpaca-unload-seq 'elpaca--activate-package)))
-
-(use-package seq :ensure `(seq :build ,(+elpaca-seq-build-steps)))
-
 ;; Magit is the best git client. Full stop.
+(use-package transient
+  :ensure (:pin t :ref "v0.7.6"))
+
 (use-package magit
   :init
-  (setq transient-levels-file (concat ls/cache-dir  "levels.el")
-        transient-values-file (concat ls/cache-dir  "values.el")
-        transient-history-file (concat ls/cache-dir "history.el"))
+  (setq transient-levels-file (concat ls/cache-directory  "levels.el")
+        transient-values-file (concat ls/cache-directory  "values.el")
+        transient-history-file (concat ls/cache-directory "history.el"))
   :config
   (add-hook 'after-save-hook 'magit-after-save-refresh-status)
   :general
