@@ -405,7 +405,8 @@ there the start of the visual line"
 
 ;; Highlight characters past the fill-column mark
 (use-package column-enforce-mode
-  :hook (prog-mode . column-enforce-mode))
+  :hook (prog-mode . column-enforce-mode)
+  :config (setq column-enforce-column nil))
 
 ;; Auto update buffers when other programs modify them. Setup stolen from DOOM
 ;; emacs.
@@ -806,8 +807,10 @@ own version of treesitter."
   :mode "\\.rb\\'"
   :mode "Rakefile\\'"
   :mode "Gemfile\\'"
-  :config
-  (ls/treesit-install-language 'ruby))
+  :init
+  (advice-add 'ruby-ts-mode :before (lambda () (ls/treesit-install-language 'ruby)))
+  :hook
+  ((ruby-mode ruby-ts-mode) . (lambda () (setq-local fill-column 100))))
 
 (use-package yard-mode
   :hook ((ruby-mode ruby-ts-mode) . yard-mode))
