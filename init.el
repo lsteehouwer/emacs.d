@@ -3,12 +3,12 @@
 (defvar ls/templates-directory (concat user-emacs-directory "templates/")
   "Directory used for templates")
 
-(defvar elpaca-installer-version 0.7)
+(defvar elpaca-installer-version 0.9)
 (defvar elpaca-directory (expand-file-name "elpaca/" ls/cache-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                              :ref nil :depth 1
+                              :ref nil :depth 1 :inherit ignore
                               :files (:defaults "elpaca-test.el" (:exclude "extensions"))
                               :build (:not elpaca--activate-package)))
 (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
@@ -18,20 +18,19 @@
   (add-to-list 'load-path (if (file-exists-p build) build repo))
   (unless (file-exists-p repo)
     (make-directory repo t)
-    (when (< emacs-major-version 28) (require 'subr-x))
     (condition-case-unless-debug err
-        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
-                                                 ,@(when-let ((depth (plist-get order :depth)))
-                                                     (list (format "--depth=%d" depth) "--no-single-branch"))
-                                                 ,(plist-get order :repo) ,repo))))
-                 ((zerop (call-process "git" nil buffer t "checkout"
-                                       (or (plist-get order :ref) "--"))))
-                 (emacs (concat invocation-directory invocation-name))
-                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                 ((require 'elpaca))
-                 ((elpaca-generate-autoloads "elpaca" repo)))
+        (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                  ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                  ,@(when-let* ((depth (plist-get order :depth)))
+                                                      (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                  ,(plist-get order :repo) ,repo))))
+                  ((zerop (call-process "git" nil buffer t "checkout"
+                                        (or (plist-get order :ref) "--"))))
+                  (emacs (concat invocation-directory invocation-name))
+                  ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                  ((require 'elpaca))
+                  ((elpaca-generate-autoloads "elpaca" repo)))
             (progn (message "%s" (buffer-string)) (kill-buffer buffer))
           (error "%s" (with-current-buffer buffer (buffer-string))))
       ((error) (warn "%s" err) (delete-directory repo 'recursive))))
@@ -65,14 +64,6 @@
 
 (elpaca-wait)
 
-;; (use-package esup)
-
-;; (use-package benchmark-init
-;;   :defer nil
-;;   :ensure t
-;;   :init (benchmark-init/activate)
-;;   :hook (after-init-hook . benchmark-init/deactivate))
-
 (use-package emacs
   :ensure nil
   :init
@@ -86,7 +77,8 @@
         inhibit-compacting-font-caches t
         redisplay-skip-fontification-on-input t
         read-process-output-max (* 256 1024)
-        use-file-dialog nil)
+        use-file-dialog nil
+        load-prefer-newer nil)
   ;; Tell me when you're collecting garbage so I can keep an eye on it
   (setq garbage-collection-messages t)
   ;; Don't get in my way, Emacs
@@ -243,9 +235,7 @@ bottom of the buffer"
   :init
   (setq window-divider-default-places 'right-only
         window-divider-default-right-width 1)
-  ;; blinking cursors only distract
-  (blink-cursor-mode -1)
-  (window-divider-mode)
+  (blink-cursor-mode -1) ;; blinking cursors only distract
   (setq frame-inhibit-implied-resize t)) ;; performance improvement
 
 (use-package window
@@ -533,24 +523,21 @@ there the start of the visual line"
     "o t" '(vterm-toggle :wk "terminal")))
 
 ;; Magit is the best git client. Full stop.
-(use-package transient
-  :ensure (:pin t :ref "v0.7.6"))
 
 (use-package magit
-  :init
-  (setq transient-levels-file (concat ls/cache-directory  "levels.el")
-        transient-values-file (concat ls/cache-directory  "values.el")
-        transient-history-file (concat ls/cache-directory "history.el"))
-  :config
-  (add-hook 'after-save-hook 'magit-after-save-refresh-status)
+  :ensure (:host github :repo "magit/magit" :tag "v4.2.0")
+  :config (add-hook 'after-save-hook 'magit-after-save-refresh-status)
   :general
   (leader-keys
-    "g"          '(:ignore t :wk "git")
+    "g"          '(:ignore t :wk "git/vcs")
     "g <escape>" '(keyboard-quit :wk t)
     "g g"        '(magit-status :wk "status")
     "g l"        '(magit-log :wk "log"))
   (general-nmap
     "<escape>" #'transient-quit-one))
+
+(use-package transient
+  :ensure (:host github :repo "magit/transient" :tag "v0.8.2"))
 
 (use-package which-key
   :init
@@ -658,30 +645,11 @@ there the start of the visual line"
   (setq display-line-numbers-grow-only t
         display-line-numbers-width-start t))
 
-;; A collection of nice themes
+;; Some nice themes
+(use-package adwaita-dark-theme)
 (use-package doom-themes
-  :init
-  (load-theme 'doom-molokai t))
-
-;; But the modus themes are also very nice
-(use-package modus-themes
-  ;; Use the remote one over the built-in one since it's more up to date, and
-  ;; makes the themes available to older Emacs versions.
-  :ensure (:repo "https://github.com/protesilaos/modus-themes")
-  :init
-  (setq modus-themes-common-palette-overrides
-        '((fringe unspecified)
-          (bg-line-number-active bg-hl-line)
-          (fg-line-number-inactive fg-dim)
-          (bg-line-number-inactive unspecified))))
-
-(use-package ef-themes
-  :init
-  (load-theme 'ef-light t))
-
-(use-package standard-themes)
-
-(use-package ample-theme)
+  :init (load-theme 'doom-one t))
+(use-package color-theme-sanityinc-tomorrow)
 
 ;; Custom mode line format
 (setq-default mode-line-format
@@ -694,42 +662,16 @@ there the start of the visual line"
                 mode-line-modified
                 mode-line-remote
                 "   "
-                "%12b"
+                "%12b (%l, %c)"
                 "   "
                 (vc-mode vc-mode)
                 "   "
                 minions-mode-line-modes))
 
-(defun ls/setup-modeline (&rest r)
-  (when (facep 'mode-line)
-    (set-face-attribute 'mode-line nil
-                        :inherit 'default
-                        :background nil
-                        :overline nil
-                        :underline nil
-                        :box '(:line-width (0 . 1))))
-  (when (facep 'mode-line-active)
-    (set-face-attribute 'mode-line-active nil
-                        :inherit 'mode-line
-                        :background nil
-                        :overline nil
-                        :underline nil
-                        :box '(:line-width (0 . 1))))
-  (when (facep 'mode-line-inactive)
-    (set-face-attribute 'mode-line-inactive nil
-                        :inherit 'mode-line
-                        :background nil
-                        :overline nil
-                        :underline nil
-                        :box '(:line-width (0 . 1)))))
-
 (defun ls/evil-state-acronymn ()
   "Describe the current evil state in a single letter. This function
 makes no distinction between the different kinds of visual states"
   (capitalize (substring (symbol-name evil-state) 0 1)))
-
-(add-hook 'elpaca-after-init-hook #'ls/setup-modeline)
-(advice-add 'consult-theme :after #'ls/setup-modeline)
 
 ;; Hide all of the various minor modes behind a simple menu in the mode line
 (use-package minions
@@ -848,15 +790,16 @@ own version of treesitter."
 (use-package org
   :ensure nil
   :hook (org-mode . org-indent-mode)
+  :init
+  (setq org-modules '(org-tempo))
   :config
   (ls/setup-i3-keys :keymaps 'org-mode-map)
-  (require 'org-tempo)
   (setq org-latex-pdf-process (list "latexmk -pdf -shell-escape %f")))
 
-(use-package org-superstar
-  :hook (org-mode . org-superstar-mode)
-  :config
-  (setq org-superstar-headline-bullets-list '("◉")))
+(use-package org-modern
+  :hook (org-mode . org-modern-mode)
+  :init (setq org-modern-hide-stars t
+              org-modern-keyword t))
 
 (use-package ox-latex
   :ensure nil
