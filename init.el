@@ -105,12 +105,11 @@
         scroll-margin 5
         scroll-preserve-screen-position t
         auto-window-vscroll nil)
-  ;; Set column width to 80. Archaic but still the de-facto standard
-  (setq-default fill-column 80)
+  ;; Set column width to 100.
+  (setq-default fill-column 100)
   ;; Single space after a sentence end, please.
   (setq-default sentence-end-double-space nil)
-  ;; Use spaces not tabs, but if tabs are required show them as 2
-  ;; spaces wide
+  ;; Use spaces not tabs, but if tabs are required show them as 2 spaces wide
   (setq-default indent-tabs-mode nil
 		            tab-width 2)
   ;; Functions for use in hooks (below)
@@ -129,8 +128,7 @@ Function lifted from Doom Emacs."
     (setq-local show-trailing-whitespace t))
 
   (defun ls/indicate-empty-lines ()
-    "Place a symbol in the fringe to indicate empty lines at the
-bottom of the buffer"
+    "Place a symbol in the fringe to indicate empty lines at the bottom of the buffer"
     (interactive)
     (setq-local indicate-empty-lines t))
   :hook ((before-save . ls/trim-trailing-newlines)
@@ -149,8 +147,7 @@ bottom of the buffer"
         inhibit-splash-screen t
         inhibit-startup-echo-area-message user-login-name)
   (advice-add #'display-startup-echo-area-message :override #'ignore)
-  ;; On Emacs versions supporting native compilation, place the compiled files
-  ;; in the cache dir
+  ;; On Emacs versions supporting native compilation, place the compiled files in the cache dir
   (when (boundp 'native-comp-eln-load-path)
     (add-to-list 'native-comp-eln-load-path
                  (expand-file-name "eln" ls/cache-directory))))
@@ -160,7 +157,7 @@ bottom of the buffer"
   :init (when (and (>= emacs-major-version 29) (display-graphic-p))
           (context-menu-mode)))
 
-;; FILES AND PROJECTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FILES AND PROJECTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package files
   :ensure nil
@@ -178,8 +175,7 @@ bottom of the buffer"
     (interactive)
     (find-file (concat user-emacs-directory "init.el"))))
 
-;; I never use custom, but in the off chance that I do need it, don't clutter
-;; my init.el
+;; I never use custom, but in the off chance that I do need it, don't clutter my init.el
 (use-package cus-edit
   :ensure nil
   :init
@@ -228,7 +224,7 @@ bottom of the buffer"
   :config
   (setq save-place-file (concat ls/cache-directory "places")))
 
-;; FRAMES AND WINDOWS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; FRAMES AND WINDOWS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package frame
   :ensure nil
@@ -242,9 +238,9 @@ bottom of the buffer"
   :ensure nil
   :init
   (fringe-mode '(24 . 0))
-  (add-hook 'minibuffer-setup-hook #'(lambda ()
-                                       (progn (set-window-fringes nil 0)
-                                              (set-window-margins nil 2 2))))
+  (add-hook 'minibuffer-setup-hook
+            #'(lambda () (progn (set-window-fringes nil 0)
+                                (set-window-margins nil 2 2))))
   (setq split-width-threshold 160
         split-height-threshold nil))
 
@@ -256,8 +252,7 @@ bottom of the buffer"
   (balance-windows))
 
 (defun ls/split-window-below-and-rebalance ()
-  "Split the current window into two above and below each other,
- and rebalance all windows"
+  "Split the current window into two above and below each other, and rebalance all windows"
   (interactive)
   (split-window-below)
   (balance-windows))
@@ -268,9 +263,9 @@ bottom of the buffer"
   (delete-window)
   (balance-windows))
 
-;; Setup i3-like key bindings. I prefer a master-stack layout like in DWM, but
-;; the only package I know of that achieves this, edwina, does not integrate
-;; well with other packages that open and close windows. So, i3 it is.
+;; Setup i3-like key bindings. I prefer a master-stack layout like in DWM, but the only package I
+;; know of that achieves this, edwina, does not integrate well with other packages that open and
+;; close windows. So, i3 it is.
 (cl-defun ls/setup-i3-keys (&key (keymaps 'global) (states 'normal))
   (general-define-key
    :keymaps keymaps
@@ -292,7 +287,11 @@ bottom of the buffer"
 
 (add-hook 'elpaca-after-init-hook (ls/setup-i3-keys))
 
-;; EDITOR BEHAVIOR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; EDITOR BEHAVIOR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package indent
+  :ensure nil
+  :config (setq tab-always-indent 'complete))
 
 ;; Vim emulation
 (use-package evil
@@ -303,8 +302,7 @@ bottom of the buffer"
     "L" #'evil-end-of-visual-line)
   :init
   (defun ls/beginning-of-line-dwim ()
-    "Move to the first text character of the line, or when already
-there the start of the visual line"
+    "Move to the first text character of the line, or the start of the visual line if already there"
     (interactive)
     (let ((starting-point (point)))
       (evil-first-non-blank-of-visual-line)
@@ -398,8 +396,7 @@ there the start of the visual line"
   :hook (prog-mode . column-enforce-mode)
   :config (setq column-enforce-column nil))
 
-;; Auto update buffers when other programs modify them. Setup stolen from DOOM
-;; emacs.
+;; Auto update buffers when other programs modify them. Setup stolen from DOOM emacs.
 (use-package autorevert
   :ensure nil
   :hook ((focus-in after-save) . ls/auto-revert-buffers-h)
@@ -423,8 +420,7 @@ there the start of the visual line"
       (with-current-buffer buffer
         (ls/auto-revert-buffer-h)))))
 
-;; Don't slow to a crawl when loading files with very long lines, e.g. minified
-;; javascript
+;; Don't slow to a crawl when loading files with very long lines, e.g. minified javascript
 (use-package so-long
   :ensure nil
   :hook (after-init . global-so-long-mode))
@@ -435,7 +431,7 @@ there the start of the visual line"
   :config
   (setq imenu-max-item-length 500))
 
-;; COMPLETIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; COMPLETIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; A better IComplete vertical
 (use-package vertico
@@ -499,12 +495,11 @@ there the start of the visual line"
               company-minimum-prefix-length 3)
   :hook ((prog-mode org-mode) . company-mode))
 
-;; TOOLS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; TOOLS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; VTERM is probably still the best terminal emulator available in Emacs right
-;; now, but eat seems to be making ways. Perhaps in the future I'll give it a
-;; shot. In the meantime I've had to pin vterm to a specific version otherwise
-;; it will not cooperate with solaire mode.
+;; VTERM is probably still the best terminal emulator available in Emacs right now, but eat seems to
+;; be making ways. Perhaps in the future I'll give it a shot. In the meantime I've had to pin vterm
+;; to a specific version otherwise it will not cooperate with solaire mode.
 (use-package vterm
   :ensure (:pin t :ref "94e2b0b2b4a750e7907dacd5b4c0584900846dd1")
   :init
@@ -569,18 +564,16 @@ there the start of the visual line"
   (setq editorconfig-trim-whitespaces-mode 'ws-butler-mode)
   (editorconfig-mode +1))
 
-;; UI ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; UI ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; These UI elements were already disabled in early-init.el, effectively
-;; preventing them from ever showing up. However, Emacs' internal state still
-;; says these UI elements are active. By disabling these modes now we rectify
-;; this state.
+;; These UI elements were already disabled in early-init.el, effectively preventing them from ever
+;; showing up. However, Emacs' internal state still says these UI elements are active. By disabling
+;; these modes now we rectify this state.
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
 (use-package dashboard
-  :hook (elpaca-after-init-hook . dashboard-initialize)
   :init (dashboard-setup-startup-hook)
   :config
   (setq dashboard-center-content t
@@ -669,8 +662,8 @@ there the start of the visual line"
                 minions-mode-line-modes))
 
 (defun ls/evil-state-acronymn ()
-  "Describe the current evil state in a single letter. This function
-makes no distinction between the different kinds of visual states"
+  "Describe the current evil state in a single letter. This function makes no distinction between
+the different kinds of visual states"
   (capitalize (substring (symbol-name evil-state) 0 1)))
 
 ;; Hide all of the various minor modes behind a simple menu in the mode line
@@ -679,8 +672,8 @@ makes no distinction between the different kinds of visual states"
   :config
   (setq minions-mode-line-delimiters '()))
 
-;; Give "lesser" buffers like *scratch*, terms, and dired a different background
-;; to differentiate them from "normal" buffers.
+;; Give "lesser" buffers like *scratch*, terms, and dired a different background to differentiate
+;; them from "normal" buffers.
 (use-package solaire-mode
   :init
   (solaire-global-mode +1))
@@ -689,12 +682,11 @@ makes no distinction between the different kinds of visual states"
 (use-package nerd-icons)
 (use-package all-the-icons)
 
-;; LANG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LANG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Eldoc is a built-in tool that shows documentation. Typically it does this by
-;; putting a lot of text in the echo area. I find this too distracting, so I
-;; disable it. Instead, I use eldoc box, which renders the documentation in a
-;; little box at point, but only on demand
+;; Eldoc is a built-in tool that shows documentation. Typically it does this by putting a lot of
+;; text in the echo area. I find this too distracting, so I disable it. Instead, I use eldoc box,
+;; which renders the documentation in a little box at point, but only on demand
 (use-package eldoc
   :ensure nil
   :config
