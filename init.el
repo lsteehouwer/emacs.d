@@ -667,7 +667,7 @@ the different kinds of visual states"
 (use-package minions
   :demand
   :config
-  (setq minions-mode-line-delimiters '()))
+  (setq minions-mode-line-delimiters nil))
 
 ;; Give "lesser" buffers like *scratch*, terms, and dired a different background to differentiate
 ;; them from "normal" buffers.
