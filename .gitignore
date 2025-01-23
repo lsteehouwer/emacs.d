@@ -1,7 +1,9 @@
 # Files
+recentf
 .yas-compiled-snippets.el
 
 # Directories
 .cache/
 eln-cache/
 tree-sitter/
+transient/
