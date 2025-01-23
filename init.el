@@ -707,41 +707,16 @@ the different kinds of visual states"
         eglot-report-progress t)
   :hook ((ruby-mode ruby-ts-mode) . eglot-ensure))
 
-;; Recent versions of Emacs come with tree sitter support built in. This is
-;; nice, but I'm not too happy about how much manual action it takes to install
-;; language grammars. The function below improves the situation quite a bit, but
-;; it's still not quite where I want it to be.
-(use-package treesit
-  :ensure nil
-  :when (fboundp 'treesit-install-language-grammar)
-  :init
-  (defun ls/treesit-install-language (lang)
-    "Install treesitter language LANG
-
-The built-in treesitter package has the capability of outputting
-compiled files to directories other than \"tree-sitter\", but
-unfortunately it does not expose this via any configuration
-option. I'd rather put up with it for now, than maintaining my
-own version of treesitter."
-    (require 'treesit)
-    (let* ((url    (concat "https://github.com/tree-sitter/tree-sitter-" (symbol-name lang)))
-           (record (list lang url)))
-      (when (not (member record treesit-language-source-alist))
-        (push record treesit-language-source-alist)))
-    (when (not (treesit-language-available-p lang))
-      (treesit-install-language-grammar lang))))
-
-;; Ruby
-(use-package ruby-ts-mode
-  :ensure nil
-  :when (fboundp 'treesit-install-language-grammar)
-  :mode "\\.rb\\'"
-  :mode "Rakefile\\'"
-  :mode "Gemfile\\'"
-  :init
-  (advice-add 'ruby-ts-mode :before (lambda () (ls/treesit-install-language 'ruby)))
-  :hook
-  ((ruby-mode ruby-ts-mode) . (lambda () (setq-local fill-column 100))))
+;; Recent versions of Emacs come with tree sitter support built in. This is nice, but I'm not too
+;; happy about how much manual action it takes to install language grammars. The function below
+;; improves the situation quite a bit, but it's still not quite where I want it to be.
+(use-package treesit-auto
+  :ensure (:host github :repo "renzmann/treesit-auto")
+  :demand
+  :config
+  (setq treesit-auto-install t)
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode +1))
 
 (use-package yard-mode
   :hook ((ruby-mode ruby-ts-mode) . yard-mode))
