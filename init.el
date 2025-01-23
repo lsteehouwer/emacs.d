@@ -599,22 +599,15 @@ Function lifted from Doom Emacs."
     "u b" '(ls/toggle-bold-face :wk "toggle face boldness")
     "u t" '(consult-theme :wk "pick a theme"))
   :init
-  (set-face-attribute 'default nil
-                      :weight 'normal
-                      :width  'normal
-                      :slant  'normal
-                      :font (font-spec :family "Commit Mono"
-                                       :size 10.5
-                                       :weight 'normal))
-  (set-face-attribute 'fixed-pitch nil
-                      :family 'unspecified
-                      :inherit 'default)
-  (set-face-attribute 'variable-pitch nil
-                      :weight 'normal
-                      :width  'normal
-                      :slant  'normal
-                      :font (font-spec :family "Liberation Sans"
-                                       :size 11))
+  (set-face-attribute
+   'default nil
+   :font (font-spec :family "Terminess Nerd Font" :size 12.0 :weight 'bold))
+  (set-face-attribute
+   'fixed-pitch nil
+   :family 'unspecified :inherit 'default)
+  (set-face-attribute
+   'variable-pitch nil
+   :font (font-spec :family "Liberation Sans" :size 11))
   (defun ls/toggle-bold-face ()
     "Toggle the boldness of the default face"
     (interactive)
