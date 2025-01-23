@@ -102,7 +102,7 @@
   (setq default-input-method nil)
   ;; Smooth scrolling behavior
   (setq scroll-conservatively 101
-        scroll-margin 5
+        scroll-margin 0
         scroll-preserve-screen-position t
         auto-window-vscroll nil)
   ;; Set column width to 100.
@@ -286,6 +286,10 @@ Function lifted from Doom Emacs."
    "M-O"          #'zoom-window-zoom))
 
 (add-hook 'elpaca-after-init-hook (ls/setup-i3-keys))
+
+(use-package ultra-scroll
+  :ensure '(:host github :repo "jdtsmith/ultra-scroll")
+  :init (ultra-scroll-mode +1))
 
 ;; EDITOR BEHAVIOR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
