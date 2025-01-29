@@ -367,11 +367,13 @@ Function lifted from Doom Emacs."
     (setq auto-insert-query nil
           auto-insert-directory insert-dir
           auto-insert-alist ())
-    (dolist (fname (directory-files insert-dir nil
-                                    directory-files-no-dot-files-regexp))
-      (let* ((mode-str (concat fname "-mode"))
-             (mode     (intern mode-str)))
-        (push `(,mode . ,fname) auto-insert-alist))))
+    (dolist (fname (directory-files insert-dir nil directory-files-no-dot-files-regexp))
+      (let* ((base-mode-string       (concat fname "-mode"))
+             (treesitter-mode-string (concat fname "-ts-mode"))
+             (base-mode              (intern base-mode-string))
+             (treesitter-mode        (intern treesitter-mode-string)))
+        (push `(,base-mode . ,fname) auto-insert-alist)
+        (push `(,treesitter-mode . ,fname) auto-insert-alist))))
   (auto-insert-mode +1))
 
 ;; Highlight the current line
