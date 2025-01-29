@@ -601,11 +601,12 @@ Function lifted from Doom Emacs."
     "u"   '(:ignore t :wk "ui")
     "u l" '(hl-line-mode :wk "toggle line highlight")
     "u b" '(ls/toggle-bold-face :wk "toggle face boldness")
-    "u t" '(consult-theme :wk "pick a theme"))
+    "u t" '(consult-theme :wk "pick a theme")
+    "u f" '(ls/pick-font :wk "switch font"))
   :init
   (set-face-attribute
    'default nil
-   :font (font-spec :family "Terminess Nerd Font" :size 12.0 :weight 'bold))
+   :font (font-spec :family "Fantasque Sans Mono" :size 12.0 :weight 'normal))
   (set-face-attribute
    'fixed-pitch nil
    :family 'unspecified :inherit 'default)
@@ -617,7 +618,11 @@ Function lifted from Doom Emacs."
     (interactive)
     (if (face-bold-p 'default nil t)
         (make-face-unbold 'default)
-      (make-face-bold 'default))))
+      (make-face-bold 'default)))
+  (defun ls/pick-font (font-name)
+    "Set the default font"
+    (interactive (list (completing-read "Select font: " (font-family-list) nil t)))
+    (set-face-attribute 'default nil :family font-name)))
 
 ;; Set keybindings for resizing faces
 (use-package face-remap
