@@ -504,10 +504,8 @@ Function lifted from Doom Emacs."
 ;; TOOLS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; VTERM is probably still the best terminal emulator available in Emacs right now, but eat seems to
-;; be making ways. Perhaps in the future I'll give it a shot. In the meantime I've had to pin vterm
-;; to a specific version otherwise it will not cooperate with solaire mode.
+;; be making ways. Perhaps in the future I'll give it a shot.
 (use-package vterm
-  :ensure (:pin t :ref "94e2b0b2b4a750e7907dacd5b4c0584900846dd1")
   :init
   (setq vterm-timer-delay 0.0
         vterm-max-scrollback 50000
