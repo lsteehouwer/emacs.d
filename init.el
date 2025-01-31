@@ -522,7 +522,6 @@ Function lifted from Doom Emacs."
     "o t" '(vterm-toggle :wk "terminal")))
 
 ;; Magit is the best git client. Full stop.
-
 (use-package magit
   :ensure (:host github :repo "magit/magit" :tag "v4.2.0")
   :config (add-hook 'after-save-hook 'magit-after-save-refresh-status)
@@ -759,10 +758,10 @@ the different kinds of visual states"
 (use-package org
   :ensure nil
   :hook (org-mode . org-indent-mode)
-  :init
-  (setq org-modules '(org-tempo))
   :config
   (ls/setup-i3-keys :keymaps 'org-mode-map)
+  (dolist (module '(org-tempo ox-md))
+    (add-to-list 'org-modules module))
   (setq org-latex-pdf-process (list "latexmk -pdf -shell-escape %f")))
 
 (use-package org-modern
