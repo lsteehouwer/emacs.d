@@ -584,6 +584,7 @@ Function lifted from Doom Emacs."
         dashboard-icon-type 'all-the-icons
         dashboard-path-style 'truncate-beginning
         dashboard-path-max-length 45
+        dashboard-projects-switch-function 'dired
         dashboard-vertically-center-content t
         dashboard-items '((projects . 5)
                           (recents . 5))
