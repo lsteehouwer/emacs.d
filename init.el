@@ -761,8 +761,10 @@ the different kinds of visual states"
   :hook (org-mode . org-indent-mode)
   :config
   (ls/setup-i3-keys :keymaps 'org-mode-map)
-  (dolist (module '(org-tempo ox-md))
+  (dolist (module '(org-tempo))
     (add-to-list 'org-modules module))
+  (dolist (backend '(md))
+    (add-to-list 'org-export-backends backend))
   (setq org-latex-pdf-process (list "latexmk -pdf -shell-escape %f")))
 
 (use-package org-modern
