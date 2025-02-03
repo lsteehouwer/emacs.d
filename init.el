@@ -351,6 +351,19 @@ Function lifted from Doom Emacs."
                       "M-i" #'drag-stuff-up
                       "M-o" #'drag-stuff-down))
 
+;; Finding stuff through TAGS is often good enough
+(use-package etags
+  :ensure nil
+  :hook
+  (find-file . ls/set-tags-table-maybe)
+  :config
+  (defun ls/set-tags-table-maybe ()
+    "Try setting the TAGS table if available"
+    (when-let ((project   (project-current))
+                (tags_path (file-name-concat (project-root project) "TAGS"))
+                (file-exists-p tags_path))
+      (setq-local tags-file-name tags_path))))
+
 ;; Snippets
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode)
