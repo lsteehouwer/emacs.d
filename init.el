@@ -489,10 +489,12 @@ Function lifted from Doom Emacs."
     "o b" '(consult-buffer :wk "open buffer")
     "o B" '(consult-buffer-other-window :wk "open buffer other window"))
   :init
-  (setq vertico-multiform-commands
-        '((consult-ripgrep buffer)))
+  (setq vertico-multiform-commands '((consult-ripgrep buffer)))
   (setq consult-preview-partial-size 0
-        consult-line-start-from-top t))
+        consult-line-start-from-top t)
+  :config
+  (setq xref-show-xrefs-function 'consult-xref
+        xref-show-definitions-function 'consult-xref))
 
 ;; Quickly switch between all files and open buffers within a project
 (use-package consult-project-extra
