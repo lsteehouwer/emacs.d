@@ -54,15 +54,16 @@
         use-package-compute-statistics nil))
 
 ;; Use general for registering key bindings
-(elpaca general
+(use-package general
+  :ensure (:wait t)
+  :demand t
+  :config
   (general-evil-setup)
   (general-create-definer leader-keys
     :states '(normal insert visual emacs)
     :keymaps 'override
     :prefix "SPC"
     :global-prefix "C-SPC"))
-
-(elpaca-wait)
 
 (use-package emacs
   :ensure nil
@@ -618,16 +619,20 @@ Function lifted from Doom Emacs."
     "u b" '(ls/toggle-bold-face :wk "toggle face boldness")
     "u t" '(consult-theme :wk "pick a theme")
     "u f" '(ls/pick-font :wk "switch font"))
+  (general-nmap
+    "C-+" 'ls/increase-font-size
+    "C--" 'ls/decrease-font-size)
   :init
+  (defvar ls/base-font-size 12.0 "Font size of default font")
   (set-face-attribute
    'default nil
-   :font (font-spec :family "Fantasque Sans Mono" :size 12.0 :weight 'normal))
+   :font (font-spec :family "Fantasque Sans Mono" :size ls/base-font-size :weight 'normal))
   (set-face-attribute
    'fixed-pitch nil
    :family 'unspecified :inherit 'default)
   (set-face-attribute
    'variable-pitch nil
-   :font (font-spec :family "Liberation Sans" :size 11))
+   :font (font-spec :family "Liberation Sans" :size ls/base-font-size))
   (defun ls/toggle-bold-face ()
     "Toggle the boldness of the default face"
     (interactive)
@@ -637,15 +642,15 @@ Function lifted from Doom Emacs."
   (defun ls/pick-font (font-name)
     "Set the default font"
     (interactive (list (completing-read "Select font: " (font-family-list) nil t)))
-    (set-face-attribute 'default nil :family font-name)))
-
-;; Set keybindings for resizing faces
-(use-package face-remap
-  :ensure nil
-  :general
-  (general-nmap
-    "C-+" 'text-scale-increase
-    "C--" 'text-scale-decrease))
+    (set-face-attribute 'default nil :family font-name))
+  (defun ls/increase-font-size ()
+    (interactive)
+    (setq ls/base-font-size (+ ls/base-font-size 0.5))
+    (set-face-attribute 'default nil :font (font-spec :size ls/base-font-size)))
+  (defun ls/decrease-font-size ()
+    (interactive)
+    (setq ls/base-font-size (- ls/base-font-size 0.5))
+    (set-face-attribute 'default nil :font (font-spec :size ls/base-font-size))))
 
 ;; Line numbers in programming environments please
 (use-package display-line-numbers
