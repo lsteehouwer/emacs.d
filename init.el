@@ -622,7 +622,9 @@ Function lifted from Doom Emacs."
     "u f" '(ls/pick-font :wk "switch font"))
   (general-nmap
     "C-+" 'ls/increase-font-size
-    "C--" 'ls/decrease-font-size)
+    "C-=" 'ls/increase-font-size
+    "C--" 'ls/decrease-font-size
+    "C-_" 'ls/decrease-font-size))
   :init
   (defvar ls/base-font-size 12.0 "Font size of default font")
   (set-face-attribute
