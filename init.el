@@ -362,9 +362,17 @@ Function lifted from Doom Emacs."
   (defun ls/set-tags-table-maybe ()
     "Try setting the TAGS table if available"
     (when-let ((project   (project-current))
-                (tags_path (file-name-concat (project-root project) "TAGS"))
-                (file-exists-p tags_path))
+               (tags_path (file-name-concat (project-root project) "TAGS"))
+               (file-exists-p tags_path))
       (setq-local tags-file-name tags_path))))
+
+;; xref for jumping around references
+(use-package xref
+  :ensure nil
+  :general
+  (general-nmap
+    "g r" #'xref-find-references
+    "M-." #'xref-go-forward))
 
 ;; Snippets
 (use-package yasnippet
