@@ -66,6 +66,8 @@
     :prefix "SPC"
     :global-prefix "C-SPC"))
 
+(elpaca-process-queues)
+
 (use-package emacs
   :ensure nil
   :init
@@ -539,12 +541,11 @@ Function lifted from Doom Emacs."
         confirm-kill-processes nil)
   :config
   (ls/setup-i3-keys :keymaps 'vterm-mode-map
-                    :states '(normal insert)))
-
-(use-package vterm-toggle
+                    :states '(normal insert))
   :general
   (leader-keys
-    "o t" '(vterm-toggle :wk "terminal")))
+    :states 'normal
+    "o t" '(vterm-other-window :wk "terminal")))
 
 ;; Magit is the best git client. Full stop.
 (use-package magit
@@ -676,6 +677,7 @@ Function lifted from Doom Emacs."
 (use-package doom-themes
   :init (load-theme 'doom-one t))
 (use-package color-theme-sanityinc-tomorrow)
+(use-package doric-themes)
 
 ;; Custom mode line format
 (setq-default mode-line-format
@@ -773,20 +775,14 @@ the different kinds of visual states"
 
 (use-package haml-mode)
 
-;; Yaml
 (use-package yaml-mode)
 
-;; Coffeescript
 (use-package coffee-mode)
 
-;; Docker
 (use-package dockerfile-mode
   :mode "Dockerfile\\'")
 
-;; Terraform
 (use-package terraform-mode)
-
-(use-package groovy-mode)
 
 (use-package markdown-mode)
 
