@@ -295,6 +295,11 @@ Function lifted from Doom Emacs."
   :ensure '(:host github :repo "jdtsmith/ultra-scroll")
   :init (ultra-scroll-mode +1))
 
+;; Don't make window contents jump up when opening the minibuffer
+(use-package stillness-mode
+  :ensure '(:host github :repo "neeasade/stillness-mode.el")
+  :init (stillness-mode))
+
 ;; EDITOR BEHAVIOR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package indent
