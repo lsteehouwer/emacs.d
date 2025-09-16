@@ -248,24 +248,9 @@ Function lifted from Doom Emacs."
   (setq split-width-threshold 160
         split-height-threshold nil))
 
-(defun ls/split-window-right-and-rebalance ()
-  "Split the current window into two side-by-side windows, and
- rebalance all windows"
-  (interactive)
-  (split-window-right)
-  (balance-windows))
-
-(defun ls/split-window-below-and-rebalance ()
-  "Split the current window into two above and below each other, and rebalance all windows"
-  (interactive)
-  (split-window-below)
-  (balance-windows))
-
-(defun ls/delete-window-and-rebalance ()
-  "Delete the current window and rebalance the windows left behind"
-  (interactive)
-  (delete-window)
-  (balance-windows))
+;; Balance windows after splitting and deleting
+(advice-add 'split-window :after (lambda (&rest _) (balance-windows)))
+(advice-add 'delete-window :after (lambda (&rest _) (balance-windows)))
 
 ;; Setup i3-like key bindings. I prefer a master-stack layout like in DWM, but the only package I
 ;; know of that achieves this, edwina, does not integrate well with other packages that open and
@@ -274,10 +259,10 @@ Function lifted from Doom Emacs."
   (general-define-key
    :keymaps keymaps
    :states states
-   "M-RET"        #'ls/split-window-right-and-rebalance
-   "M-<return>"   #'ls/split-window-right-and-rebalance
-   "M-<S-RET>"    #'ls/split-window-below-and-rebalance
-   "M-<S-return>" #'ls/split-window-below-and-rebalance
+   "M-RET"        #'split-window-right
+   "M-<return>"   #'split-window-right
+   "M-<S-RET>"    #'split-window-below
+   "M-<S-return>" #'split-window-below
    "M-h"          #'windmove-left
    "M-j"          #'windmove-down
    "M-k"          #'windmove-up
@@ -286,7 +271,7 @@ Function lifted from Doom Emacs."
    "M-J"          #'windmove-swap-states-down
    "M-K"          #'windmove-swap-states-up
    "M-L"          #'windmove-swap-states-right
-   "M-Q"          #'ls/delete-window-and-rebalance
+   "M-Q"          #'delete-window
    "M-O"          #'zoom-window-zoom))
 
 (add-hook 'elpaca-after-init-hook (ls/setup-i3-keys))
