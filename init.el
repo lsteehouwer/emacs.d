@@ -546,13 +546,13 @@ Function lifted from Doom Emacs."
     "g"          '(:ignore t :wk "git/vcs")
     "g <escape>" '(keyboard-quit :wk t)
     "g g"        '(magit-status :wk "status")
-    "g l"        '(magit-log :wk "log"))
-  (general-nmap
-    "<escape>" #'transient-quit-one))
+    "g l"        '(magit-log :wk "log")))
 
 (use-package transient
   :ensure (:host github :repo "magit/transient" :tag "v0.10.0")
-  :demand t)
+  :demand t
+  :general
+  (:keymaps 'transient-map "<escape>" #'transient-quit-one))
 
 (use-package which-key
   :init
