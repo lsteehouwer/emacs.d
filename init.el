@@ -583,6 +583,60 @@ Function lifted from Doom Emacs."
   (setq editorconfig-trim-whitespaces-mode 'ws-butler-mode)
   (editorconfig-mode +1))
 
+;; Notemaking with denote
+(use-package denote
+  :demand t
+  :general
+  (leader-keys
+    "n"   '(:ignore t :wk "notes")
+    "n n" '(denote :wk "new note")))
+
+;; Search through notes using xapian
+(use-package xeft
+  :after denote
+  :general
+  (leader-keys
+    "n s" '(xeft :wk "search notes"))
+  (general-nmap xeft-mode-map
+    "C-j"      'xeft-next
+    "C-n"      'xeft-next
+    "j"        'xeft-next
+    "n"        'xeft-next
+    "C-k"      'xeft-previous
+    "k"        'xeft-previous
+    "C-p"      'xeft-previous
+    "p"        'xeft-previous
+    "<escape>" 'ls/xeft-kill-buffer
+    "q"        'ls/xeft-kill-buffer)
+  (general-imap xeft-mode-map
+    "C-j"   'ls/xeft-normal-state-and-next
+    "C-n"   'ls/xeft-normal-state-and-next
+    "C-k"   'ls/xeft-normal-state-and-previous
+    "C-p"   'ls/xeft-normal-state-and-previous)
+  :config
+  (defun ls/xeft-normal-state-and-next ()
+    "Enter evil's normal state and move to the next xeft entry"
+    (interactive)
+    (evil-normal-state)
+    (xeft-next))
+  (defun ls/xeft-normal-state-and-previous ()
+    "Enter evil's normal state and move to the previous xeft entry"
+    (interactive)
+    (evil-normal-state)
+    (xeft-previous))
+  (defun ls/xeft-kill-buffer ()
+    "Kill the xeft buffer"
+    (interactive)
+    (kill-buffer (xeft--buffer)))
+  ;; Enter insert state when entering the first line
+  (advice-add 'xeft-previous :after
+              (lambda (&rest _)
+                (when (eq (line-number-at-pos) 1)
+                  (evil-append-line 1))))
+  (setq xeft-directory denote-directory
+        xeft-database (file-name-concat xeft-directory "xeft.db"))
+  (evil-set-initial-state 'xeft-mode 'insert))
+
 ;; UI ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; These UI elements were already disabled in early-init.el, effectively preventing them from ever
