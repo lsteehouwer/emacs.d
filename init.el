@@ -294,8 +294,7 @@ Function lifted from Doom Emacs."
 ;; Vim emulation
 (use-package evil
   :general
-  (general-define-key
-    :states 'motion
+  (general-mmap
     "H" #'ls/beginning-of-line-dwim
     "L" #'evil-end-of-visual-line)
   :init
