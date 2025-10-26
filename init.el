@@ -369,7 +369,7 @@ Function lifted from Doom Emacs."
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode)
   :init
-  (setq yasnippet-snippets-dir (concat ls/templates-directory "snippets")))
+  (setopt yas-snippet-dirs `(,(concat ls/templates-directory "snippets"))))
 
 (use-package yasnippet-snippets
   :after yasnippet)
