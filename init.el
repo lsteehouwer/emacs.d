@@ -49,8 +49,7 @@
 ;; Install use-package and configure it
 (elpaca elpaca-use-package
   (elpaca-use-package-mode)
-  (setq use-package-always-defer t
-        use-package-always-ensure t
+  (setq use-package-always-ensure t
         use-package-expand-minimally t
         use-package-compute-statistics nil))
 
@@ -68,12 +67,8 @@
 
 (elpaca-process-queues)
 
-(use-package emacs
-  :ensure nil
-  :init
-  ;; Some performance improvements
-  (setq initial-scratch-message nil
-        auto-mode-case-fold nil
+;; Default settings
+(setopt auto-mode-case-fold nil
         bidi-inhibit-bpa t
         highlight-nonselected-windows nil
         fast-but-imprecise-scrolling t
@@ -82,79 +77,67 @@
         redisplay-skip-fontification-on-input t
         read-process-output-max (* 256 1024)
         use-file-dialog nil
-        load-prefer-newer nil)
-  ;; Tell me when you're collecting garbage so I can keep an eye on it
-  (setq garbage-collection-messages t)
-  ;; Don't get in my way, Emacs
-  (defalias 'yes-or-no-p 'y-or-n-p)
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  (setq byte-compile-warnings nil
-        ring-bell-function #'ignore)
-  ;; While a rare occurence, running a command during another is quite useful
-  (setq enable-recursive-minibuffers t)
-  ;; Disable both backup and lock files
-  (setq create-lockfiles nil
-        make-backup-files nil)
-  ;; Don't clutter whatever directory I'm working in with autosave files
-  (setq auto-save-default t
+        load-prefer-newer nil
+        garbage-collection-messages t
+        enable-recursive-minibuffers t
+        create-lockfiles nil
+        make-backup-files nil
+        byte-compile-warnings nil
+        ring-bell-function #'ignore
+        auto-save-default t
         auto-save-include-big-deletions t
-        auto-save-list-file-prefix (concat ls/cache-directory "autosave/"))
-  ;; Delete by moving to trash.
-  (setq delete-by-moving-to-trash t)
-  ;; UTF-8 everywhere please
-  (set-language-environment "UTF-8")
-  (setq default-input-method nil)
-  ;; Smooth scrolling behavior
-  (setq scroll-conservatively 101
-        scroll-margin 0
-        scroll-preserve-screen-position t
-        auto-window-vscroll nil)
-  ;; Set column width to 100.
-  (setq-default fill-column 100)
-  ;; Single space after a sentence end, please.
-  (setq-default sentence-end-double-space nil)
-  ;; Use spaces not tabs, but if tabs are required show them as 2 spaces wide
-  (setq-default indent-tabs-mode nil
-		            tab-width 2)
-  ;; Functions for use in hooks (below)
-  (defun ls/trim-trailing-newlines ()
-    "Remove empty lines at the end of the buffer.
-
-Function lifted from Doom Emacs."
-    (interactive)
-    (save-excursion
-      (goto-char (point-max))
-      (delete-blank-lines)))
-
-  (defun ls/indicate-trailing-whitespace ()
-    "Indicate trailing whitespace"
-    (interactive)
-    (setq-local show-trailing-whitespace t))
-
-  (defun ls/indicate-empty-lines ()
-    "Place a symbol in the fringe to indicate empty lines at the bottom of the buffer"
-    (interactive)
-    (setq-local indicate-empty-lines t))
-  :hook ((before-save . ls/trim-trailing-newlines)
-         (prog-mode   . ls/indicate-trailing-whitespace)
-         (prog-mode   . ls/indicate-empty-lines))
-  :general
-  (leader-keys
-    "<escape>" '(keyboard-quit :wk t)
-    "o"        '(:ignore t :wk "open")))
-
-;; Startup tweaks
-(use-package startup
-  :ensure nil
-  :init
-  (setq initial-major-mode 'fundamental-mode
+        auto-save-list-file-prefix (concat ls/cache-directory "autosave/")
+        delete-by-moving-to-trash t
+        default-input-method nil
+        auto-window-vscroll nil
+        use-short-answers t
+        initial-major-mode 'fundamental-mode
+        initial-scratch-message nil
         inhibit-splash-screen t
         inhibit-startup-echo-area-message user-login-name)
-  (advice-add #'display-startup-echo-area-message :override #'ignore)
-  ;; On Emacs versions supporting native compilation, place the compiled files in the cache dir
-  (when (boundp 'native-comp-eln-load-path)
-    (add-to-list 'native-comp-eln-load-path
-                 (expand-file-name "eln" ls/cache-directory))))
+
+(advice-add #'display-startup-echo-area-message :override #'ignore)
+
+;; On Emacs versions supporting native compilation, place the compiled files in the cache dir
+(when (boundp 'native-comp-eln-load-path)
+  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln" ls/cache-directory)))
+
+(setq-default fill-column 100
+              sentence-end-double-space nil
+              indent-tabs-mode nil
+		          tab-width 2)
+
+;; UTF-8 everywhere please
+(set-language-environment "UTF-8")
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(leader-keys
+  "<escape>" '(keyboard-quit :wk t)
+  "o"        '(:ignore t :wk "open"))
+
+;; Functions for use in hooks (below)
+(defun ls/trim-trailing-newlines ()
+  "Remove empty lines at the end of the buffer.
+
+Function lifted from Doom Emacs."
+  (interactive)
+  (save-excursion
+    (goto-char (point-max))
+    (delete-blank-lines)))
+
+(defun ls/indicate-trailing-whitespace ()
+  "Indicate trailing whitespace"
+  (interactive)
+  (setq-local show-trailing-whitespace t))
+
+(defun ls/indicate-empty-lines ()
+  "Place a symbol in the fringe to indicate empty lines at the bottom of the buffer"
+  (interactive)
+  (setq-local indicate-empty-lines t))
+
+(add-hook 'before-save-hook 'ls/trim-trailing-newlines)
+(add-hook 'prog-mode-hook 'ls/indicate-trailing-whitespace)
+(add-hook 'prog-mode-hook 'ls/indicate-empty-lines)
 
 (use-package mouse
   :ensure nil
@@ -230,6 +213,11 @@ Function lifted from Doom Emacs."
 
 ;; FRAMES AND WINDOWS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; non-package-related settings
+(setopt scroll-conservatively 101
+        scroll-margin 0
+        scroll-preserve-screen-position t)
+
 (use-package frame
   :ensure nil
   :init
@@ -287,9 +275,8 @@ Function lifted from Doom Emacs."
 
 ;; EDITOR BEHAVIOR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package indent
-  :ensure nil
-  :config (setq tab-always-indent 'complete))
+;; general settings
+(setq tab-always-indent 'complete)
 
 ;; Vim emulation
 (use-package evil
@@ -374,7 +361,7 @@ Function lifted from Doom Emacs."
 (use-package yasnippet-snippets
   :after yasnippet)
 
-(use-package auto-insert-mode
+(use-package autoinsert
   :ensure nil
   :init
   (let ((insert-dir (concat ls/templates-directory "auto-insert/")))
