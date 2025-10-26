@@ -249,8 +249,8 @@ Function lifted from Doom Emacs."
         split-height-threshold nil))
 
 ;; Balance windows after splitting and deleting
-(advice-add 'split-window :after (lambda (&rest _) (balance-windows)))
-(advice-add 'delete-window :after (lambda (&rest _) (balance-windows)))
+(dolist (func '(split-window split-window-sensibly delete-window))
+  (advice-add func :after (lambda (&rest _) (balance-windows))))
 
 ;; Setup i3-like key bindings. I prefer a master-stack layout like in DWM, but the only package I
 ;; know of that achieves this, edwina, does not integrate well with other packages that open and
