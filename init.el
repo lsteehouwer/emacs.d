@@ -67,7 +67,9 @@
 
 (elpaca-process-queues)
 
-;; Default settings
+;; GENERAL SETTINGS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; performance tweaks
 (setopt auto-mode-case-fold nil
         bidi-inhibit-bpa t
         highlight-nonselected-windows nil
@@ -75,26 +77,24 @@
         idle-update-delay 1.0
         inhibit-compacting-font-caches t
         redisplay-skip-fontification-on-input t
-        read-process-output-max (* 256 1024)
-        use-file-dialog nil
         load-prefer-newer nil
+        read-process-output-max (* 256 1024))
+
+;; behavioral tweaks
+(setopt use-file-dialog nil
         garbage-collection-messages t
         enable-recursive-minibuffers t
-        create-lockfiles nil
-        make-backup-files nil
-        byte-compile-warnings nil
         ring-bell-function #'ignore
-        auto-save-default t
-        auto-save-include-big-deletions t
-        auto-save-list-file-prefix (concat ls/cache-directory "autosave/")
         delete-by-moving-to-trash t
+        use-short-answers t
+        byte-compile-warnings nil
         default-input-method nil
         auto-window-vscroll nil
-        use-short-answers t
-        initial-major-mode 'fundamental-mode
-        initial-scratch-message nil
+        inhibit-startup-echo-area-message user-login-name
         inhibit-splash-screen t
-        inhibit-startup-echo-area-message user-login-name)
+        create-lockfiles nil
+        initial-major-mode 'fundamental-mode
+        initial-scratch-message nil)
 
 (advice-add #'display-startup-echo-area-message :override #'ignore)
 
@@ -160,7 +160,12 @@ Function lifted from Doom Emacs."
   (defun ls/edit-emacs-init ()
     "Edit emacs configuration"
     (interactive)
-    (find-file (concat user-emacs-directory "init.el"))))
+    (find-file (concat user-emacs-directory "init.el")))
+  :config
+  (setq make-backup-files nil
+        auto-save-default t
+        auto-save-include-big-deletions t
+        auto-save-list-file-prefix (concat ls/cache-directory "autosave/")))
 
 ;; I never use custom, but in the off chance that I do need it, don't clutter my init.el
 (use-package cus-edit
@@ -580,7 +585,6 @@ Function lifted from Doom Emacs."
 
 ;; Search through notes using xapian
 (use-package xeft
-  :after denote
   :general
   (leader-keys
     "n s" '(xeft :wk "search notes"))
@@ -666,16 +670,15 @@ Function lifted from Doom Emacs."
     "C--" 'ls/decrease-font-size
     "C-_" 'ls/decrease-font-size)
   :init
-  (defvar ls/base-font-size 12.0 "Font size of default font")
-  (set-face-attribute
-   'default nil
-   :font (font-spec :family "Fantasque Sans Mono" :size ls/base-font-size :weight 'normal))
-  (set-face-attribute
-   'fixed-pitch nil
-   :family 'unspecified :inherit 'default)
-  (set-face-attribute
-   'variable-pitch nil
-   :font (font-spec :family "Liberation Sans" :size ls/base-font-size))
+  (defvar ls/base-font-size 10.5 "Font size of default font")
+  (set-face-attribute 'default nil
+                      :font (font-spec :family "iosevka nf" :size ls/base-font-size :weight 'normal))
+  (set-face-attribute 'fixed-pitch nil
+                      :family 'unspecified :inherit 'default)
+  (set-face-attribute 'fixed-pitch-serif nil
+                      :family 'unspecified :inherit 'fixed-pitch)
+  (set-face-attribute 'variable-pitch nil
+                      :font (font-spec :family "Liberation Sans" :size ls/base-font-size))
   (defun ls/toggle-bold-face ()
     "Toggle the boldness of the default face"
     (interactive)
