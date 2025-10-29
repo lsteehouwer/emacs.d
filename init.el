@@ -248,24 +248,26 @@ Function lifted from Doom Emacs."
 ;; Setup i3-like key bindings. I prefer a master-stack layout like in DWM, but the only package I
 ;; know of that achieves this, edwina, does not integrate well with other packages that open and
 ;; close windows. So, i3 it is.
-(cl-defun ls/setup-i3-keys (&key (keymaps 'global) (states 'normal))
-  (general-define-key
-   :keymaps keymaps
-   :states states
-   "M-RET"        #'split-window-right
-   "M-<return>"   #'split-window-right
-   "M-<S-RET>"    #'split-window-below
-   "M-<S-return>" #'split-window-below
-   "M-h"          #'windmove-left
-   "M-j"          #'windmove-down
-   "M-k"          #'windmove-up
-   "M-l"          #'windmove-right
-   "M-H"          #'windmove-swap-states-left
-   "M-J"          #'windmove-swap-states-down
-   "M-K"          #'windmove-swap-states-up
-   "M-L"          #'windmove-swap-states-right
-   "M-Q"          #'delete-window
-   "M-O"          #'zoom-window-zoom))
+(defun ls/setup-i3-keys (&rest kwargs)
+  (let ((keymaps (if (plist-member kwargs :keymaps) (plist-get kwargs :keymaps) '(global)))
+        (states (if (plist-member kwargs :states) (plist-get kwargs :states) '(normal))))
+    (general-define-key
+     :keymaps keymaps
+     :states states
+     "M-RET"        #'split-window-right
+     "M-<return>"   #'split-window-right
+     "M-<S-RET>"    #'split-window-below
+     "M-<S-return>" #'split-window-below
+     "M-h"          #'windmove-left
+     "M-j"          #'windmove-down
+     "M-k"          #'windmove-up
+     "M-l"          #'windmove-right
+     "M-H"          #'windmove-swap-states-left
+     "M-J"          #'windmove-swap-states-down
+     "M-K"          #'windmove-swap-states-up
+     "M-L"          #'windmove-swap-states-right
+     "M-Q"          #'delete-window
+     "M-O"          #'zoom-window-zoom)))
 
 (add-hook 'elpaca-after-init-hook (ls/setup-i3-keys))
 
