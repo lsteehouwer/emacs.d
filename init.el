@@ -115,35 +115,6 @@
   "<escape>" '(keyboard-quit :wk t)
   "o"        '(:ignore t :wk "open"))
 
-;; Functions for use in hooks (below)
-(defun ls/trim-trailing-newlines ()
-  "Remove empty lines at the end of the buffer.
-
-Function lifted from Doom Emacs."
-  (interactive)
-  (save-excursion
-    (goto-char (point-max))
-    (delete-blank-lines)))
-
-(defun ls/indicate-trailing-whitespace ()
-  "Indicate trailing whitespace"
-  (interactive)
-  (setq-local show-trailing-whitespace t))
-
-(defun ls/indicate-empty-lines ()
-  "Place a symbol in the fringe to indicate empty lines at the bottom of the buffer"
-  (interactive)
-  (setq-local indicate-empty-lines t))
-
-(add-hook 'before-save-hook 'ls/trim-trailing-newlines)
-(add-hook 'prog-mode-hook 'ls/indicate-trailing-whitespace)
-(add-hook 'prog-mode-hook 'ls/indicate-empty-lines)
-
-(use-package mouse
-  :ensure nil
-  :init (when (and (>= emacs-major-version 29) (display-graphic-p))
-          (context-menu-mode)))
-
 ;; FILES AND PROJECTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package files
@@ -282,8 +253,16 @@ Function lifted from Doom Emacs."
 
 ;; EDITOR BEHAVIOR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; general settings
-(setq tab-always-indent 'complete)
+(defun ls/trim-trailing-newlines ()
+  "Remove empty lines at the end of the buffer.
+
+Function lifted from Doom Emacs."
+  (interactive)
+  (save-excursion
+    (goto-char (point-max))
+    (delete-blank-lines)))
+
+(add-hook 'before-save-hook 'ls/trim-trailing-newlines)
 
 ;; Vim emulation
 (use-package evil
@@ -639,6 +618,23 @@ Function lifted from Doom Emacs."
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+(use-package mouse
+  :ensure nil
+  :init (when (and (>= emacs-major-version 29) (display-graphic-p))
+          (context-menu-mode)))
+
+(defun ls/indicate-trailing-whitespace ()
+  "Indicate trailing whitespace"
+  (interactive)
+  (setq-local show-trailing-whitespace t))
+(add-hook 'prog-mode-hook 'ls/indicate-trailing-whitespace)
+
+(defun ls/indicate-empty-lines ()
+  "Place a symbol in the fringe to indicate empty lines at the bottom of the buffer"
+  (interactive)
+  (setq-local indicate-empty-lines t))
+(add-hook 'prog-mode-hook 'ls/indicate-empty-lines)
+
 (use-package dashboard
   :init (dashboard-setup-startup-hook)
   :config
@@ -704,7 +700,7 @@ Function lifted from Doom Emacs."
 (use-package display-line-numbers
   :ensure nil
   :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
-  :init
+  :config
   (setq display-line-numbers-grow-only t
         display-line-numbers-width-start t))
 
