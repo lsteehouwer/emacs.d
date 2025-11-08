@@ -221,7 +221,7 @@
 ;; close windows. So, i3 it is.
 (defun ls/setup-i3-keys (&rest kwargs)
   (let ((keymaps (if (plist-member kwargs :keymaps) (plist-get kwargs :keymaps) '(global)))
-        (states (if (plist-member kwargs :states) (plist-get kwargs :states) '(normal))))
+        (states (if (plist-member kwargs :states) (plist-get kwargs :states) '(normal emacs))))
     (general-define-key
      :keymaps keymaps
      :states states
@@ -495,15 +495,14 @@ Function lifted from Doom Emacs."
 ;; VTERM is probably still the best terminal emulator available in Emacs right now, but eat seems to
 ;; be making ways. Perhaps in the future I'll give it a shot.
 (use-package vterm
-  :init
+  :config
   (setq vterm-timer-delay 0.0
         vterm-max-scrollback 50000
         vterm-always-compile-module t
         vterm-kill-buffer-on-exit t
         confirm-kill-processes nil)
-  :config
-  (ls/setup-i3-keys :keymaps 'vterm-mode-map
-                    :states '(normal insert))
+  (ls/setup-i3-keys :keymaps 'vterm-mode-map :states '(normal insert))
+  (evil-set-initial-state 'vterm-mode 'emacs)
   :general
   (leader-keys
     :states 'normal
