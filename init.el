@@ -261,7 +261,6 @@ Function lifted from Doom Emacs."
   (save-excursion
     (goto-char (point-max))
     (delete-blank-lines)))
-
 (add-hook 'before-save-hook 'ls/trim-trailing-newlines)
 
 ;; Vim emulation
@@ -314,8 +313,8 @@ Function lifted from Doom Emacs."
 (use-package drag-stuff
   :general
   (general-define-key :states 'normal
-                      "M-i" #'drag-stuff-up
-                      "M-o" #'drag-stuff-down))
+                      "C-k" #'drag-stuff-up
+                      "C-j" #'drag-stuff-down))
 
 ;; Finding stuff through TAGS is often good enough
 (use-package etags
@@ -474,7 +473,7 @@ Function lifted from Doom Emacs."
 (use-package consult-project-extra
   :general
   (leader-keys
-    :states 'normal
+    :states '(normal emacs)
     "SPC" '(consult-project-extra-find :wk "quick switch")
     "p h" '(consult-project-extra-find :wk "quick switch")))
 
@@ -501,7 +500,7 @@ Function lifted from Doom Emacs."
         vterm-always-compile-module t
         vterm-kill-buffer-on-exit t
         confirm-kill-processes nil)
-  (ls/setup-i3-keys :keymaps 'vterm-mode-map :states '(normal insert))
+  (ls/setup-i3-keys :keymaps 'vterm-mode-map :states '(normal insert emacs))
   (evil-set-initial-state 'vterm-mode 'emacs)
   :general
   (leader-keys
