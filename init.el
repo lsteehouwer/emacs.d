@@ -505,7 +505,8 @@ Function lifted from Doom Emacs."
   :general
   (leader-keys
     :states 'normal
-    "o t" '(vterm-other-window :wk "terminal")))
+    "o t" '(vterm-other-window :wk "terminal"))
+  :hook (vterm-mode . goto-address-mode))
 
 ;; Magit is the best git client. Full stop.
 (use-package magit
