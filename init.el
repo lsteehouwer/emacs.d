@@ -423,6 +423,20 @@ Function lifted from Doom Emacs."
   :config
   (setq imenu-max-item-length 500))
 
+;; Eldoc is a built-in tool that shows documentation. Typically it does this by putting a lot of
+;; text in the echo area. I find this too distracting, so I disable it. Instead, I use eldoc box,
+;; which renders the documentation in a little box at point, but only on demand
+(use-package eldoc
+  :ensure nil
+  :config
+  (setq eldoc-idle-delay 0.2
+        eldoc-display-functions '(eldoc-display-in-buffer)))
+
+(use-package eldoc-box
+  :general
+  (leader-keys
+    "l l" '(eldoc-box-help-at-point :wk "describe")))
+
 ;; COMPLETIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; A better IComplete vertical
@@ -749,20 +763,6 @@ the different kinds of visual states"
 (use-package all-the-icons)
 
 ;; LANG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Eldoc is a built-in tool that shows documentation. Typically it does this by putting a lot of
-;; text in the echo area. I find this too distracting, so I disable it. Instead, I use eldoc box,
-;; which renders the documentation in a little box at point, but only on demand
-(use-package eldoc
-  :ensure nil
-  :config
-  (setq eldoc-idle-delay 0.2
-        eldoc-display-functions '(eldoc-display-in-buffer)))
-
-(use-package eldoc-box
-  :general
-  (leader-keys
-    "l l" '(eldoc-box-help-at-point :wk "describe")))
 
 ;; Eglot is the built-in LSP-client. It's basic, but I don't need more.
 (use-package eglot
