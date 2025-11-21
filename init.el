@@ -787,6 +787,10 @@ the different kinds of visual states"
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode +1))
 
+(use-package sh-script
+  :ensure nil
+  :config (setq sh-basic-offset 2))
+
 (use-package ruby-mode
   :ensure nil
   :config (setq ruby-insert-encoding-magic-comment nil))
