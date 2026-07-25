@@ -239,8 +239,7 @@
      "M-L"          #'windmove-swap-states-right
      "M-Q"          #'delete-window
      "M-O"          #'zoom-window-zoom)))
-
-(add-hook 'elpaca-after-init-hook (ls/setup-i3-keys))
+(ls/setup-i3-keys)
 
 (use-package ultra-scroll
   :ensure '(:host github :repo "jdtsmith/ultra-scroll")
