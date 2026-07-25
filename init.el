@@ -773,7 +773,8 @@ the different kinds of visual states"
   :config
   (setq eglot-autoshutdown t
         eglot-report-progress t)
-  :hook ((ruby-mode ruby-ts-mode) . eglot-ensure))
+  :hook ((ruby-mode ruby-ts-mode c-mode c-ts-mode) . eglot-ensure)
+         (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1))))
 
 ;; Recent versions of Emacs come with tree sitter support built in. This is nice, but I'm not too
 ;; happy about how much manual action it takes to install language grammars. The function below
