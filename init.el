@@ -323,12 +323,13 @@ Function lifted from Doom Emacs."
   :hook
   (find-file . ls/set-tags-table-maybe)
   :config
+  (setq tags-add-tables nil)
   (defun ls/set-tags-table-maybe ()
-    "Try setting the TAGS table if available"
-    (when-let ((project   (project-current))
-               (tags_path (file-name-concat (project-root project) "TAGS"))
-               (file-exists-p tags_path))
-      (setq-local tags-file-name tags_path))))
+    (when-let* ((_ (not (buffer-local-value 'tags-file-name (current-buffer))))
+                (project (project-current))
+                (tags-file-path (expand-file-name "TAGS" (project-root project)))
+                (_ (file-exists-p tags-file-path)))
+      (visit-tags-table tags-file-path t))))
 
 ;; xref for jumping around references
 (use-package xref
