@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (defvar ls/cache-directory (concat user-emacs-directory ".cache/")
   "Directory used for cached files")
 (defvar ls/templates-directory (concat user-emacs-directory "templates/")
@@ -523,7 +525,7 @@ Function lifted from Doom Emacs."
 
 ;; Magit is the best git client. Full stop.
 (use-package magit
-  :ensure (:host github :repo "magit/magit" :tag "v4.4.0")
+  :ensure (:host github :repo "magit/magit" :tag "v4.7.0")
   :config (add-hook 'after-save-hook 'magit-after-save-refresh-status)
   :general
   (leader-keys
@@ -533,7 +535,7 @@ Function lifted from Doom Emacs."
     "g l"        '(magit-log :wk "log")))
 
 (use-package transient
-  :ensure (:host github :repo "magit/transient" :tag "v0.10.0")
+  :ensure (:host github :repo "magit/transient" :tag "v0.13.6")
   :demand t
   :general
   (:keymaps 'transient-map "<escape>" #'transient-quit-one))
