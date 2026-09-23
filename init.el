@@ -160,7 +160,8 @@
               dired-dwim-target t
               dired-clean-up-buffers-too t
               dired-clean-confirm-killing-deleted-buffers nil
-              dired-listing-switches "-lah --group-directories-first"))
+              dired-listing-switches "-lah --group-directories-first")
+  :config (ls/setup-i3-keys :keymaps 'dired-mode-map))
 
 ;; Spice up dired just a little bit
 (use-package diredfl
