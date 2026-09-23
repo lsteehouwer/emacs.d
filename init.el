@@ -1,10 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-(defvar ls/cache-directory (concat user-emacs-directory ".cache/")
-  "Directory used for cached files")
-(defvar ls/templates-directory (concat user-emacs-directory "templates/")
-  "Directory used for templates")
-
 (defvar elpaca-installer-version 0.12)
 (defvar elpaca-directory (expand-file-name "elpaca/" ls/cache-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
