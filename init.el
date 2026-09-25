@@ -47,6 +47,7 @@
 (elpaca elpaca-use-package
   (elpaca-use-package-mode)
   (setq use-package-always-ensure t
+        use-package-always-defer t
         use-package-expand-minimally t
         use-package-compute-statistics nil))
 
@@ -830,16 +831,12 @@ the different kinds of visual states"
     (add-to-list 'org-modules module))
   (dolist (backend '(md))
     (add-to-list 'org-export-backends backend))
-  (setq org-latex-pdf-process (list "latexmk -pdf -shell-escape %f")))
+  (setq org-latex-pdf-process (list "latexmk -pdf -shell-escape %f")
+        org-latex-listings 'minted
+        org-latex-minted-options '(("linenos" "true")))
+  (add-to-list 'org-latex-packages-alist '("" "minted" t ("pdflatex")) t))
 
 (use-package org-modern
   :hook (org-mode . org-modern-mode)
   :init (setq org-modern-hide-stars t
               org-modern-keyword t))
-
-(use-package ox-latex
-  :ensure nil
-  :config
-  (setq org-latex-listings 'minted
-        org-latex-minted-options '(("linenos" "true")))
-  (add-to-list 'org-latex-packages-alist '("" "minted" t ("pdflatex")) t))
