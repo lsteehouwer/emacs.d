@@ -798,21 +798,9 @@ the different kinds of visual states"
 (use-package yard-mode
   :hook ((ruby-mode ruby-ts-mode) . yard-mode))
 
-(use-package rubocop
-  :hook ((ruby-mode ruby-ts-mode) . rubocop-mode))
-
-(use-package rvm
-  :hook ((ruby-mode ruby-ts-mode) . rvm-activate-corresponding-ruby))
-
-(use-package rspec-mode)
-
-(use-package feature-mode)
-
 (use-package haml-mode)
 
 (use-package yaml-mode)
-
-(use-package coffee-mode)
 
 (use-package dockerfile-mode
   :mode "Dockerfile\\'")
