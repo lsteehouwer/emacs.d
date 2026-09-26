@@ -96,10 +96,6 @@
 
 (advice-add #'display-startup-echo-area-message :override #'ignore)
 
-;; On Emacs versions supporting native compilation, place the compiled files in the cache dir
-(when (boundp 'native-comp-eln-load-path)
-  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln" ls/cache-directory)))
-
 (setq-default fill-column 100
               sentence-end-double-space nil
               indent-tabs-mode nil
