@@ -132,9 +132,7 @@
     (find-file (concat user-emacs-directory "init.el")))
   :config
   (setq make-backup-files nil
-        auto-save-default t
-        auto-save-include-big-deletions t
-        auto-save-list-file-prefix (concat ls/cache-directory "autosave/")))
+        auto-save-default nil))
 
 ;; I never use custom, but in the off chance that I do need it, don't clutter my init.el
 (use-package cus-edit
