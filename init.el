@@ -770,16 +770,18 @@ the different kinds of visual states"
   :hook ((ruby-mode ruby-ts-mode c-mode c-ts-mode) . eglot-ensure)
          (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1))))
 
-;; Recent versions of Emacs come with tree sitter support built in. This is nice, but I'm not too
-;; happy about how much manual action it takes to install language grammars. The function below
-;; improves the situation quite a bit, but it's still not quite where I want it to be.
-(use-package treesit-auto
-  :ensure (:host github :repo "renzmann/treesit-auto")
-  :demand
+        eglot-report-progress t))
+  ;; :hook ((ruby-mode ruby-ts-mode c-mode c-ts-mode) . eglot-ensure)
+  ;;        (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1))))
+
+(use-package treesit
   :config
-  (setq treesit-auto-install t)
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode +1))
+  (when (not (version< "31.1" emacs-version))
+    (let ((treesitter-grammar-directory (expand-file-name "treesitter" ls/cache-directory)))
+      (when (not (file-directory-p treesitter-grammar-directory))
+        (make-directory treesitter-grammer-directory)))
+    (setq treesit-auto-install-grammar 'always))
+  (setq treesit-extra-load-path (list (expand-file-name "treesitter" ls/cache-directory))))
 
 (use-package sh-script
   :ensure nil
