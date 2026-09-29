@@ -775,6 +775,7 @@ the different kinds of visual states"
   ;;        (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1))))
 
 (use-package treesit
+  :ensure nil
   :config
   (when (not (version< "31.1" emacs-version))
     (let ((treesitter-grammar-directory (expand-file-name "treesitter" ls/cache-directory)))
