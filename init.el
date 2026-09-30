@@ -776,13 +776,14 @@ the different kinds of visual states"
 
 (use-package treesit
   :ensure nil
+  :if (and (fboundp 'treesit-available-p) (treesit-available-p))
   :config
-  (when (not (version< "31.1" emacs-version))
-    (let ((treesitter-grammar-directory (expand-file-name "treesitter" ls/cache-directory)))
-      (when (not (file-directory-p treesitter-grammar-directory))
-        (make-directory treesitter-grammer-directory)))
+  (unless (version< "31.1" emacs-version)
     (setq treesit-auto-install-grammar 'always))
-  (setq treesit-extra-load-path (list (expand-file-name "treesitter" ls/cache-directory))))
+  (let ((treesitter-grammar-directory (expand-file-name "treesitter" ls/cache-directory)))
+    (unless (file-directory-p treesitter-grammar-directory)
+      (make-directory treesitter-grammar-directory))
+    (setq treesit-extra-load-path (list treesitter-grammar-directory))))
 
 (use-package sh-script
   :ensure nil
