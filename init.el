@@ -711,11 +711,8 @@ Function lifted from Doom Emacs."
         display-line-numbers-width-start t))
 
 ;; Some nice themes
-(use-package adwaita-dark-theme)
 (use-package doom-themes
   :init (load-theme 'doom-one t))
-(use-package color-theme-sanityinc-tomorrow)
-(use-package doric-themes)
 
 ;; Custom mode line format
 (setq-default mode-line-format
