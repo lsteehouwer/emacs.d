@@ -783,7 +783,15 @@ the different kinds of visual states"
   (let ((treesitter-grammar-directory (expand-file-name "treesitter" ls/cache-directory)))
     (unless (file-directory-p treesitter-grammar-directory)
       (make-directory treesitter-grammar-directory))
-    (setq treesit-extra-load-path (list treesitter-grammar-directory))))
+    (setq treesit-extra-load-path (list treesitter-grammar-directory)))
+  (when (< emacs-major-version 31)
+    (advice-add 'treesit--install-language-grammar-1
+                :filter-args
+                (lambda (args)
+                  (let ((out-dir (car args)))
+                    (if (and (null out-dir) treesit-extra-load-path)
+                        (cons (expand-file-name (car treesit-extra-load-path)) (cdr args))
+                      args))))))
 
 (use-package sh-script
   :ensure nil
