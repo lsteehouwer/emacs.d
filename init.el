@@ -506,7 +506,7 @@ Function lifted from Doom Emacs."
   (setq vterm-timer-delay 0.0
         vterm-max-scrollback 50000
         vterm-always-compile-module t
-        vterm-kill-buffer-on-exit t
+        vterm-exit-functions `(,(lambda (buffer _event) (quit-windows-on buffer)))
         confirm-kill-processes nil)
   (ls/setup-i3-keys :keymaps 'vterm-mode-map :states '(normal insert emacs))
   (evil-set-initial-state 'vterm-mode 'emacs)
