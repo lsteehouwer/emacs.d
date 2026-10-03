@@ -198,16 +198,17 @@
 (use-package window
   :ensure nil
   :init
+  (setq window-combination-resize t
+        split-width-threshold 160
+        split-height-threshold nil))
+
+(use-package fringe
+  :ensure nil
+  :init
   (fringe-mode '(24 . 0))
   (add-hook 'minibuffer-setup-hook
             #'(lambda () (progn (set-window-fringes nil 0)
-                                (set-window-margins nil 2 2))))
-  (setq split-width-threshold 160
-        split-height-threshold nil))
-
-;; Balance windows after splitting and deleting
-(dolist (func '(split-window split-window-sensibly delete-window))
-  (advice-add func :after (lambda (&rest _) (balance-windows))))
+                                (set-window-margins nil 2 2)))))
 
 ;; Setup i3-like key bindings. I prefer a master-stack layout like in DWM, but the only package I
 ;; know of that achieves this, edwina, does not integrate well with other packages that open and
