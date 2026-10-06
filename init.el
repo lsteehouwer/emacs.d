@@ -651,12 +651,11 @@ Function lifted from Doom Emacs."
   :init (dashboard-setup-startup-hook)
   :config
   (setq dashboard-center-content t
-        dashboard-display-icons-p t
-        dashboard-icon-type 'all-the-icons
+        dashboard-vertically-center-content t
+        dashboard-display-icons-p nil
         dashboard-path-style 'truncate-beginning
         dashboard-path-max-length 45
         dashboard-projects-switch-function 'dired
-        dashboard-vertically-center-content t
         dashboard-items '((projects . 5)
                           (recents . 5))
         dashboard-startupify-list '(dashboard-insert-banner-title
@@ -753,10 +752,6 @@ the different kinds of visual states"
 (use-package solaire-mode
   :init
   (solaire-global-mode +1))
-
-;; Some packages need icons. Here they are
-(use-package nerd-icons)
-(use-package all-the-icons)
 
 ;; LANG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
