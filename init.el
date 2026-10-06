@@ -179,7 +179,7 @@
   :ensure nil
   :hook (after-init . save-place-mode)
   :config
-  (setq save-place-file (concat ls/cache-directory "places")))
+  (setq save-place-file (expand-file-name "places" ls/cache-directory)))
 
 ;; FRAMES AND WINDOWS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -306,9 +306,9 @@ Function lifted from Doom Emacs."
 ;; Move lines and regions up or down
 (use-package drag-stuff
   :general
-  (general-define-key :states 'normal
-                      "C-k" #'drag-stuff-up
-                      "C-j" #'drag-stuff-down))
+  (general-def :states '(normal)
+    "C-k" #'drag-stuff-up
+    "C-j" #'drag-stuff-down))
 
 ;; Finding stuff through TAGS is often good enough
 (use-package etags
@@ -319,8 +319,7 @@ Function lifted from Doom Emacs."
   (setq tags-add-tables nil)
   (defun ls/set-tags-table-maybe ()
     (when-let* ((_ (not (buffer-local-value 'tags-file-name (current-buffer))))
-                (project (project-current))
-                (tags-file-path (expand-file-name "TAGS" (project-root project)))
+                (tags-file-path (expand-file-name "TAGS" (project-root (project-current))))
                 (_ (file-exists-p tags-file-path)))
       (visit-tags-table tags-file-path t))))
 
@@ -336,7 +335,7 @@ Function lifted from Doom Emacs."
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode)
   :init
-  (setopt yas-snippet-dirs `(,(concat ls/templates-directory "snippets"))))
+  (setopt yas-snippet-dirs `(,(expand-file-name "snippets" ls/templates-directory))))
 
 (use-package yasnippet-snippets
   :after yasnippet)
@@ -344,7 +343,7 @@ Function lifted from Doom Emacs."
 (use-package autoinsert
   :ensure nil
   :init
-  (let ((insert-dir (concat ls/templates-directory "auto-insert/")))
+  (let ((insert-dir (expand-file-name "auto-insert" ls/templates-directory)))
     (setq auto-insert-query nil
           auto-insert-directory insert-dir
           auto-insert-alist ())
