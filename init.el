@@ -521,7 +521,7 @@ Function lifted from Doom Emacs."
 
 ;; Magit is the best git client. Full stop.
 (use-package magit
-  :ensure (:host github :repo "magit/magit" :tag "v4.7.0")
+  :ensure (:host github :repo "magit/magit" :tag "v4.7.1")
   :config (add-hook 'after-save-hook 'magit-after-save-refresh-status)
   :general
   (leader-keys
@@ -531,10 +531,12 @@ Function lifted from Doom Emacs."
     "g l"        '(magit-log :wk "log")))
 
 (use-package transient
-  :ensure (:host github :repo "magit/transient" :tag "v0.13.6")
-  :demand t
+  :ensure (:host github :repo "magit/transient" :tag "v0.13.8")
   :general
-  (:keymaps 'transient-map "<escape>" #'transient-quit-one))
+  (:keymaps 'transient-map "<escape>" #'transient-quit-one)
+  :config
+  (setq transient-history-file (expand-file-name "transient/history.el" ls/cache-directory)
+        transient-history-limit 100))
 
 (use-package which-key
   :init
