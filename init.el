@@ -94,6 +94,9 @@
         initial-major-mode 'fundamental-mode
         initial-scratch-message nil)
 
+;; enable functionality otherwise disabled
+(put 'narrow-to-region 'disabled nil)
+
 (advice-add #'display-startup-echo-area-message :override #'ignore)
 
 (setq-default fill-column 100
