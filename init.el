@@ -322,7 +322,8 @@ Function lifted from Doom Emacs."
   (setq tags-add-tables nil)
   (defun ls/set-tags-table-maybe ()
     (when-let* ((_ (not (buffer-local-value 'tags-file-name (current-buffer))))
-                (tags-file-path (expand-file-name "TAGS" (project-root (project-current))))
+                (project (project-current))
+                (tags-file-path (expand-file-name "TAGS" (project-root project)))
                 (_ (file-exists-p tags-file-path)))
       (visit-tags-table tags-file-path t))))
 
