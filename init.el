@@ -134,6 +134,11 @@
         auto-save-default nil
         auto-save-list-file-prefix nil))
 
+(use-package recentf
+  :ensure nil
+  :custom
+  (recentf-save-file (expand-file-name "recentf" ls/cache-directory)))
+
 ;; I never use custom, but in the off chance that I do need it, don't clutter my init.el
 (use-package cus-edit
   :ensure nil
