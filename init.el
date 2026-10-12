@@ -757,21 +757,24 @@ the different kinds of visual states"
 ;; LANG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Eglot is the built-in LSP-client. It's basic, but I don't need more.
+(defvar ls/eglot-enabled-modes '(c)
+  "List of modes for which to enable eglot")
+
 (use-package eglot
   :ensure nil
   :commands eglot
   :general
   (leader-keys
     "l r" '(eglot-rename :wk "rename"))
+  :init
+  (dolist (mode ls/eglot-enabled-modes)
+    (let ((hook (intern (concat (symbol-name mode) "-mode-hook"))))
+      (add-hook hook #'eglot-ensure)))
   :config
   (setq eglot-autoshutdown t
         eglot-report-progress t)
-  :hook ((ruby-mode ruby-ts-mode c-mode c-ts-mode) . eglot-ensure)
-         (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1))))
-
-        eglot-report-progress t))
-  ;; :hook ((ruby-mode ruby-ts-mode c-mode c-ts-mode) . eglot-ensure)
-  ;;        (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1))))
+  :hook
+  (eglot-managed-mode . (lambda () (eglot-inlay-hints-mode -1))))
 
 (use-package treesit
   :ensure nil
