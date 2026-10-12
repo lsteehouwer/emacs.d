@@ -1,4 +1,6 @@
 # Files
+*.elc
+*.eld
 recentf
 tramp
 .yas-compiled-snippets.el
