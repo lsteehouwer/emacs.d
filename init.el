@@ -63,8 +63,6 @@
     :prefix "SPC"
     :global-prefix "C-SPC"))
 
-(elpaca-process-queues)
-
 ;; GENERAL SETTINGS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; performance tweaks
