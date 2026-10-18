@@ -655,20 +655,22 @@ Function lifted from Doom Emacs."
 (add-hook 'prog-mode-hook 'ls/indicate-empty-lines)
 
 (use-package dashboard
-  :init (dashboard-setup-startup-hook)
+  :demand t
+  :custom
+  (initial-buffer-choice 'dashboard-open)
+  (dashboard-center-content t)
+  (dashboard-vertically-center-content t)
+  (dashboard-display-icons-p nil)
+  (dashboard-path-style 'truncate-beginning)
+  (dashboard-path-max-length 45)
+  (dashboard-projects-switch-function 'dired)
+  (dashboard-items '((projects . 5) (recents . 5)))
+  (dashboard-startupify-list '(dashboard-insert-banner-title
+                               dashboard-insert-newline
+                               dashboard-insert-init-info
+                               dashboard-insert-items))
   :config
-  (setq dashboard-center-content t
-        dashboard-vertically-center-content t
-        dashboard-display-icons-p nil
-        dashboard-path-style 'truncate-beginning
-        dashboard-path-max-length 45
-        dashboard-projects-switch-function 'dired
-        dashboard-items '((projects . 5)
-                          (recents . 5))
-        dashboard-startupify-list '(dashboard-insert-banner-title
-                                    dashboard-insert-newline
-                                    dashboard-insert-init-info
-                                    dashboard-insert-items)))
+  (dashboard-setup-startup-hook))
 
 ;; Settings for fonts/faces
 (use-package faces
