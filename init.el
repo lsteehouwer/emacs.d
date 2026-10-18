@@ -205,8 +205,8 @@
   :ensure nil
   :init
   (setq window-combination-resize t
-        split-width-threshold 160
-        split-height-threshold nil))
+        split-width-threshold 120
+        split-height-threshold 40))
 
 (use-package fringe
   :ensure nil
