@@ -818,6 +818,13 @@ the different kinds of visual states"
 
 (use-package terraform-mode)
 
+;; PROSE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(when (and (display-graphic-p)
+           (>= 31 emacs-major-version)
+           (>= 1 emacs-minor-version))
+      (add-hook 'text-mode-hook (lambda () (setq-local line-spacing '(0.1 . 0.1)))))
+
 (use-package markdown-mode)
 
 ;; Org
