@@ -555,7 +555,8 @@ Function lifted from Doom Emacs."
     "h v" '(helpful-variable :wk "variable")
     "h k" '(helpful-key :wk "key")
     "h x" '(helpful-command :wk "command")
-    "h d" '(helpful-at-point :wk "at point")))
+    "h d" '(helpful-at-point :wk "at point")
+    "h ." '(helpful-at-point :wk "at point")))
 
 ;; Replace doc view with pdf tools
 (use-package pdf-tools
