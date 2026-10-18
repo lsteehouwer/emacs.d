@@ -5,6 +5,7 @@
 (defvar ls/templates-directory (expand-file-name "templates/" user-emacs-directory)
   "Directory used for templates")
 
+(setq byte-compile-warnings nil)
 (startup-redirect-eln-cache (expand-file-name "eln/" ls/cache-directory))
 
 (push '(menu-bar-lines . 0) default-frame-alist)

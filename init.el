@@ -83,7 +83,6 @@
         ring-bell-function #'ignore
         delete-by-moving-to-trash t
         use-short-answers t
-        byte-compile-warnings nil
         default-input-method nil
         auto-window-vscroll nil
         inhibit-startup-echo-area-message user-login-name
