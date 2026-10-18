@@ -292,7 +292,10 @@ Function lifted from Doom Emacs."
 ;; Evil bindings in modes not provided by standard evil
 (use-package evil-collection
   :after evil
-  :demand
+  :demand t
+  :hook (evil-collection-setup . (lambda (mode keymaps)
+                                   (when (eq mode 'dired)
+                                     (ls/setup-i3-keys :keymaps keymaps :states '(normal emacs)))))
   :config
   (evil-collection-init))
 
