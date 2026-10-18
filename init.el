@@ -841,8 +841,3 @@ the different kinds of visual states"
         org-latex-listings 'minted
         org-latex-minted-options '(("linenos" "true")))
   (add-to-list 'org-latex-packages-alist '("" "minted" t ("pdflatex")) t))
-
-(use-package org-modern
-  :hook (org-mode . org-modern-mode)
-  :init (setq org-modern-hide-stars t
-              org-modern-keyword t))
