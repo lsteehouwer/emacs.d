@@ -152,12 +152,12 @@
     "d"   '(:ignore t :wk "dired")
     "d d" '(dired-jump :wk "open current dir")
     "d D" '(dired-jump-other-window :wk "open current dir other window"))
-  :init (setq dired-auto-revert-buffer t
-              dired-dwim-target t
-              dired-clean-up-buffers-too t
-              dired-clean-confirm-killing-deleted-buffers nil
-              dired-listing-switches "-lah --group-directories-first")
-  :config (ls/setup-i3-keys :keymaps 'dired-mode-map))
+  (ls/general-define-i3-keys :keymaps 'dired-mode-map)
+  :config (setq dired-auto-revert-buffer t
+                dired-dwim-target t
+                dired-clean-up-buffers-too t
+                dired-clean-confirm-killing-deleted-buffers nil
+                dired-listing-switches "-lah --group-directories-first"))
 
 ;; Spice up dired just a little bit
 (use-package diredfl
@@ -170,8 +170,7 @@
   (setq project-list-file (concat ls/cache-directory "projects")
         project-switch-commands #'project-dired)
   :general
-  (leader-keys
-    :states 'normal
+  (leader-keys :states 'normal
     "p"          '(:ignore t :wk "projects")
     "p <escape>" '(keyboard-quit :wk t)
     "p p"        '(project-switch-project :wk "switch project")
@@ -216,30 +215,28 @@
             #'(lambda () (progn (set-window-fringes nil 0)
                                 (set-window-margins nil 2 2)))))
 
-;; Setup i3-like key bindings. I prefer a master-stack layout like in DWM, but the only package I
-;; know of that achieves this, edwina, does not integrate well with other packages that open and
-;; close windows. So, i3 it is.
-(defun ls/setup-i3-keys (&rest kwargs)
-  (let ((keymaps (if (plist-member kwargs :keymaps) (plist-get kwargs :keymaps) '(global)))
-        (states (if (plist-member kwargs :states) (plist-get kwargs :states) '(normal emacs))))
-    (general-define-key
-     :keymaps keymaps
-     :states states
-     "M-RET"        #'split-window-right
-     "M-<return>"   #'split-window-right
-     "M-<S-RET>"    #'split-window-below
-     "M-<S-return>" #'split-window-below
-     "M-h"          #'windmove-left
-     "M-j"          #'windmove-down
-     "M-k"          #'windmove-up
-     "M-l"          #'windmove-right
-     "M-H"          #'windmove-swap-states-left
-     "M-J"          #'windmove-swap-states-down
-     "M-K"          #'windmove-swap-states-up
-     "M-L"          #'windmove-swap-states-right
-     "M-Q"          #'delete-window
-     "M-O"          #'zoom-window-zoom)))
-(ls/setup-i3-keys)
+(defmacro ls/general-define-i3-keys (&rest args)
+  "Setup i3-like key bindings. I prefer a master-stack layout like in DWM,
+    but the only package I know of that achieves this, edwina, does not
+    integrate well with other packages that open and close windows. So,
+    i3 it is."
+  (let ((keymaps (if (plist-member args :keymaps) (plist-get args :keymaps) ''global))
+        (states  (if (plist-member args :states)  (plist-get args :states) ''(normal emacs))))
+    `(general-def :keymaps ,keymaps :states ,states
+       "M-RET"        #'split-window-right
+       "M-<return>"   #'split-window-right
+       "M-S-<RET>"    #'split-window-below
+       "M-S-<return>" #'split-window-below
+       "M-h"          #'windmove-left
+       "M-j"          #'windmove-down
+       "M-k"          #'windmove-up
+       "M-l"          #'windmove-right
+       "M-H"          #'windmove-swap-states-left
+       "M-J"          #'windmove-swap-states-down
+       "M-K"          #'windmove-swap-states-up
+       "M-L"          #'windmove-swap-states-right
+       "M-Q"          #'delete-window)))
+(ls/general-define-i3-keys)
 
 (use-package ultra-scroll
   :ensure '(:host github :repo "jdtsmith/ultra-scroll")
@@ -295,7 +292,7 @@ Function lifted from Doom Emacs."
   :demand t
   :hook (evil-collection-setup . (lambda (mode keymaps)
                                    (when (eq mode 'dired)
-                                     (ls/setup-i3-keys :keymaps keymaps :states '(normal emacs)))))
+                                     (ls/general-define-i3-keys :keymaps keymaps :states '(normal emacs)))))
   :config
   (evil-collection-init))
 
@@ -517,12 +514,12 @@ Function lifted from Doom Emacs."
         vterm-always-compile-module t
         vterm-exit-functions `(,(lambda (buffer _event) (quit-windows-on buffer)))
         confirm-kill-processes nil)
-  (ls/setup-i3-keys :keymaps 'vterm-mode-map :states '(normal insert emacs))
   (evil-set-initial-state 'vterm-mode 'emacs)
   :general
   (leader-keys
     :states 'normal
     "o t" '(vterm-other-window :wk "terminal"))
+  (ls/general-define-i3-keys :keymaps 'vterm-mode-map :states '(normal insert emacs))
   :hook (vterm-mode . goto-address-mode))
 
 ;; Magit is the best git client. Full stop.
@@ -836,8 +833,9 @@ the different kinds of visual states"
 (use-package org
   :ensure nil
   :hook (org-mode . org-indent-mode)
+  :general
+  (ls/general-define-i3-keys :keymaps 'org-mode-map)
   :config
-  (ls/setup-i3-keys :keymaps 'org-mode-map)
   (dolist (module '(org-tempo))
     (add-to-list 'org-modules module))
   (dolist (backend '(md))
