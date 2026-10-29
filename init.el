@@ -223,10 +223,10 @@
   (let ((keymaps (if (plist-member args :keymaps) (plist-get args :keymaps) ''global))
         (states  (if (plist-member args :states)  (plist-get args :states) ''(normal emacs))))
     `(general-def :keymaps ,keymaps :states ,states
-       "M-RET"        #'split-window-right
-       "M-<return>"   #'split-window-right
-       "M-S-<RET>"    #'split-window-below
-       "M-S-<return>" #'split-window-below
+       "M-RET"        #'ls/split-window-right-and-move
+       "M-<return>"   #'ls/split-window-right-and-move
+       "M-S-<RET>"    #'ls/split-window-below-and-move
+       "M-S-<return>" #'ls/split-window-below-and-move
        "M-h"          #'windmove-left
        "M-j"          #'windmove-down
        "M-k"          #'windmove-up
@@ -236,6 +236,19 @@
        "M-K"          #'windmove-swap-states-up
        "M-L"          #'windmove-swap-states-right
        "M-Q"          #'delete-window)))
+
+(defun ls/split-window-right-and-move ()
+  (interactive)
+  (split-window-right)
+  (windmove-right)
+  (recenter))
+
+(defun ls/split-window-below-and-move ()
+  (interactive)
+  (split-window-below)
+  (windmove-down)
+  (recenter))
+
 (ls/general-define-i3-keys)
 
 (use-package ultra-scroll
