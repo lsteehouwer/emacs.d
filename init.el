@@ -518,9 +518,8 @@ Function lifted from Doom Emacs."
 
 ;; TOOLS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; VTERM is probably still the best terminal emulator available in Emacs right now, but eat seems to
-;; be making ways. Perhaps in the future I'll give it a shot.
 (use-package vterm
+  :unless '(executable-find "zig")
   :config
   (setq vterm-timer-delay 0.0
         vterm-max-scrollback 50000
@@ -534,6 +533,19 @@ Function lifted from Doom Emacs."
     "o t" '(vterm-other-window :wk "terminal"))
   (ls/general-define-i3-keys :keymaps 'vterm-mode-map :states '(normal insert emacs))
   :hook (vterm-mode . goto-address-mode))
+
+(use-package ghostel
+  :if (executable-find "zig")
+  :general
+  (leader-keys :states 'normal
+    "o t" '(ls/ghostel-other-window :wk terminal))
+  :config
+  (push (lambda (buffer _event) (quit-windows-on buffer)) ghostel-exit-functions)
+  (evil-set-initial-state 'ghostel-mode 'emacs)
+  (defun ls/ghostel-other-window ()
+    "Create a new ghostel terminal an another window"
+    (interactive)
+    (ghostel-create nil '(display-buffer-pop-up-window))))
 
 ;; Magit is the best git client. Full stop.
 (use-package magit
