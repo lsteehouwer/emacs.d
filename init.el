@@ -63,6 +63,11 @@
     :prefix "SPC"
     :global-prefix "C-SPC"))
 
+;; Make emacs support the kitty keyboard protocol when running in the terminal. This makes emacs
+;; support more key combos in that environment
+(use-package kkp
+  :hook (tty-setup . global-kkp-mode))
+
 ;; GENERAL SETTINGS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; performance tweaks
