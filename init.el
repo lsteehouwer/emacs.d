@@ -531,7 +531,7 @@ Function lifted from Doom Emacs."
 ;; TOOLS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package vterm
-  :unless '(executable-find "zig")
+  :unless (executable-find "zig")
   :config
   (setq vterm-timer-delay 0.0
         vterm-max-scrollback 50000
