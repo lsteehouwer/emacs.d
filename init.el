@@ -513,8 +513,9 @@ Function lifted from Doom Emacs."
   :general
   (leader-keys
     :states '(normal emacs)
-    "SPC" '(consult-project-extra-find :wk "quick switch")
-    "p h" '(consult-project-extra-find :wk "quick switch")))
+    "SPC"   '(consult-project-extra-find :wk "quick switch")
+    "C-SPC" '(consult-project-extra-find :wk "quick switch")
+    "p h"   '(consult-project-extra-find :wk "quick switch")))
 
 ;; Add meta information to mini buffer completion candidates
 (use-package marginalia
