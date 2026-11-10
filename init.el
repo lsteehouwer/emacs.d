@@ -109,6 +109,18 @@
   "<escape>" '(keyboard-quit :wk t)
   "o"        '(:ignore t :wk "open"))
 
+;; TERMINAL EMACS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Mouse support in the terminal
+(use-package xt-mouse
+  :ensure nil
+  :hook (tty-setup . xterm-mouse-mode))
+
+;; Make emacs support the kitty keyboard protocol when running in the terminal. This makes emacs
+;; support more key combos in that environment
+(use-package kkp
+  :hook (tty-setup . global-kkp-mode))
+
 ;; FILES AND PROJECTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package files
@@ -515,18 +527,6 @@ Function lifted from Doom Emacs."
   :init (setq company-idle-delay 0.05
               company-minimum-prefix-length 3)
   :hook ((prog-mode org-mode) . company-mode))
-
-;; TERMINAL EMACS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Mouse support in the terminal
-(use-package xt-mouse
-  :ensure nil
-  :hook (tty-setup . xterm-mouse-mode))
-
-;; Make emacs support the kitty keyboard protocol when running in the terminal. This makes emacs
-;; support more key combos in that environment
-(use-package kkp
-  :hook (tty-setup . global-kkp-mode))
 
 ;; TOOLS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
